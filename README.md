@@ -24,3 +24,7 @@
     * 100って少ない
 * cxの取得
     * https://cse.google.com/cse/all
+* リクエストURL例
+    * https://developers.google.com/custom-search/json-api/v1/using_rest
+* 通信
+    * reuests http://docs.python-requests.org/en/master/
