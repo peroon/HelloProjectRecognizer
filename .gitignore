@@ -1,3 +1,4 @@
 secret/*
 .idea/*
 resources/*
+*.pyc
