@@ -42,7 +42,7 @@ def get_angerme_list():
     idol_list.append(Idol('中西香菜', 'kana-nakanishi', group_name))
     idol_list.append(Idol('竹内朱莉', 'akari-takeuchi', group_name))
     idol_list.append(Idol('勝田里奈', 'rina-katsuta', group_name))
-    idol_list.append(Idol('室田瑞希', 'muzuki-murota', group_name))
+    idol_list.append(Idol('室田瑞希', 'mizuki-murota', group_name))
     idol_list.append(Idol('相川茉穂', 'maho-aikawa', group_name))
     idol_list.append(Idol('佐々木莉佳子', 'rikako-sasaki', group_name))
     idol_list.append(Idol('上國料萌衣', 'moe-kamikokuryo', group_name))
@@ -102,12 +102,12 @@ def get_tsubaki_list():
     return idol_list
 
 
-def get_idol_all_list():
+def get_idol_list():
     return get_cute_list() + get_musume_list() + get_angerme_list() + get_juice_list() + get_country_list() + get_kobushi_list() + get_tsubaki_list()
 
 
 def __make_directory():
-    idol_list = get_idol_all_list()
+    idol_list = get_idol_list()
     idol_list = idol_list[2:]
     for idol in idol_list:
         dir_path = '../resources/face/' + idol.directory_name

@@ -13,9 +13,9 @@ import data
 
 
 def get_image(search_word, save_directory, start_index=1):
-    offset = start_index * 35
+    offset = start_index * 150
     q = urllib.parse.quote(search_word)
-    url = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?q={0}&offset={1}".format(q, offset)
+    url = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?q={0}&offset={1}&count=150".format(q, offset)
     print(url)
     headers = {'Ocp-Apim-Subscription-Key': get_api_key()}
     r = requests.get(url, headers=headers)
@@ -44,7 +44,11 @@ def download_image(url="", save_dir="", image_id=1):
         try:
             urllib.request.urlretrieve(url, save_dir + filename)
         except urllib.error.HTTPError:
-            print('DL error. so skip')
+            print('HTTP error. so skip')
+        except urllib.error.URLError:
+            print('URL Error')
+        except:
+            print('unexpected error')
     else:
         print('skip')
 
@@ -53,10 +57,10 @@ def get_api_key():
     return secret.get_key('bing_api_key')
 
 if __name__ == '__main__':
-    cute_list = data.get_cute_list()
-    cute_list = cute_list[1:]
+    idol_list = data.get_idol_list()
+    idol_list = idol_list[5:]
 
-    for idol in cute_list:
+    for idol in idol_list:
         print(idol.name)
-        for i in range(0, 20):
+        for i in range(0, 5):
             get_image(idol.name, '..\\..\\resources\\search\\{0}\\'.format(idol.directory_name), start_index=i)

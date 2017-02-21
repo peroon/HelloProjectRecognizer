@@ -21,7 +21,7 @@ def get_image(search_word, save_directory, start_index=1):
           "&hl=ja" \
           "&start={3}" \
           "&searchType=image" \
-          "&num=10".format(api_key, cx, q, start_index)
+          "&num=10".format(api_key, cx, q, start_index * 10)
     print(url)
     r = requests.get(url)
     json_obj = json.loads(r.text)
@@ -62,4 +62,6 @@ def get_cx():
 
 
 if __name__ == '__main__':
-    get_image('矢島舞美', r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\search\maimi-yajima\\')
+    for i in range(8, 50):
+        print(i)
+        get_image('矢島舞美', r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\search\maimi-yajima\\', start_index=i)
