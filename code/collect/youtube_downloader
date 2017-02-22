@@ -1,0 +1,31 @@
+# HelloProjectRecognizer
+
+## 目的：動画内のハロプロメンバーを認識する
+
+### Youtube API
+
+* API_KEYを発行する。APIを有効にするボタンを押す
+* GETで正しくURLを入れる。ブラウザで十分
+* プレイリストIDから全動画URLが取りたかったので、
+* GET用URL例
+	* https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PL1U0DlJ2bZPQi-dQsg4nAAKs57oHpXFsv&maxResults=50&key=XXXX
+* JSON内の、items/resourceId/videoIdに_4nww-s_q_cなどと書かれているので、再生URLはyoutube.com/watch?v=_4nww-s_q_cとなる
+* 50件ずつしか取れないので、nextPageTokenを使う。1ページ目取得時にJSON内に書かれている
+* 2ページ目をGETするURLは、pageTokenを指定する。例は、
+	* https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PL1U0DlJ2bZPQi-dQsg4nAAKs57oHpXFsv&maxResults=50&key=XXXX&pageToken=CDIQAA
+* TODO
+	* Python一発で200件のリストが生成されるようにする
+
+
+### Youtube動画のダウンロード
+
+* https://github.com/NFicano/pytube
+* mp4 720pで落とすと、1時間ほどなのでファイルサイズは1GB
+* 200本ある
+* JPGにすると500KB
+* 5秒ごとの静止画にすると60 * 60 / 5 = 720枚 → 360MB
+* 手間が増える割にはサイズは小さくならないので、静止画ではなく、動画で管理する
+
+### 動画のサイズの検討
+* 720pだと1280x720で十分大きそう
+* 顔検出・顔認識には大きすぎる可能性がある。FaceNetではどのサイズを使っているか調べる
