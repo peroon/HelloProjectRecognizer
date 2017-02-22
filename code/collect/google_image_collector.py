@@ -10,23 +10,26 @@ import pprint
 import os.path
 from PIL import Image
 
+import data
+
 
 def get_image(search_word, save_directory, start_index=1):
     api_key = get_api_key()
     cx = get_cx()
     q = urllib.parse.quote(search_word)
+    print('q', q)
     url = "https://www.googleapis.com/customsearch/v1?key={0}" \
           "&cx={1}" \
           "&q={2}" \
-          "&hl=ja" \
           "&start={3}" \
           "&searchType=image" \
-          "&num=10".format(api_key, cx, q, start_index * 10)
+          "&num=10".format(api_key, cx, q, start_index * 10 + 1)
     print(url)
     r = requests.get(url)
     json_obj = json.loads(r.text)
     for i, item in enumerate(json_obj['items']):
         image_id = 10 * (start_index - 1) + i
+        image_id += 99000000 # google sign
         image_url = item['link']
         download_image(image_url, save_directory, image_id)
     pass
@@ -62,6 +65,9 @@ def get_cx():
 
 
 if __name__ == '__main__':
-    for i in range(8, 50):
-        print(i)
-        get_image('矢島舞美', r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\search\maimi-yajima\\', start_index=i)
+    idol = data.get_tsubaki_list()[-3]
+
+    # 上位100件しか取得できない
+    for i in range(0, 10):
+        print(i, idol.name, idol.directory_name)
+        get_image(idol.name, '../../resources/search_google/{0}/'.format(idol.directory_name), start_index=i)

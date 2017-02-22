@@ -69,7 +69,7 @@ def get_country_list():
     idol_list.append(Idol('森戸知沙希', 'chisaki-morito', group_name))
     idol_list.append(Idol('小関舞', 'mai-ozeki', group_name))
     idol_list.append(Idol('梁川奈々美', 'nanami-yanagawa', group_name))
-    idol_list.append(Idol('船木結', 'yui-funaki', group_name))
+    idol_list.append(Idol('船木結', 'musubu-funaki', group_name))
     return idol_list
 
 
@@ -108,14 +108,15 @@ def get_idol_list():
 
 def __make_directory():
     idol_list = get_idol_list()
-    idol_list = idol_list[2:]
     for idol in idol_list:
-        dir_path = '../resources/face/' + idol.directory_name
-        os.mkdir(dir_path)
-        dir_path = '../resources/search/' + idol.directory_name
+        # dir_path = '../resources/face/' + idol.directory_name
+        # os.mkdir(dir_path)
+        # dir_path = '../resources/search/' + idol.directory_name
+        # os.mkdir(dir_path)
+        dir_path = '../resources/youtube/' + idol.directory_name
         os.mkdir(dir_path)
 
 
 if __name__ == '__main__':
-    #__make_directory()
+    __make_directory()
     pass
