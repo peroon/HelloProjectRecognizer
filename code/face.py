@@ -9,6 +9,7 @@ import glob
 import os.path
 
 import data
+import name
 
 
 def detect_idols():
@@ -58,9 +59,12 @@ def detect_from_video(video_path, save_dir, interval=10, image_id = 50000000):
     print('reader')
     reader = imageio.get_reader(video_path, 'ffmpeg')
 
+    frame_num = reader._meta['nframes']
+    print('frame num', frame_num)
+
     for i, img in enumerate(reader):
-        print(i)
         if i % interval == 0:
+            print(i, '/', frame_num)
             save_id = image_id + i
 
             # detect
@@ -82,6 +86,4 @@ if __name__ == '__main__':
     # 個別
     # idol = data.get_tsubaki_list()[-3]
     # detect_idol(idol, 'search_google')
-
-    detect_from_video('../resources/youtube/8H1Ex9voW64.mp4', save_dir='../resources/face/mizuho-ono/')
 
