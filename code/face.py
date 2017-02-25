@@ -62,21 +62,22 @@ def detect_from_video(video_path, save_dir, interval=10, image_id = 50000000):
     frame_num = reader._meta['nframes']
     print('frame num', frame_num)
 
-    for i, img in enumerate(reader):
-        if i % interval == 0:
-            print(i, '/', frame_num)
-            save_id = image_id + i
+    #for i, img in enumerate(reader):
+    for i in range(0, frame_num, interval):
+        print(i, '/', frame_num)
+        save_id = image_id + i
+        img = reader.get_data(i)
 
-            # detect
-            try:
-                detects = detector(img, 1)
-                for detect_id, d in enumerate(detects):
-                    cropped = img[d.top():d.bottom(), d.left():d.right()]
-                    if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0 and d.right() - d.left() > 99:
-                        save_path = save_dir + str(save_id) + '-' + str(detect_id) + '.jpg'
-                        io.imsave(save_path, cropped)
-            except RuntimeError:
-                print('detection failed. skip')
+        # detect
+        try:
+            detects = detector(img, 1)
+            for detect_id, d in enumerate(detects):
+                cropped = img[d.top():d.bottom(), d.left():d.right()]
+                if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0 and d.right() - d.left() > 99:
+                    save_path = save_dir + str(save_id) + '-' + str(detect_id) + '.jpg'
+                    io.imsave(save_path, cropped)
+        except RuntimeError:
+            print('detection failed. skip')
 
 
 if __name__ == '__main__':
@@ -84,6 +85,12 @@ if __name__ == '__main__':
     #detect_idols()
 
     # 個別
-    # idol = data.get_tsubaki_list()[-3]
-    # detect_idol(idol, 'search_google')
+    if True:
+        idol = data.get_tsubaki_list()[-3]
+        detect_idol(idol, 'search')
 
+    if False:
+        youtube_id = 'fIPA3PbS0w0'
+        idol_name = name.momona_kasahara
+        image_id = 5044 * 10000
+        detect_from_video('../resources/youtube/{0}.mp4'.format(youtube_id), save_dir='../resources/face/{0}/'.format(idol_name), interval=100, image_id=image_id)
