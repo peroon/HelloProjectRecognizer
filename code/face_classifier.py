@@ -7,6 +7,7 @@ from keras.applications.resnet50 import ResNet50
 from keras.layers import Dense, GlobalAveragePooling2D, Dropout
 from keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import SGD
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 import numpy as np
 
@@ -79,6 +80,13 @@ class FaceClassifier():
             layer.trainable = True
         self.model.compile(optimizer=SGD(lr=1e-4, momentum=0.9), loss='categorical_crossentropy',
                            metrics=['accuracy'])
+        # save model weight
+        file_path = "../temp/model_weight/epoch_{epoch:02d}"
+        check_point = ModelCheckpoint(filepath=file_path, verbose=1, save_best_only=True)
+
+        # early stopping
+        #early_stopping = EarlyStopping()
+
         print('full layer fit()')
         self.model.fit_generator(datagen.flow(
             X_training,
@@ -89,7 +97,8 @@ class FaceClassifier():
             samples_per_epoch=X_training.shape[0],
             nb_epoch=100,
             verbose=2, # per epoch
-            validation_data=(X_validation, Y_validation)
+            validation_data=(X_validation, Y_validation),
+            callbacks=[check_point]
         )
 
     def load_weight(self, weight_path):
