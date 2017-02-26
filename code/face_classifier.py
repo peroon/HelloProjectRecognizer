@@ -72,7 +72,7 @@ class FaceClassifier():
             validation_data=(X_validation, Y_validation)
         )
 
-        # learning for tine tune
+        # learning for fine tune
         fine_tune_index = 60
         for layer in self.model.layers[:fine_tune_index]:
             layer.trainable = False
