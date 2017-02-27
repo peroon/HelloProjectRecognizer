@@ -5,33 +5,17 @@
 from keras.models import Model
 from keras.applications.resnet50 import ResNet50
 from keras.layers import Dense, GlobalAveragePooling2D, Dropout
-from keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 
+from skimage import io
+import cv2
 import numpy as np
 
 import constant
 import data
-
-
-def get_generator():
-    datagen = ImageDataGenerator(
-        featurewise_center=False,  # set input mean to 0 over the dataset
-        samplewise_center=False,  # set each sample mean to 0
-        featurewise_std_normalization=False,  # divide inputs by std of the dataset
-        samplewise_std_normalization=False,  # divide each input by its std
-        zca_whitening=False,  # apply ZCA whitening
-        rotation_range=0,  # 回転角度範囲 (degrees, 0 to 180)
-
-        zoom_range=0.2,
-        shear_range=0.2,
-
-        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
-        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
-        horizontal_flip=True,  # 横反転
-        vertical_flip=False)  # 縦反転
-    return datagen
+import idol
+import augmentation
 
 
 class FaceClassifier():
@@ -59,7 +43,7 @@ class FaceClassifier():
         for layer in self.base_model.layers:
             layer.trainable = False
         self.model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
-        datagen = get_generator()
+        datagen = augmentation.get_generator()
         self.model.fit_generator(datagen.flow(
             X_training,
             Y_training,
@@ -102,10 +86,11 @@ class FaceClassifier():
         )
 
     def load_weight(self, weight_path):
-        pass
+        self.model.load_weights(weight_path)
 
     def predict(self, x):
-        return [0.1, 0.9]
+        x = np.expand_dims(x, axis=0)
+        return self.model.predict(x)
 
     def predict_label(self, x):
         probability = self.predict(x)
@@ -115,13 +100,24 @@ if __name__ == '__main__':
     classifier = FaceClassifier()
 
     # 学習時
-    enable_learning = True
+    enable_learning = False
     if enable_learning:
         X_training, Y_training, X_validation, Y_validation = data.get_train_and_validation_data()
         classifier.learn(X_training, Y_training, X_validation, Y_validation)
 
     # 予測時
-    enable_predict = False
+    enable_predict = True
     if enable_predict:
-        weight_path = ''
+        weight_path = '../temp/model_weight/epoch_92'
         classifier.load_weight(weight_path)
+
+        face_image_path = r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\face_224x224\airi-suzuki\ok\00000002-0.jpg'
+        image = data.load_image(face_image_path)
+
+        probability = classifier.predict(image)
+        print(probability)
+
+        label = np.argmax(probability)
+        predicted_idol = idol.get_idol(label)
+        print(predicted_idol)
+
