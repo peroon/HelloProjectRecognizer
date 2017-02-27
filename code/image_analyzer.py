@@ -83,6 +83,16 @@ class ImageAnalyzer():
 
                         # text
                         font = cv2.FONT_HERSHEY_SIMPLEX
+                        # shadow
+                        cv2.putText(img=image_for_draw,
+                                    text=an_idol.alphabet_name(),
+                                    org=(pos0[0] + 1, pos0[1] + 1),
+                                    fontFace=font,
+                                    fontScale=1,
+                                    color=(0, 0, 0),
+                                    lineType=cv2.LINE_AA
+                                    )
+                        # color text
                         cv2.putText(img=image_for_draw,
                                     text=an_idol.alphabet_name(),
                                     org=pos0,
