@@ -20,6 +20,10 @@ class Idol():
             self.member_color
         )
 
+    def alphabet_name(self):
+        sep = self.directory_name.split('-')
+        return sep[0].capitalize() + ' ' + sep[1].capitalize()
+
 
 def get_idol(idol_id):
     csv_path = '../data/csv/idols.csv'
@@ -37,3 +41,4 @@ def get_idol(idol_id):
 if __name__ == '__main__':
     idol = get_idol(2)
     print(idol)
+    print(idol.alphabet_name())
