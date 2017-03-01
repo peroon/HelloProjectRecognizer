@@ -93,4 +93,7 @@ if __name__ == '__main__':
         youtube_id = 'fIPA3PbS0w0'
         idol_name = name.momona_kasahara
         image_id = 5044 * 10000
-        detect_from_video('../resources/youtube/{0}.mp4'.format(youtube_id), save_dir='../resources/face/{0}/'.format(idol_name), interval=100, image_id=image_id)
+        detect_from_video(video_path='../resources/youtube/{0}.mp4'.format(youtube_id),
+                          save_dir='../resources/face/{0}/'.format(idol_name),
+                          interval=100,
+                          image_id=image_id)

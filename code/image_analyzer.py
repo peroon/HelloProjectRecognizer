@@ -7,12 +7,14 @@ import cv2
 import time
 from skimage import io
 import pprint
+import numpy as np
 
 
 from face_classifier import FaceClassifier
 import idol
 import data
 import color
+import constant
 
 
 class ImageAnalyzer():
@@ -22,10 +24,9 @@ class ImageAnalyzer():
         self.face_classifier.load_weight('../temp/model_weight/epoch_92')
 
     def analyze(self, image_path):
-        print('analyze')
         """画像を入力として、分析結果を返す"""
-
         image = io.imread(image_path)
+        image_for_draw = None
 
         # face detection
         try:
@@ -35,11 +36,7 @@ class ImageAnalyzer():
                 image_for_draw = cv2.imread(image_path)
 
                 for i, d in enumerate(detects):
-                    print(i)
                     cropped = image[d.top():d.bottom(), d.left():d.right()]
-
-                    pprint.pprint(d)
-                    print('shape', image.shape)
 
                     # 画面内か
                     if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0:
@@ -48,7 +45,7 @@ class ImageAnalyzer():
                         in_image = False
 
                     # 小さすぎる顔は除外
-                    size_threshold = 32
+                    size_threshold = 64
                     if d.right() - d.left() > size_threshold:
                         enough_size = True
                     else:
@@ -56,19 +53,15 @@ class ImageAnalyzer():
 
                     if in_image and enough_size:
                         resized = cv2.resize(cropped, (224, 224))
-                        label = self.face_classifier.predict_label(resized)
+                        probability = self.face_classifier.predict(resized)
+                        label = np.argmax(probability)
+                        probability_max = np.max(probability)
                         an_idol = idol.get_idol(label)
-                        print(an_idol)
-
-                        # draw rect
-                        pos0 = (d.left(), d.top())
-                        pos1 = (d.right(), d.bottom())
-                        print('pos0', pos0)
-                        print('pos1', pos1)
-                        member_color = color.color_code_to_bgr_tuple(an_idol.member_color)
-                        #image_for_draw = cv2.rectangle(image_for_draw, pos0, pos1, color=member_color)
 
                         # draw circle
+                        pos0 = (d.left(), d.top())
+                        pos1 = (d.right(), d.bottom())
+                        member_color = color.color_code_to_bgr_tuple(an_idol.member_color)
                         x_center = (d.left() + d.right()) / 2
                         y_center = (d.top() + d.bottom()) / 2
                         center = (int(x_center), int(y_center))
@@ -80,12 +73,12 @@ class ImageAnalyzer():
                                    color=member_color,
                                    thickness=thickness)
 
-
-                        # text
                         font = cv2.FONT_HERSHEY_SIMPLEX
-                        # shadow
+                        #text = an_idol.alphabet_name() + ' {0:10.2f}'.format(probability_max)
+                        text = an_idol.alphabet_name() + ' ' + str(probability_max)
+                        # shadow text
                         cv2.putText(img=image_for_draw,
-                                    text=an_idol.alphabet_name(),
+                                    text=text,
                                     org=(pos0[0] + 1, pos0[1] + 1),
                                     fontFace=font,
                                     fontScale=1,
@@ -94,7 +87,7 @@ class ImageAnalyzer():
                                     )
                         # color text
                         cv2.putText(img=image_for_draw,
-                                    text=an_idol.alphabet_name(),
+                                    text=text,
                                     org=pos0,
                                     fontFace=font,
                                     fontScale=1,
@@ -107,18 +100,13 @@ class ImageAnalyzer():
         except RuntimeError:
             print('detection failed. skip')
 
-        # save
-        cv2.imwrite('../resources/result/result.jpg', image_for_draw)
-
-        # classification
-
-        result = []
-        return result
+        if image_for_draw is None:
+            return cv2.imread(image_path)
+        else:
+            return image_for_draw
 
 
 if __name__ == '__main__':
     image_analyzer = ImageAnalyzer()
-    image_path = r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\test\cute1.jpg'
-    #image_path = r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\search\akane-haga\00000001.jpg'
-
-    image_analyzer.analyze(image_path)
+    test_image_path = r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\test\cute1.jpg'
+    result_image = image_analyzer.analyze(test_image_path)
