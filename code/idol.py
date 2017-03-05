@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+import os
+
+import constant
 
 
 class Idol():
@@ -26,7 +29,7 @@ class Idol():
 
 
 def get_idol(idol_id):
-    csv_path = '../data/csv/idols.csv'
+    csv_path = os.path.dirname(__file__) + '/../data/csv/idols.csv'
     df = pd.read_csv(csv_path)
     row = df.loc[idol_id]
     return Idol(
@@ -36,6 +39,14 @@ def get_idol(idol_id):
         directory_name=row['directory_name'],
         member_color=row['member_color']
     )
+
+
+def get_idol_list():
+    idol_list = []
+    for i in range(constant.LABEL_NUM):
+        idol = get_idol(i)
+        idol_list.append(idol)
+    return idol_list
 
 
 if __name__ == '__main__':
