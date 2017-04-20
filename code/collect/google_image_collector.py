@@ -24,6 +24,7 @@ def get_image(search_word, save_directory, start_index=1):
           "&start={3}" \
           "&searchType=image" \
           "&num=10".format(api_key, cx, q, start_index * 10 + 1)
+
     print(url)
     r = requests.get(url)
     json_obj = json.loads(r.text)
@@ -67,7 +68,7 @@ def get_cx():
 if __name__ == '__main__':
     idol = data.get_tsubaki_list()[-3]
 
-    # 上位100件しか取得できない
+    # Only the top 100 search results can be acquired
     for i in range(0, 10):
         print(i, idol.name, idol.directory_name)
         get_image(idol.name, '../../resources/search_google/{0}/'.format(idol.directory_name), start_index=i)

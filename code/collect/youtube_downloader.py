@@ -15,11 +15,13 @@ def download(youtube_id, save_dir, video_size='720p'):
         yt = YouTube(url)
         pprint(yt.get_videos())
         yt.set_filename(youtube_id)
+
         try:
             video = yt.get('mp4', video_size)
             print('download', youtube_id)
             video.download(save_dir)
             print('done.')
+
         except exceptions.DoesNotExist:
             video = yt.get('mp4')
             print('低解像度 download', youtube_id)

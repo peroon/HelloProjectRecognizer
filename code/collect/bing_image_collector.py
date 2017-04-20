@@ -5,8 +5,6 @@ import urllib.request
 import requests
 import json
 import pprint
-import os.path
-from PIL import Image
 
 import secret
 import data

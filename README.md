@@ -28,3 +28,19 @@
     * https://developers.google.com/custom-search/json-api/v1/using_rest
 * 通信
     * reuests http://docs.python-requests.org/en/master/
+    
+# How to prepare training images
+
+* Google Image Search
+* Bing Image Search
+* Youtube & Face Detetction
+
+# Classifier
+
+* Keras
+* mxnet
+
+# Visualization
+
+* t-SNE
+
