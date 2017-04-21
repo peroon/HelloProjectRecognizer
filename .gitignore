@@ -3,3 +3,5 @@ secret/*
 resources/*
 *.pyc
 temp/*
+code/dmlc_mxnet/example/image-classification/*.params
+code/dmlc_mxnet/example/image-classification/*-symbol.json
