@@ -9,6 +9,7 @@ import mxnet as mx
 import numpy as np
 
 from constant import IMAGES_ROOT
+import mxlib
 
 
 def make_directory():
@@ -17,15 +18,7 @@ def make_directory():
     os.makedirs('./temp/submit', exist_ok=True)
 
 
-def download(url):
-    filename = url.split("/")[-1]
-    if not os.path.exists(filename):
-        urllib.request.urlretrieve(url, filename)
 
-
-def get_model(prefix, epoch):
-    download(prefix + '-symbol.json')
-    download(prefix + '-%04d.params' % (epoch,))
 
 
 def get_iterators(batch_size, data_shape=(3, 224, 224), fold_index=0):
