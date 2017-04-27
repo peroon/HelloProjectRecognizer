@@ -13,11 +13,14 @@ import constant
 
 
 def load_image(image_path):
+    """load image for keras"""
+
     X = cv2.imread(image_path)
     X = cv2.cvtColor(X, cv2.COLOR_BGR2RGB)
     X = X.astype('float32')
     # 'RGB'->'BGR'
     X = X[:, :, ::-1]
+
     # Zero-center by mean pixel
     X[:, :, 0] -= 103.939
     X[:, :, 1] -= 116.779

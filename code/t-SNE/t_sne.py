@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""アイドルの顔分布をt-SNEで可視化する"""
+"""Visualization on the distribution of idol faces"""
 
 import glob
 from keras.models import Model
