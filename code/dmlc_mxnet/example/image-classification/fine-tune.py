@@ -8,22 +8,26 @@ import glob
 import mxnet as mx
 import numpy as np
 
-from constant import IMAGES_ROOT
+from constant import PROJECT_ROOT
+import constant
 import mxlib
 
 
-def make_directory():
-    os.makedirs('./temp/model_weight/resnext-101', exist_ok=True)
-    os.makedirs('./temp/predict/resnext-101', exist_ok=True)
-    os.makedirs('./temp/submit', exist_ok=True)
+def download(url):
+    filename = url.split("/")[-1]
+    if not os.path.exists(filename):
+        urllib.request.urlretrieve(url, filename)
 
 
+def get_model(prefix, epoch):
+    download(prefix + '-symbol.json')
+    download(prefix + '-%04d.params' % (epoch,))
 
 
-
-def get_iterators(batch_size, data_shape=(3, 224, 224), fold_index=0):
-    train_rec = IMAGES_ROOT + "mxnet/train_224x224_fold_{}.rec".format(fold_index)
-    valid_rec = IMAGES_ROOT + "mxnet/validation_224x224_fold_{}.rec".format(fold_index)
+def get_iterators(batch_size, data_shape=(3, 224, 224)):
+    IMAGES_ROOT = PROJECT_ROOT + '/resources/rec_files/'
+    train_rec = IMAGES_ROOT + "training.rec"
+    valid_rec = IMAGES_ROOT + "validation.rec"
 
     train = mx.io.ImageRecordIter(
         path_imgrec=train_rec,
@@ -48,7 +52,7 @@ def get_iterators(batch_size, data_shape=(3, 224, 224), fold_index=0):
 
 def fine_tune(mode):
     BATCH_PER_GPU = 20
-    CLASS_NUM = 25
+    CLASS_NUM = constant.LABEL_NUM
     EPOCH_NUM = 1
     MODEL_NAME = 'resnext-101'
     ENABLE_VALIDATION = True
@@ -81,7 +85,7 @@ def fine_tune(mode):
 
     (new_sym, new_args) = get_fine_tune_model(sym, arg_params, CLASS_NUM)
 
-    def fit(symbol, arg_params, aux_params, train, val, batch_size, GPU_NUM, fold_index):
+    def fit(symbol, arg_params, aux_params, train, val, batch_size, GPU_NUM):
         devs = [mx.gpu(i) for i in range(GPU_NUM)]
         mod = mx.mod.Module(symbol=new_sym, context=devs)
         mod.bind(data_shapes=train.provide_data, label_shapes=train.provide_label, force_rebind=True)
@@ -104,7 +108,7 @@ def fine_tune(mode):
         end_time = time.time()
         passed_minutes = int((end_time - start_time) / 60)
         print('学習完了', 'min', passed_minutes)
-        mod.save_params('temp/model_weight/{}/model_params_fold_i_{}'.format(MODEL_NAME, fold_index))
+        mod.save_params(PROJECT_ROOT + '/temp/model_weight/resnext')
 
         if ENABLE_VALIDATION:
             metric = mx.metric.Accuracy()
@@ -113,16 +117,14 @@ def fine_tune(mode):
             return None
 
     if mode == 'train':
-        for fold_i in range(0, 5):
-            print('学習します', 'fold i', fold_i)
-            batch_size = BATCH_PER_GPU * GPU_NUM
-            (train, val) = get_iterators(batch_size, fold_index=fold_i)
-            mod_score = fit(new_sym, new_args, aux_params, train, val, batch_size, GPU_NUM, fold_index=fold_i)
-            if mod_score:
-                result = list(mod_score)
-                print('result', result)
-                acc = result[0][1]
-                print('学習モデルの評価結果', acc)
+        batch_size = BATCH_PER_GPU * GPU_NUM
+        (train, val) = get_iterators(batch_size)
+        mod_score = fit(new_sym, new_args, aux_params, train, val, batch_size, GPU_NUM)
+        if mod_score:
+            result = list(mod_score)
+            print('result', result)
+            acc = result[0][1]
+            print('学習モデルの評価結果', acc)
 
     if mode == 'predict':
         for fold_i in range(5):
@@ -178,6 +180,6 @@ def average_predict():
 
 if __name__ == '__main__':
     #make_directory()
-    #fine_tune(mode='train')
-    fine_tune(mode='predict')
-    average_predict()
+    fine_tune(mode='train')
+    # fine_tune(mode='predict')
+    # average_predict()
