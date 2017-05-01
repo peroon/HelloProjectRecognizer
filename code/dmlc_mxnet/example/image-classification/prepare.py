@@ -58,7 +58,7 @@ def make_train_and_validation_lst():
         image_path_list = glob.glob(glob_path)
 
         # DEBUG
-        image_path_list = image_path_list[:20]
+        #image_path_list = image_path_list[:20]
 
         # split
         trains, validations = split_list(image_path_list, fold_index=0)
@@ -79,7 +79,7 @@ def make_train_and_validation_lst():
     write_lst(validation_lst_path, image_path_list_validation, labels_validation)
 
 
-def make_rec():
+def make_bat():
     im2rec_fullpath = os.path.abspath('../..//tools/im2rec.py')
     lst_path_list = glob.glob(lst_output_dir + '/*.lst')
 
@@ -98,5 +98,5 @@ def make_rec():
 
 
 if __name__ == '__main__':
-    # make_train_and_validation_lst()
-    make_rec()
+    make_train_and_validation_lst()
+    make_bat()

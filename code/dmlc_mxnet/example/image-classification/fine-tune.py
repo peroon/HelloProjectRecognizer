@@ -53,7 +53,7 @@ def get_iterators(batch_size, data_shape=(3, 224, 224)):
 def fine_tune(mode):
     BATCH_PER_GPU = 20
     CLASS_NUM = constant.LABEL_NUM
-    EPOCH_NUM = 1
+    EPOCH_NUM = 30
     MODEL_NAME = 'resnext-101'
     ENABLE_VALIDATION = True
     GPU_NUM = 1
@@ -127,59 +127,36 @@ def fine_tune(mode):
             print('学習モデルの評価結果', acc)
 
     if mode == 'predict':
-        for fold_i in range(5):
-            for crop_i in range(4):
-                print('予測します', 'fold i', fold_i, 'crop i', crop_i)
+        print('predictします')
+        batch_size = BATCH_PER_GPU * GPU_NUM
+        (train, val) = get_iterators(batch_size)
+        train = None
 
-                batch_size = BATCH_PER_GPU * GPU_NUM
-                test_rec_path = IMAGES_ROOT + "mxnet/test_224x224_crop_{}.rec".format(crop_i)
-                test = mx.io.ImageRecordIter(
-                    path_imgrec=test_rec_path,
-                    data_name='data',
-                    label_name='softmax_label',
-                    batch_size=batch_size,
-                    data_shape=(3, 224, 224),
-                    rand_crop=False,
-                    rand_mirror=False)
+        devs = [mx.gpu(i) for i in range(GPU_NUM)]
+        mod = mx.mod.Module(symbol=new_sym, context=devs)
+        mod.bind(data_shapes=val.provide_data, label_shapes=val.provide_label)
+        mod.init_params(initializer=mx.init.Xavier(rnd_type='gaussian', factor_type="in", magnitude=2))
+        mod.set_params(new_args, aux_params, allow_missing=True)
 
-                devs = [mx.gpu(i) for i in range(GPU_NUM)]
-                mod = mx.mod.Module(symbol=new_sym, context=devs)
-                mod.bind(data_shapes=test.provide_data, label_shapes=test.provide_label)
-                mod.init_params(initializer=mx.init.Xavier(rnd_type='gaussian', factor_type="in", magnitude=2))
-                mod.set_params(new_args, aux_params, allow_missing=True)
+        # 学習済みパラメータをロード
+        mod.load_params(PROJECT_ROOT + '/temp/model_weight/resnext')
+        output_list = mod.predict(eval_data=val, num_batch=None)
 
-                # 学習済みパラメータをロード
-                mod.load_params('temp/model_weight/{}/model_params_fold_i_{}'.format(MODEL_NAME, fold_i))
-                output_list = mod.predict(eval_data=test, num_batch=None)
+        # 予測して確率を保存
+        predicts = []
+        probabilities = output_list.asnumpy()
+        for prob in probabilities:
+            label = np.argmax(prob)
+            predicts.append(label)
+        print('labels', predicts)
 
-                # 予測して確率を保存
-                probabilities = output_list.asnumpy()
-                save_path = 'temp/predict/{}/fold_{}_crop_{}_predict.npy'.format(MODEL_NAME, fold_i, crop_i)
-                np.save(save_path, probabilities)
+        #save_path = 'temp/predict/{}/fold_{}_crop_{}_predict.npy'.format(MODEL_NAME, fold_i, crop_i)
+        #np.save(save_path, probabilities)
 
-
-def average_predict():
-    """average predictions and make a final prediction"""
-
-    # 強識別器
-    predict_path_list = glob.glob('temp/predict/resnext-101/*.npy'.format())
-
-    predict = np.load(predict_path_list[0])
-    predict_sum = np.zeros(predict.shape, dtype='float32')
-
-    for predict_path in predict_path_list:
-        predict = np.load(predict_path)
-        predict_sum += predict
-
-    with open('./temp/submit/predict_for_submit.csv', 'w') as f:
-        for i, predict in enumerate(predict_sum):
-            label = np.argmax(predict)
-            s = '{0},{1}'.format(i, label) + '\n'
-            f.write(s)
 
 
 if __name__ == '__main__':
     #make_directory()
-    fine_tune(mode='train')
-    # fine_tune(mode='predict')
+    #fine_tune(mode='train')
+    fine_tune(mode='predict')
     # average_predict()
