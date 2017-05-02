@@ -143,20 +143,55 @@ def fine_tune(mode):
         output_list = mod.predict(eval_data=val, num_batch=None)
 
         # 予測して確率を保存
-        predicts = []
+        labels = []
         probabilities = output_list.asnumpy()
         for prob in probabilities:
             label = np.argmax(prob)
-            predicts.append(label)
-        print('labels', predicts)
+            labels.append(label)
+        print('labels', labels)
 
-        #save_path = 'temp/predict/{}/fold_{}_crop_{}_predict.npy'.format(MODEL_NAME, fold_i, crop_i)
-        #np.save(save_path, probabilities)
+        save_path = PROJECT_ROOT + '/temp/predicts/validation.npy'
+        np.save(save_path, labels)
 
+        # generate viewer HTML
+        # TODO
+
+
+def evaluate_validation():
+    """evaluate validation results"""
+
+    answer_labels = get_labels_from_lst(PROJECT_ROOT + '/resources/rec_files/validation.lst')
+    predicted_labels = np.load(PROJECT_ROOT + '/temp/predicts/validation.npy')
+
+    correct_num = 0
+    incorrect_num = 0
+
+    for i in range(len(answer_labels)):
+        if answer_labels[i] == predicted_labels[i]:
+            correct_num += 1
+        else:
+            incorrect_num += 1
+
+    print('correct num', correct_num)
+    print('incorrect num', incorrect_num)
+    print('accuracy', correct_num / (correct_num + incorrect_num))
+
+
+def get_labels_from_lst(lst_path):
+    f = open(lst_path, 'r')
+    labels = []
+    for s in f:
+        s = s.strip()
+        if s != '':
+            sep = s.split()
+            label = int(sep[1])
+            labels.append(label)
+    f.close()
+    return labels
 
 
 if __name__ == '__main__':
     #make_directory()
     #fine_tune(mode='train')
-    fine_tune(mode='predict')
-    # average_predict()
+    #fine_tune(mode='predict')
+    evaluate_validation()
