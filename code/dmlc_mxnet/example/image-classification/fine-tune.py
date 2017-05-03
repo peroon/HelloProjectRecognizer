@@ -160,7 +160,8 @@ def fine_tune(mode):
 def evaluate_validation():
     """evaluate validation results"""
 
-    answer_labels = get_labels_from_lst(PROJECT_ROOT + '/resources/rec_files/validation.lst')
+    lst_path = PROJECT_ROOT + '/resources/rec_files/validation.lst'
+    answer_labels = get_labels_from_lst(lst_path)
     predicted_labels = np.load(PROJECT_ROOT + '/temp/predicts/validation.npy')
 
     correct_num = 0
@@ -175,6 +176,21 @@ def evaluate_validation():
     print('correct num', correct_num)
     print('incorrect num', incorrect_num)
     print('accuracy', correct_num / (correct_num + incorrect_num))
+
+    f = open(PROJECT_ROOT + '/temp/HTML/validation_result.html', 'w')
+    g = open(lst_path, 'r')
+    import idol
+    idol_list = idol.get_idol_list()
+    for i, s in enumerate(g):
+        spl = s.split()
+        img_path = spl[2]
+
+        if predicted_labels[i] != answer_labels[i]:
+            answer_name = idol_list[answer_labels[i]].name
+            predict_name = idol_list[predicted_labels[i]].name
+            tag = '<img src="{}"> 正解: {} 予測結果: {}\n'.format(img_path, answer_name, predict_name)
+            f.write(tag)
+
 
 
 def get_labels_from_lst(lst_path):
