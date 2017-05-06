@@ -9,11 +9,11 @@ import glob
 import os.path
 
 import data
-import name
+from constant import PROJECT_ROOT
 
 
 def detect_idols():
-    """一括で顔検出"""
+    """Face detection in batch"""
 
     idol_list = data.get_idol_list()
     idol_list = idol_list[8:]
@@ -22,13 +22,13 @@ def detect_idols():
 
 
 def detect_idol(idol, input_dir='search'):
-    """アイドル指定で顔検出"""
+    """Face detection with idle designation"""
 
     print('detector load')
     detector = dlib.get_frontal_face_detector()
 
     print(idol.name)
-    glob_path = "C:\\Users\\kt\Documents\\github_projects\\HelloProjectRecognizer\\resources\\{0}\\{1}\\*.jpg".format(input_dir, idol.directory_name)
+    glob_path = PROJECT_ROOT + "/resources/{0}/{1}/*.jpg".format(input_dir, idol.directory_name)
     image_path_list = glob.glob(glob_path)
 
     for image_path in image_path_list:
@@ -47,11 +47,11 @@ def detect_idol(idol, input_dir='search'):
             except RuntimeError:
                 print('detection failed. skip')
         except OSError:
-            print('スキップします', image_path)
+            print('[OSError] skip', image_path)
 
 
 def detect_from_video(video_path, save_dir, interval=10, image_id = 50000000):
-    """ビデオからも顔検出"""
+    """Face detection from video"""
 
     print('detector load')
     detector = dlib.get_frontal_face_detector()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Search APIで画像を集める"""
+"""Collect images using Search API"""
 
 import urllib.parse
 import urllib.request
@@ -11,6 +11,7 @@ import os.path
 from PIL import Image
 
 import data
+from constant import PROJECT_ROOT
 
 
 def get_image(search_word, save_directory, start_index=1):
@@ -51,7 +52,7 @@ def download_image(url, save_dir, image_id):
 
 
 def get_key(filename):
-    path = r"C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\secret\\" + filename
+    path = PROJECT_ROOT + "/secret/" + filename
     with open(path, 'r') as f:
         s = f.readline()
     return s

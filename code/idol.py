@@ -42,6 +42,9 @@ def get_idol(idol_id):
 
 
 def get_idol_list():
+    """
+    :rtype: list[Idol]
+    """
     idol_list = []
     for i in range(constant.LABEL_NUM):
         idol = get_idol(i)
