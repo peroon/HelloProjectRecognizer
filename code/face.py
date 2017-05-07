@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import dlib
-import pprint
 from skimage import io
 import imageio
 import glob

@@ -1,4 +1,4 @@
-# Collect Idol Face Images from Youtube
+# Collect idol face images from Youtube
 
 ## Youtube API
 
@@ -15,7 +15,7 @@
 	* Python一発で200件のリストが生成されるようにする
 
 
-## Youtube動画のダウンロード
+## Download from Youtube
 
 * https://github.com/NFicano/pytube
 * mp4 720pで落とすと、1時間ほどなのでファイルサイズは1GB
@@ -24,7 +24,6 @@
 * 5秒ごとの静止画にすると60 * 60 / 5 = 720枚 → 360MB
 * 手間が増える割にはサイズは小さくならないので、静止画ではなく、動画で管理する
 
-## Appropriate Video Size
+## Appropriate video size
 
-* If 720p is specified, 1280x720 video can be acquired and it is a sufficient size
-* 顔検出・顔認識には大きすぎる可能性がある。FaceNetではどのサイズを使っているか調べる
+* If 720p is specified, 1280x720 video can be acquired and it is sufficient.

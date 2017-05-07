@@ -16,9 +16,21 @@
     
 # How to prepare training images
 
+## Get images
+
 * Google Image Search
 * Bing Image Search
 * Youtube & Face Detection
+
+## Crop faces
+
+* refer to face.py
+* face detection using dlib
+* detected faces are placed in the candidates directory
+
+## Sort by hand
+
+* candidates are sorted by hand and placed in recognized idol directory
 
 # Classifier
 
@@ -50,14 +62,15 @@
 * API Manager
     * https://console.developers.google.com
     * You can see the number of queries remaining today
-    * Limit a day is 100 queries (little...)
+    * Limit a day is 100 queries (few...)
 * Get cx
     * https://cse.google.com/cse/all
 * Request URL example
     * https://developers.google.com/custom-search/json-api/v1/using_rest
 * Package for connection
     * requests http://docs.python-requests.org/en/master/
-    
-## Others
 
-* TODO
+# TODO
+
+* Since it is meaningless to learn almost the same face image, 
+we want to eliminate overlapping images by sorting by image similarity
