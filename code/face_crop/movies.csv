@@ -1,0 +1,4 @@
+movie_id,is_downloaded,is_face_cropped
+aaaaa,True,True
+bbbbb,True,True
+ccc,False,False
