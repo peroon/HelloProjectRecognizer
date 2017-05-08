@@ -48,11 +48,12 @@ def detect_idol(idol, input_dir='search'):
             print('[OSError] skip', image_path)
 
 
-def detect_from_video(video_path, save_dir, interval=10, image_id = 50000000):
+def detect_from_video(video_path, save_dir, interval=100, image_id = 50000000):
     """Face detection from video"""
 
     print('detector load')
     detector = dlib.get_frontal_face_detector()
+
 
     print('reader')
     reader = imageio.get_reader(video_path, 'ffmpeg')
@@ -60,7 +61,6 @@ def detect_from_video(video_path, save_dir, interval=10, image_id = 50000000):
     frame_num = reader._meta['nframes']
     print('frame num', frame_num)
 
-    #for i, img in enumerate(reader):
     for i in range(0, frame_num, interval):
         print(i, '/', frame_num)
         save_id = image_id + i
