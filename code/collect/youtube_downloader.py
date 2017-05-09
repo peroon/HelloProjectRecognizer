@@ -5,6 +5,8 @@ from pytube import exceptions
 from pprint import pprint
 import os.path
 import glob
+import pandas as pd
+
 from constant import PROJECT_ROOT
 
 
@@ -41,11 +43,14 @@ def get_already_downloaded_list():
 
 
 if __name__ == '__main__':
-    download_list_path = './youtube_download_list.txt'
-    with open(download_list_path, 'r') as f:
-       for s in f:
-           youtube_id = s.strip()
-           download(youtube_id, save_dir='../../resources/youtube/')
+    csv_path = PROJECT_ROOT + '/code/face_crop/movies.csv'
+    df = pd.read_csv(csv_path)
+    for i, row in df.iterrows():
+        if not row['is_downloaded']:
+            movie_id = row['movie_id']
+            download(youtube_id=movie_id, save_dir='../../resources/youtube/')
 
-    # if done correctly, make list empty
-    f = open(download_list_path, 'w').close()
+            # update df
+            df.loc[df.movie_id == movie_id, 'is_downloaded'] = True
+    # save
+    df.to_csv(csv_path, index=False)

@@ -5,6 +5,7 @@ from skimage import io
 import imageio
 import glob
 import os.path
+import numpy as np
 
 import data
 from constant import PROJECT_ROOT
@@ -77,13 +78,12 @@ def detect_from_video(video_path, save_dir, interval=100, image_id = 50000000):
         except RuntimeError:
             print('detection failed. skip')
 
-
 if __name__ == '__main__':
     # 一括
     #detect_idols()
 
     # 個別
-    if True:
+    if False:
         idol = data.get_tsubaki_list()[-3]
         detect_idol(idol, 'search')
 
