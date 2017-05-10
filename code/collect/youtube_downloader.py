@@ -7,8 +7,8 @@ import os.path
 import glob
 import pandas as pd
 
-from constant import PROJECT_ROOT
-
+from constant import PROJECT_ROOT, MOVIES_CSV_PATH
+import colname
 
 def download(youtube_id, save_dir, video_size='720p'):
     if os.path.exists(save_dir + youtube_id + 'mp4'):
@@ -43,14 +43,13 @@ def get_already_downloaded_list():
 
 
 if __name__ == '__main__':
-    csv_path = PROJECT_ROOT + '/code/face_crop/movies.csv'
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(MOVIES_CSV_PATH)
     for i, row in df.iterrows():
-        if not row['is_downloaded']:
-            movie_id = row['movie_id']
+        if not row[colname.is_downloaded]:
+            movie_id = row[colname.movie_id]
             download(youtube_id=movie_id, save_dir='../../resources/youtube/')
 
             # update df
-            df.loc[df.movie_id == movie_id, 'is_downloaded'] = True
+            df.loc[df.movie_id == movie_id, colname.is_downloaded] = True
     # save
-    df.to_csv(csv_path, index=False)
+    df.to_csv(MOVIES_CSV_PATH, index=False)

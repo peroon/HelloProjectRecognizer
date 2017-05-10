@@ -4,20 +4,12 @@ import dlib
 from skimage import io
 import imageio
 import glob
-import os.path
-import numpy as np
+import os
+import pandas as pd
 
 import data
-from constant import PROJECT_ROOT
-
-
-def detect_idols():
-    """Face detection in batch"""
-
-    idol_list = data.get_idol_list()
-    idol_list = idol_list[8:]
-    for idol in idol_list:
-        detect_idol(idol)
+from constant import PROJECT_ROOT, MOVIES_CSV_PATH
+import colname
 
 
 def detect_idol(idol, input_dir='search'):
@@ -78,9 +70,28 @@ def detect_from_video(video_path, save_dir, interval=100, image_id = 50000000):
         except RuntimeError:
             print('detection failed. skip')
 
+
+def face_crop_batch():
+    # read csv
+    df = pd.read_csv(MOVIES_CSV_PATH)
+
+    # not cropped only
+    for i, row in df.iterrows():
+        if not row[colname.is_face_cropped]:
+            movie_id = row[colname.movie_id]
+            print('crop this movie', movie_id)
+
+            # crop
+            # TODO
+
+            # update df
+            df.loc[df.movie_id == movie_id, colname.is_face_cropped] = True
+
+    # update csv
+    #df.to_csv(MOVIES_CSV_PATH, index=False)
+
 if __name__ == '__main__':
-    # 一括
-    #detect_idols()
+    face_crop_batch()
 
     # 個別
     if False:
