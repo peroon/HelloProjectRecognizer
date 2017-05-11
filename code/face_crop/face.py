@@ -5,7 +5,9 @@ from skimage import io
 import imageio
 import glob
 import os
+import time
 import pandas as pd
+
 
 import data
 from constant import PROJECT_ROOT, MOVIES_CSV_PATH
@@ -41,22 +43,22 @@ def detect_idol(idol, input_dir='search'):
             print('[OSError] skip', image_path)
 
 
-def detect_from_video(video_path, save_dir, interval=100, image_id = 50000000):
+def detect_from_video(video_path, save_dir, interval=100):
     """Face detection from video"""
 
-    print('detector load')
+    print('load face detector')
     detector = dlib.get_frontal_face_detector()
 
-
-    print('reader')
+    print('load mp4 reader')
     reader = imageio.get_reader(video_path, 'ffmpeg')
 
     frame_num = reader._meta['nframes']
     print('frame num', frame_num)
 
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+
     for i in range(0, frame_num, interval):
         print(i, '/', frame_num)
-        save_id = image_id + i
         img = reader.get_data(i)
 
         # detect
@@ -64,8 +66,11 @@ def detect_from_video(video_path, save_dir, interval=100, image_id = 50000000):
             detects = detector(img, 1)
             for detect_id, d in enumerate(detects):
                 cropped = img[d.top():d.bottom(), d.left():d.right()]
+
+                # confirm it is croppable and big enough
                 if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0 and d.right() - d.left() > 99:
-                    save_path = save_dir + str(save_id) + '-' + str(detect_id) + '.jpg'
+                    filename = '{}-{}-{}.jpg'.format(timestr, i, detect_id)
+                    save_path = save_dir + filename
                     io.imsave(save_path, cropped)
         except RuntimeError:
             print('detection failed. skip')
@@ -75,14 +80,22 @@ def face_crop_batch():
     # read csv
     df = pd.read_csv(MOVIES_CSV_PATH)
 
-    # not cropped only
+    # not cropped yet only
     for i, row in df.iterrows():
         if not row[colname.is_face_cropped]:
             movie_id = row[colname.movie_id]
             print('crop this movie', movie_id)
 
-            # crop
-            # TODO
+            print(row[colname.specific_idol])
+            if row[colname.specific_idol] == 'None':
+                # crop
+                video_path = PROJECT_ROOT + '/resources/youtube/{}.mp4'.format(movie_id)
+                save_dir = PROJECT_ROOT + '/resources/face/__uncategorized/'
+                interval = 10000  # temp
+                detect_from_video(video_path=video_path, save_dir=save_dir, interval=interval)
+
+            else:
+                print('undefined')
 
             # update df
             df.loc[df.movie_id == movie_id, colname.is_face_cropped] = True

@@ -15,7 +15,7 @@ def download(youtube_id, save_dir, video_size='720p'):
         print('SKIP because the video was already downloaded.')
     else:
         url = "http://www.youtube.com/watch?v={0}".format(youtube_id)
-        print('url', url)
+        print('download url:', url)
         yt = YouTube(url)
         pprint(yt.get_videos())
         yt.set_filename(youtube_id)
