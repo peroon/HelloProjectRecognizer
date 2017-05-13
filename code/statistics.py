@@ -5,7 +5,9 @@ import glob
 import data
 
 
-def list_up_file_num():
+def list_up():
+    """list up the number of images for each idle"""
+
     idol_list = data.get_idol_list()
     print('idol num', len(idol_list))
 
@@ -18,4 +20,4 @@ def list_up_file_num():
     print('jpg_num', jpg_num)
 
 if __name__ == '__main__':
-    list_up_file_num()
+    list_up()

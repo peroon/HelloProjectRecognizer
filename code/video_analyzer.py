@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-"""動画を分析して結果を返す"""
+"""Analyze video"""
 
 from image_analyzer import ImageAnalyzer
 import imageio
 import cv2
 import time
+
 
 class VideoAnalyzer():
     def __init__(self):
