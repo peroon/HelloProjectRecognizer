@@ -6,9 +6,9 @@ import imageio
 import time
 import pandas as pd
 
-import data
 from constant import PROJECT_ROOT, MOVIES_CSV_PATH
 import colname
+import idol
 
 
 def detect_from_video(video_path, save_dir, interval=100):
@@ -54,17 +54,18 @@ def face_crop_batch():
             movie_id = row[colname.movie_id]
             print('crop this movie', movie_id)
 
-            print(row[colname.specific_idol])
-            if row[colname.specific_idol] == 'None':
-                # crop
-                video_path = PROJECT_ROOT + '/resources/youtube/{}.mp4'.format(movie_id)
+            print(row[colname.specific_idol_id])
+            if row[colname.specific_idol_id] == 'None':
                 save_dir = PROJECT_ROOT + '/resources/face/__uncategorized/'
-                interval = 10000  # temp
-                detect_from_video(video_path=video_path, save_dir=save_dir, interval=interval)
-
             else:
-                # TODO
-                print('undefined')
+                idol_id = int(row[colname.specific_idol_id])
+                dir_name = idol.get_idol_directory(idol_id)
+                save_dir = PROJECT_ROOT + '/resources/face/{}/candidates/'.format(dir_name)
+
+            # execute crop
+            video_path = PROJECT_ROOT + '/resources/youtube/{}.mp4'.format(movie_id)
+            interval = 10000  # temp
+            detect_from_video(video_path=video_path, save_dir=save_dir, interval=interval)
 
             # update df
             df.loc[df.movie_id == movie_id, colname.is_face_cropped] = True

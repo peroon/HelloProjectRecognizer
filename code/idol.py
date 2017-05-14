@@ -41,6 +41,10 @@ def get_idol(idol_id):
     )
 
 
+def get_idol_directory(idol_id):
+    return get_idol(idol_id).directory_name
+
+
 def get_idol_list():
     """
     :rtype: list[Idol]

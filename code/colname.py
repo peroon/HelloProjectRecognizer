@@ -3,4 +3,4 @@
 movie_id = 'movie_id'
 is_downloaded = 'is_downloaded'
 is_face_cropped = 'is_face_cropped'
-specific_idol = 'specific_idol'
+specific_idol_id = 'specific_idol_id'
