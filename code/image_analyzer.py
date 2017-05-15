@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 
-"""画像内のどこに誰がいるか分析する"""
+"""Analyze where in the image who is."""
 
 import dlib
 import cv2
-import time
 from skimage import io
-import pprint
 import numpy as np
-
 
 from face_classifier import FaceClassifier
 import idol
 import data
 import color
-import constant
 
 
 class ImageAnalyzer():
@@ -24,7 +20,9 @@ class ImageAnalyzer():
         self.face_classifier.load_weight('../temp/model_weight/epoch_92')
 
     def analyze(self, image_path):
-        """画像を入力として、分析結果を返す"""
+
+        # TODO io.imread and cv2.imread is mixed..
+
         image = io.imread(image_path)
         image_for_draw = None
 
@@ -38,13 +36,12 @@ class ImageAnalyzer():
                 for i, d in enumerate(detects):
                     cropped = image[d.top():d.bottom(), d.left():d.right()]
 
-                    # 画面内か
                     if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0:
                         in_image = True
                     else:
                         in_image = False
 
-                    # 小さすぎる顔は除外
+                    # Exclude too small faces
                     size_threshold = 64
                     if d.right() - d.left() > size_threshold:
                         enough_size = True

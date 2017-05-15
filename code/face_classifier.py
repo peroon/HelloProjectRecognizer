@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""face classification by CNN"""
+"""face classification Keras version"""
 
 from keras.models import Model
 from keras.applications.resnet50 import ResNet50

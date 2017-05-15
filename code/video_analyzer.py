@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Analyze video"""
+"""ビデオを分析して結果をJSONに保存する"""
 
 from image_analyzer import ImageAnalyzer
 import imageio
@@ -12,16 +12,15 @@ class VideoAnalyzer():
     def __init__(self):
         self.image_analyzer = ImageAnalyzer()
 
-    def analyze(self, video_path, output_directory):
+    def analyze(self, video_path, output_directory, interval=100):
         # load video
         reader = imageio.get_reader(video_path, 'ffmpeg')
         frame_num = reader._meta['nframes']
         print('frame num', frame_num)
 
         # analyze each frame
-        interval = 100
         for i in range(0, frame_num, interval):
-            print(i)
+            print('current frame', i)
             image = reader.get_data(i)
             temp_path = '../temp/temp.jpg'
             imageio.imwrite(uri=temp_path, im=image)
