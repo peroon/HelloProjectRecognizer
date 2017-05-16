@@ -32,6 +32,12 @@
 
 * candidates are sorted by hand and placed in recognized idol directory
 
+## Eliminate by hand
+
+* Remove almost same image and blurred image
+* This prevents the number of training data from increasing unnecessarily
+* TODO: Efficiency can be improved if there is a tool to sort by image similarity
+
 # Classifier
 
 * Keras Resnet
