@@ -3,12 +3,8 @@
 """Prepare for Training"""
 
 import glob
-import cv2
 import os
-import shutil
 from collections import deque
-
-from tqdm import tqdm
 
 import data
 from constant import PROJECT_ROOT
@@ -26,16 +22,6 @@ def split_list(list_input, fold_num=5, fold_index=0):
     deq = deque(list_input)
     deq.rotate(fold_index * num_val)
     return list(deq)[:num_tra], list(deq)[num_tra:]
-
-
-def get_labels():
-    labels = []
-    with open(IMAGES_ROOT + 'clf_train_master.tsv', 'r') as f:
-        f.readline()
-        for s in f:
-            label = int(s.split()[-1])
-            labels.append(label)
-    return labels
 
 
 def write_lst(save_path, image_path_list, labels):
@@ -56,6 +42,7 @@ def make_train_and_validation_lst():
     for idol in data.get_idol_list():
         glob_path = PROJECT_ROOT + "/resources/face_224x224/{}/ok/*.jpg".format(idol.directory_name)
         image_path_list = glob.glob(glob_path)
+        image_path_list = image_path_list[:100]
 
         # DEBUG
         #image_path_list = image_path_list[:20]
