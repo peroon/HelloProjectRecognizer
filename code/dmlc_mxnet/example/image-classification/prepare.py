@@ -32,8 +32,7 @@ def write_lst(save_path, image_path_list, labels):
     f.close()
 
 
-def make_train_and_validation_lst():
-
+def train_and_validation_path_list():
     image_path_list_training = []
     image_path_list_validation = []
     labels_training = []
@@ -45,7 +44,7 @@ def make_train_and_validation_lst():
         image_path_list = image_path_list[:100]
 
         # DEBUG
-        #image_path_list = image_path_list[:20]
+        # image_path_list = image_path_list[:20]
 
         # split
         trains, validations = split_list(image_path_list, fold_index=0)
@@ -57,6 +56,11 @@ def make_train_and_validation_lst():
         image_path_list_validation += validations
         labels_training += train_labels
         labels_validation += validation_labels
+    return image_path_list_training, image_path_list_validation, labels_training, labels_validation
+
+
+def make_train_and_validation_lst():
+    image_path_list_training, image_path_list_validation, labels_training, labels_validation = train_and_validation_path_list()
 
     # save
     train_lst_path = lst_output_dir + '/training.lst'

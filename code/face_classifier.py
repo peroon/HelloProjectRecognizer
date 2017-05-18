@@ -6,10 +6,7 @@ from keras.models import Model
 from keras.applications.resnet50 import ResNet50
 from keras.layers import Dense, GlobalAveragePooling2D, Dropout
 from keras.optimizers import SGD
-from keras.callbacks import ModelCheckpoint, EarlyStopping
-
-from skimage import io
-import cv2
+from keras.callbacks import ModelCheckpoint
 import numpy as np
 
 import constant
@@ -64,8 +61,9 @@ class FaceClassifier():
             layer.trainable = True
         self.model.compile(optimizer=SGD(lr=1e-4, momentum=0.9), loss='categorical_crossentropy',
                            metrics=['accuracy'])
+
         # save model weight
-        file_path = "../temp/model_weight/epoch_{epoch:02d}"
+        file_path = "../temp/model_weight/keras/resnet/epoch_{epoch:02d}"
         check_point = ModelCheckpoint(filepath=file_path, verbose=1, save_best_only=True)
 
         # early stopping
@@ -100,13 +98,13 @@ if __name__ == '__main__':
     classifier = FaceClassifier()
 
     # 学習時
-    enable_learning = False
+    enable_learning = True
     if enable_learning:
         X_training, Y_training, X_validation, Y_validation = data.get_train_and_validation_data()
         classifier.learn(X_training, Y_training, X_validation, Y_validation)
 
     # 予測時
-    enable_predict = True
+    enable_predict = False
     if enable_predict:
         weight_path = '../temp/model_weight/epoch_92'
         classifier.load_weight(weight_path)

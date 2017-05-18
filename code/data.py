@@ -28,7 +28,7 @@ def load_image(image_path):
     return X
 
 
-def get_image_num():
+def get_all_image_num():
     idol_list = get_idol_list()
     image_num = 0
     for an_idol in idol_list:
@@ -39,46 +39,27 @@ def get_image_num():
 
 
 def get_train_and_validation_data():
-    image_num = get_image_num()
+    import prepare # to get same data as mxnet
+    image_path_list_training, image_path_list_validation, labels_training, labels_validation = prepare.train_and_validation_path_list()
 
-    validation_num_per_label = 20
-    validation_num = constant.LABEL_NUM * validation_num_per_label
-    training_num = image_num - validation_num
-
-    # 入れ物
-    X_validation = np.zeros((validation_num, constant.IMAGE_SIZE, constant.IMAGE_SIZE, 3), dtype='float32')
-    Y_validation = np.zeros((validation_num,), dtype='uint8')
+    training_num = len(image_path_list_training)
+    validation_num = len(image_path_list_validation)
 
     X_training = np.zeros((training_num, constant.IMAGE_SIZE, constant.IMAGE_SIZE, 3), dtype='float32')
     Y_training = np.zeros((training_num,), dtype='uint8')
 
-    print(X_validation.shape)
-    print(X_training.shape)
+    X_validation = np.zeros((validation_num, constant.IMAGE_SIZE, constant.IMAGE_SIZE, 3), dtype='float32')
+    Y_validation = np.zeros((validation_num,), dtype='uint8')
 
-    index_validation = 0
-    index_training = 0
+    for i in range(training_num):
+        X_training[i] = load_image(image_path_list_training[i])
+        Y_training[i] = labels_training[i]
 
-    idol_list = get_idol_list()
-    for an_idol in idol_list:
-        print(an_idol.idol_id, an_idol.name)
-        glob_path = '../resources/face_224x224/{0}/ok/*.jpg'.format(an_idol.directory_name)
-        image_path_list = glob.glob(glob_path)
+    for i in range(validation_num):
+        X_validation[i] = load_image(image_path_list_validation[i])
+        Y_validation[i] = labels_validation[i]
 
-        # 最初のX件はvalidation, 残りはtrainingへ
-        for i, image_path in enumerate(image_path_list):
-            try:
-                image = load_image(image_path)
-                if i < validation_num_per_label:
-                    X_validation[index_validation] = image
-                    Y_validation[index_validation] = an_idol.idol_id
-                    index_validation += 1
-                else:
-                    X_training[index_training] = image
-                    Y_training[index_training] = an_idol.idol_id
-                    index_training += 1
-            except IndexError:
-                print(i, image_path, index_validation, index_training)
-    # one hot
+    # one hot vector
     Y_training = np_utils.to_categorical(Y_training, constant.LABEL_NUM)
     Y_validation = np_utils.to_categorical(Y_validation, constant.LABEL_NUM)
 
@@ -109,5 +90,5 @@ def __rename_images():
         os.rename(path, save_path)
 
 if __name__ == '__main__':
-    get_train_and_validation_data()
+    # get_train_and_validation_data()
     pass
