@@ -53,7 +53,7 @@ def get_iterators(batch_size, data_shape=(3, 224, 224)):
 def fine_tune(mode):
     BATCH_PER_GPU = 20
     CLASS_NUM = constant.LABEL_NUM
-    EPOCH_NUM = 30
+    EPOCH_NUM = 100
     MODEL_NAME = 'resnext-101'
     ENABLE_VALIDATION = True
     GPU_NUM = 1
@@ -108,7 +108,7 @@ def fine_tune(mode):
         end_time = time.time()
         passed_minutes = int((end_time - start_time) / 60)
         print('学習完了', 'min', passed_minutes)
-        mod.save_params(PROJECT_ROOT + '/temp/model_weight/resnext')
+        mod.save_params(PROJECT_ROOT + '/temp/model_weight/mxnet/resnext')
 
         if ENABLE_VALIDATION:
             metric = mx.metric.Accuracy()
@@ -139,7 +139,7 @@ def fine_tune(mode):
         mod.set_params(new_args, aux_params, allow_missing=True)
 
         # 学習済みパラメータをロード
-        mod.load_params(PROJECT_ROOT + '/temp/model_weight/resnext')
+        mod.load_params(PROJECT_ROOT + '/temp/model_weight/mxnet/resnext')
         output_list = mod.predict(eval_data=val, num_batch=None)
 
         # 予測して確率を保存
@@ -208,6 +208,6 @@ def get_labels_from_lst(lst_path):
 
 if __name__ == '__main__':
     #make_directory()
-    #fine_tune(mode='train')
+    fine_tune(mode='train')
     #fine_tune(mode='predict')
-    evaluate_validation()
+    #evaluate_validation()
