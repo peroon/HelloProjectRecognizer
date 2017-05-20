@@ -202,6 +202,7 @@ def get_labels_from_lst(lst_path):
             sep = s.split()
             label = int(sep[1])
             labels.append(label)
+
     f.close()
     return labels
 
