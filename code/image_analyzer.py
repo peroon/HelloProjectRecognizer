@@ -9,8 +9,8 @@ import numpy as np
 
 from face_classifier import FaceClassifier
 import idol
-import data
 import color
+from constant import PROJECT_ROOT
 
 
 class ImageAnalyzer():
@@ -43,6 +43,8 @@ class ImageAnalyzer():
         if len(detects) == 0 or detects is None:
             return image
 
+        print('detected face num', len(detects))
+
         #image = data.load_image(image_path)  # cv2
         #image_for_draw = cv2.imread(image_path)
         image_for_draw = image.copy()
@@ -64,6 +66,7 @@ class ImageAnalyzer():
 
             if in_image and enough_size:
                 resized = cv2.resize(cropped, (224, 224))
+                cv2.imshow(str(i), resized)
                 probability = self.face_classifier.predict(resized)
                 label = np.argmax(probability)
                 probability_max = np.max(probability)
@@ -105,13 +108,19 @@ class ImageAnalyzer():
                             color=member_color,
                             lineType=cv2.LINE_AA
                             )
+
             else:
                 print('事前チェックによりスルー', in_image, enough_size)
         return image_for_draw
 
 
-if __name__ == '__main__':
+
+def __detect_and_draw_test():
     image_analyzer = ImageAnalyzer()
-    test_image_path = r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\test\cute1.jpg'
+    test_image_path = PROJECT_ROOT + '/resources/test/cute1.jpg'
     result_image = image_analyzer.analyze(test_image_path)
     cv2.imshow('windows name', result_image)
+    cv2.waitKey()
+
+if __name__ == '__main__':
+    __detect_and_draw_test()

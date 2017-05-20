@@ -8,8 +8,10 @@ from keras.layers import Dense, GlobalAveragePooling2D, Dropout
 from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint
 import numpy as np
+import glob
 
 import constant
+from constant import PROJECT_ROOT
 import data
 import idol
 import augmentation
@@ -98,24 +100,27 @@ if __name__ == '__main__':
     classifier = FaceClassifier()
 
     # 学習時
-    enable_learning = True
+    enable_learning = False
     if enable_learning:
         X_training, Y_training, X_validation, Y_validation = data.get_train_and_validation_data()
         classifier.learn(X_training, Y_training, X_validation, Y_validation)
 
     # 予測時
-    enable_predict = False
+    enable_predict = True
     if enable_predict:
-        weight_path = '../temp/model_weight/epoch_92'
+        weight_path = '../temp/model_weight/keras/resnet/epoch_95'
         classifier.load_weight(weight_path)
 
-        face_image_path = r'C:\Users\kt\Documents\github_projects\HelloProjectRecognizer\resources\face_224x224\airi-suzuki\ok\00000002-0.jpg'
-        image = data.load_image(face_image_path)
+        glob_path = PROJECT_ROOT + '/resources/face_224x224/airi-suzuki/ok/0004*.jpg'
+        image_path_list = glob.glob(glob_path)
 
-        probability = classifier.predict(image)
-        print(probability)
+        for image_path in image_path_list:
+            image = data.load_image(image_path)
 
-        label = np.argmax(probability)
-        predicted_idol = idol.get_idol(label)
-        print(predicted_idol)
+            probability = classifier.predict(image)
+            print(probability)
+
+            label = np.argmax(probability)
+            predicted_idol = idol.get_idol(label)
+            print(predicted_idol)
 
