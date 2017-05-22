@@ -113,6 +113,22 @@ class ImageAnalyzer():
                 print('事前チェックによりスルー', in_image, enough_size)
         return image_for_draw
 
+    def test(self):
+        image_path = PROJECT_ROOT + '/resources/test/cute1.jpg'
+        image = cv2.imread(image_path)
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        dets = self.face_detector(image_rgb, 1)
+        print("Number of faces detected: {}".format(len(dets)))
+        for i, d in enumerate(dets):
+            print("Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
+                i, d.left(), d.top(), d.right(), d.bottom()))
+
+        win = dlib.image_window()
+        win.clear_overlay()
+        win.set_image(image_rgb)
+        win.add_overlay(dets)
+        dlib.hit_enter_to_continue()
+
 
 
 def __detect_and_draw_test():
@@ -122,5 +138,10 @@ def __detect_and_draw_test():
     cv2.imshow('windows name', result_image)
     cv2.waitKey()
 
+
 if __name__ == '__main__':
-    __detect_and_draw_test()
+    #__detect_and_draw_test()
+
+    image_analyzer = ImageAnalyzer()
+    image_analyzer.test()
+

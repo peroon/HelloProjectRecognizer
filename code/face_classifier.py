@@ -89,6 +89,7 @@ class FaceClassifier():
         self.model.load_weights(weight_path)
 
     def predict(self, x):
+
         x = np.expand_dims(x, axis=0)
         return self.model.predict(x)
 
