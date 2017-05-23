@@ -11,7 +11,7 @@ from face_classifier import FaceClassifier
 import idol
 import color
 from constant import PROJECT_ROOT
-
+import data
 
 class ImageAnalyzer():
     def __init__(self):
@@ -20,20 +20,51 @@ class ImageAnalyzer():
         self.face_classifier.load_weight('../temp/model_weight/keras/resnet/epoch_95')
 
     def analyze(self, image_path):
-        image = io.imread(image_path)
+        """
+        :param image_path:
+        :return: detects, idol_ids
+        """
+        io_image = io.imread(image_path)
 
         # face detection
         try:
-            detects = self.face_detector(image, 1)
+            detects = self.face_detector(io_image, 1)
         except RuntimeError:
             print('detection failed. skip')
 
-        cv2_image = cv2.imread(image_path)
+        cv2_image = data.load_image(image_path)
         if detects:
-            drawn_image = self.draw_face_detection_result_to_image(detects, cv2_image)
-            return drawn_image
+            idol_ids = self.classify(detects, cv2_image)
+            return detects, idol_ids
         else:
-            cv2_image
+            return None, None
+
+    def classify(self, detects, image):
+        """classify cropped faces"""
+        idol_ids = []
+        for i, d in enumerate(detects):
+            cropped = image[d.top():d.bottom(), d.left():d.right()]
+
+            if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0:
+                in_image = True
+            else:
+                in_image = False
+
+            # Exclude small faces
+            size_threshold = 64
+            if d.right() - d.left() > size_threshold:
+                enough_size = True
+            else:
+                enough_size = False
+
+            if in_image and enough_size:
+                resized = cv2.resize(cropped, (224, 224))
+                probability = self.face_classifier.predict(resized)
+                idol_id = int(np.argmax(probability))
+                idol_ids.append(idol_id)
+            else:
+                idol_ids.append(None)
+        return idol_ids
 
     def draw_face_detection_result_to_image(self, detects, image):
         """
@@ -45,8 +76,6 @@ class ImageAnalyzer():
 
         print('detected face num', len(detects))
 
-        #image = data.load_image(image_path)  # cv2
-        #image_for_draw = cv2.imread(image_path)
         image_for_draw = image.copy()
 
         for i, d in enumerate(detects):
@@ -70,7 +99,7 @@ class ImageAnalyzer():
                 probability = self.face_classifier.predict(resized)
                 label = np.argmax(probability)
                 probability_max = np.max(probability)
-                an_idol = idol.get_idol(label)
+                an_idol = idol.get_idol(int(label))
 
                 # draw circle
                 pos0 = (d.left(), d.top())
@@ -143,5 +172,7 @@ if __name__ == '__main__':
     #__detect_and_draw_test()
 
     image_analyzer = ImageAnalyzer()
-    image_analyzer.test()
-
+    image_path = PROJECT_ROOT + '/resources/test/cute1.jpg'
+    detects, idol_ids = image_analyzer.analyze(image_path)
+    print('detects', detects)
+    print('idol_ids', idol_ids)
