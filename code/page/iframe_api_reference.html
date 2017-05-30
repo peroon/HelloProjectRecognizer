@@ -4,6 +4,12 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
 
+  <style>
+      <!--
+        .faceimage{width:32px; height:32px;}
+      -->
+  </style>
+
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
@@ -64,12 +70,17 @@
       }
     </script>
 
+    <div id="idol-0" class="seekbar" style="width:300px; height:10px; color:blue;">
+        <img src="../../resources/face_224x224/airi-suzuki/ok/00000000-0.jpg" class="faceimage">
+    </div>
+
+    <br>
+    <br>
+
     <div>
-        <button id="seek">
+        <button id="seekbars">
             seek
         </button>
-
-
     </div>
   </body>
 </html>
