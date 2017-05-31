@@ -2,13 +2,8 @@
 <html>
   <head>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="./viewer.css">
   </head>
-
-  <style>
-      <!--
-        .faceimage{width:32px; height:32px;}
-      -->
-  </style>
 
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -52,7 +47,7 @@
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
-        event.target.playVideo();
+        //event.target.playVideo();
       }
 
       // 5. The API calls this function when the player's state changes.
@@ -68,13 +63,22 @@
       function stopVideo() {
         player.stopVideo();
       }
+
+      function onClick(second){
+        console.log(second);
+        player.seekTo(second);
+      }
     </script>
 
-    <div id="idol-0" class="seekbar" style="width:300px; height:10px; color:blue;">
-        <img src="../../resources/face_224x224/airi-suzuki/ok/00000000-0.jpg" class="faceimage">
-    </div>
 
-    <br>
+    <p class="datedAside">
+        <span>
+            <a onclick="onClick(30)">
+                <img src="../../resources/face_224x224/airi-suzuki/ok/00000000-0.jpg" class="face-image round-image">
+            </a>
+        </span>
+    </p>​
+
     <br>
 
     <div>
@@ -82,5 +86,6 @@
             seek
         </button>
     </div>
+
   </body>
 </html>

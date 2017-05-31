@@ -1,0 +1,18 @@
+.face-image{
+    width:32px;
+    height:32px;
+    border-radius: 50%;
+}
+
+p {
+    background: #000;
+    height:1px;
+    margin-top: 16px;
+}
+
+p span{
+    background: #fff;
+    position:relative;
+    top: -16px;
+    left: 30%;
+}
