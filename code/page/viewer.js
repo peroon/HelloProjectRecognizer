@@ -2,6 +2,15 @@ console.log("hello js");
 var d = getUrlVars();
 console.log(d['q']);
 
+// load json
+var json_path = "../../resources/json/N0c-jH-r_lo.json";
+console.log("json");
+$.getJSON(json_path, function(obj) {
+    Object.keys(obj).forEach(function (key) {
+        console.log(obj[key]);
+    });
+});
+
 // on load
 $(function() {
     console.log( "ready!" );
