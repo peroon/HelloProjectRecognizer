@@ -11,41 +11,42 @@ $.getJSON(json_path, function(obj) {
     });
 });
 
-// on load
-$(function() {
-    console.log( "ready!" );
+// 2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
 
-    var player = $("#ytplayer");
-    var url = player.attr("src");
-    var new_url = url.replace("YOUTUBE_ID", d['q']);
-    console.log(new_url);
-    player.attr("src", new_url)
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // button event
-    $("#btn").click(function(e){
-        console.log( "btn" );
-    });
+var player;
+var width = $(window).width();
+var height = width * (390 / 640);
 
-    // player
-    var tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      var player;
-      function onYouTubeIframeAPIReady() {
-        console.log("YT ready");
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'M7lc1UVf-VE',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
+function onYouTubeIframeAPIReady() {
+player = new YT.Player('player', {
+  height: height.toString(),
+  width: width.toString(),
+  videoId: d['q'],
+  events: {
+    'onReady': onPlayerReady,
+    'onStateChange': onPlayerStateChange
+  }
 });
+}
+
+function onPlayerReady(event) {}
+
+var done = false;
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING && !done) {
+        setTimeout(stopVideo, 6000);
+        done = true;
+    }
+}
+
+function stopVideo() {
+    player.stopVideo();
+}
 
 function getUrlVars(){
     var vars = [], max = 0, hash = "", array = "";
@@ -59,3 +60,10 @@ function getUrlVars(){
     }
     return vars;
 }
+
+function onClickFaceImage(second){
+    console.log(second);
+    player.seekTo(second);
+}
+
+$("face-image").balloon();

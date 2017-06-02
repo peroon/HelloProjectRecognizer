@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>youtube viewer page</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="viewer.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Project Youtube Viewer</title>
 
-    <body>
-    <h1>Youtube Viewer</h1>
+    <link rel="stylesheet" type="text/css" href="./viewer.css">
 
-    <iframe id="ytplayer" type="text/html" width="640" height="360"
-      src="http://www.youtube.com/embed/YOUTUBE_ID?autoplay=1"
-            frameborder="0"/>
-    </iframe>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="library/jquery.balloon.min.js"></script>
 
-    <div id="seek_ui">
-        <button id="btn">seek 0</button>
-    </div>
+    <script src="viewer.js"></script>
+</head>
 
-    aaa
-    </body>
+<body>
+<div id="player"></div>
+
+<p class="datedAside">
+    <span>
+        <a onclick="onClickFaceImage(30)">
+            <img src="../../resources/face_224x224/airi-suzuki/ok/00000000-0.jpg" class="face-image round-image" title="鈴木愛理 01:23">
+        </a>
+    </span>
+</p>​
+
+</body>
 </html>
