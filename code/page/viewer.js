@@ -11,22 +11,46 @@ function getUrlVars(){
     }
     return vars;
 }
-console.log("hello jss");
 var d = getUrlVars();
-console.log(d['q']);
+console.log("q=" + d['q']);
 
 $( document ).ready(function() {
     $(".face-image").balloon();
     $('#sample1 a').balloon();
 });
 
+// util
+function zeroPadding(number, length){
+    return (Array(length).join('0') + number).slice(-length);
+}
+
 // JSON
-var json_path = "../../resources/json/N0c-jH-r_lo.json";
+//var json_path = "../../resources/json/N0c-jH-r_lo.json";
+var json_path = "../../resources/json/testbed.json";
 console.log("json");
 $.getJSON(json_path, function(obj) {
     Object.keys(obj).forEach(function (key) {
         console.log(obj[key]);
     });
+
+    // each idol
+    idol_num = 2;
+    var template = $("#template div");
+    var container = $("#container");
+    for(var i=0; i<idol_num; i++){
+        var key = i.toString();
+        frame_list = obj[key];
+        var idol_name = idol_data[i+1][2];
+        console.log(idol_name + '用のUIを追加');
+
+        var c = template.clone();
+        var face = c.find('.face-image');
+        var icon_path = face.attr('src');
+        var new_icon_path = icon_path.substring(0, icon_path.length - 8) + zeroPadding(i, 4) + '.jpg';
+        face.attr('src', new_icon_path);
+        console.log(new_icon_path);
+        c.appendTo(container);
+    }
 });
 
 // Youtube
@@ -59,7 +83,6 @@ function onPlayerStateChange(event) {
 function stopVideo() {
     player.stopVideo();
 }
-
 
 function onClickFaceImage(second){
     console.log(second);

@@ -4,15 +4,27 @@
     border-radius: 50%;
 }
 
-p {
-    background: #000;
-    height:1px;
-    margin-top: 16px;
+div.ui-container{
+    width:100%;
+    height:32px;
+    background-color:gray;
 }
 
-p span{
-    background: #fff;
+hr.ui-line{
     position:relative;
-    top: -16px;
+    top: 16px;
+    border: none;
+    background-color: #ff0000;
+}
+
+hr {
+    height: 1px;
+    background-color: #ff0000;
+    color: #ff0000;
+}
+
+span.span-face{
+    position:relative;
+    top: -10px;
     left: 30%;
 }
