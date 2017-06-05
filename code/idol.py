@@ -41,6 +41,13 @@ def get_idol(idol_id):
     )
 
 
+def directory_name_to_idol_id(directory_name):
+    idol_list = get_idol_list()
+    for idol in idol_list:
+        if idol.directory_name == directory_name:
+            return idol.idol_id
+
+
 def get_idol_directory(idol_id):
     return get_idol(idol_id).directory_name
 
