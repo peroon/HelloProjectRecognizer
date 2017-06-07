@@ -29,28 +29,42 @@ function zeroPadding(number, length){
 var json_path = "../../resources/json/testbed.json";
 console.log("json");
 $.getJSON(json_path, function(obj) {
-    Object.keys(obj).forEach(function (key) {
-        console.log(obj[key]);
-    });
+    var total_frames = obj['total_frames'];
+    console.log(total_frames);
 
     // each idol
-    idol_num = 2;
+    idol_num = 3;
     var template = $("#template div");
     var container = $("#container");
     for(var i=0; i<idol_num; i++){
         var key = i.toString();
         frame_list = obj[key];
         var idol_name = idol_data[i+1][2];
-        console.log(idol_name + '用のUIを追加');
+        console.log('Add UI bar for ' + idol_name);
 
-        var c = template.clone();
-        var face = c.find('.face-image');
+        var tc = template.clone();
+        var ui_container = tc.find('div .ui-container').prevObject;
+        console.log(ui_container);
+        var face = tc.find('.face-image');
         var icon_path = face.attr('src');
         var new_icon_path = icon_path.substring(0, icon_path.length - 8) + zeroPadding(i, 4) + '.jpg';
         face.attr('src', new_icon_path);
-        console.log(new_icon_path);
-        c.appendTo(container);
+
+        // add face icons
+        var span_face = tc.find('.span-face');
+        var lst = obj[i.toString()];
+        for(var frame of lst){
+            console.log(i, frame);
+            var percentage = 100 * frame / total_frames;
+            var sfc = span_face.clone();
+            sfc.css('left', 'calc(' + percentage + '% - 16px)');
+            sfc.appendTo(ui_container);
+        }
+        tc.appendTo(container);
     }
+
+    // delete template
+    template.remove();
 });
 
 // Youtube
