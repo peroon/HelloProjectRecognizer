@@ -15,8 +15,7 @@ class VideoAnalyzer():
     def analyze(self, video_path, interval=1000):
         # load video
         reader = imageio.get_reader(video_path, 'ffmpeg')
-        frame_num = reader._meta['nframes']
-        print('frame num', frame_num)
+        frame_num = reader.get_meta_data()['nframes']
 
         result = {}
 

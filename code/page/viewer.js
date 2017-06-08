@@ -1,4 +1,4 @@
-// URL paramter
+// URL parameter
 function getUrlVars(){
     var vars = [], max = 0, hash = "", array = "";
     var url = window.location.search;
@@ -15,7 +15,6 @@ var d = getUrlVars();
 console.log("q=" + d['q']);
 
 $( document ).ready(function() {
-
 });
 
 // util
@@ -60,6 +59,10 @@ $.getJSON(json_path, function(obj) {
             var sfc = span_face.clone();
             sfc.css('left', 'calc(' + percentage + '% - 16px)');
             sfc.appendTo(ui_container);
+
+            // update pop up info
+            var new_title = get_idol_name(i);
+            sfc.find('img').prop('title', new_title);
         }
         span_face.remove();
         tc.appendTo(container);
