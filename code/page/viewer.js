@@ -15,8 +15,7 @@ var d = getUrlVars();
 console.log("q=" + d['q']);
 
 $( document ).ready(function() {
-    $(".face-image").balloon();
-    $('#sample1 a').balloon();
+
 });
 
 // util
@@ -33,12 +32,15 @@ $.getJSON(json_path, function(obj) {
     console.log(total_frames);
 
     // each idol
-    idol_num = 3;
+    idol_num = 4;
     var template = $("#template div");
     var container = $("#container");
     for(var i=0; i<idol_num; i++){
         var key = i.toString();
         frame_list = obj[key];
+        if(frame_list.length == 0){
+            continue;
+        }
         var idol_name = idol_data[i+1][2];
         console.log('Add UI bar for ' + idol_name);
 
@@ -52,19 +54,21 @@ $.getJSON(json_path, function(obj) {
 
         // add face icons
         var span_face = tc.find('.span-face');
-        var lst = obj[i.toString()];
-        for(var frame of lst){
+        for(var frame of frame_list){
             console.log(i, frame);
             var percentage = 100 * frame / total_frames;
             var sfc = span_face.clone();
             sfc.css('left', 'calc(' + percentage + '% - 16px)');
             sfc.appendTo(ui_container);
         }
+        span_face.remove();
         tc.appendTo(container);
     }
 
     // delete template
     template.remove();
+
+    $(".face-image").balloon();
 });
 
 // Youtube
