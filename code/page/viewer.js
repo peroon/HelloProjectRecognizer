@@ -21,6 +21,11 @@ $( document ).ready(function() {
 function zeroPadding(number, length){
     return (Array(length).join('0') + number).slice(-length);
 }
+function min_sec_str(second){
+    var min = Math.floor(second / 60);
+    var sec = second - min * 60;
+    return zeroPadding(min, 2) + ':' + zeroPadding(sec, 2);
+}
 
 // JSON
 //var json_path = "../../resources/json/N0c-jH-r_lo.json";
@@ -28,6 +33,7 @@ var json_path = "../../resources/json/testbed.json";
 console.log("json");
 $.getJSON(json_path, function(obj) {
     var total_frames = obj['total_frames'];
+    var fps = obj['fps'];
     console.log(total_frames);
 
     // each idol
@@ -58,11 +64,25 @@ $.getJSON(json_path, function(obj) {
             var percentage = 100 * frame / total_frames;
             var sfc = span_face.clone();
             sfc.css('left', 'calc(' + percentage + '% - 16px)');
-            sfc.appendTo(ui_container);
+
+            var sec = Math.floor(frame / fps);
+            console.log('sec', sec);
 
             // update pop up info
-            var new_title = get_idol_name(i);
+            var new_title = get_idol_name(i) + ' ' + min_sec_str(sec);
             sfc.find('img').prop('title', new_title);
+
+            console.log('set sec', sec);
+            sfc.find('a').on('click', (function(){
+                var current = sec;
+                console.log(current);
+                return function(){
+                    console.log('a');
+                    onClickFaceImage(current);
+                }
+            })());
+
+            sfc.appendTo(ui_container);
         }
         span_face.remove();
         tc.appendTo(container);
@@ -93,7 +113,9 @@ player = new YT.Player('player', {
   }
 });
 }
-function onPlayerReady(event) {}
+function onPlayerReady(event) {
+    console.log('YT player is ready.')
+}
 var done = false;
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING && !done) {
@@ -106,6 +128,8 @@ function stopVideo() {
 }
 
 function onClickFaceImage(second){
-    console.log(second);
-    player.seekTo(second);
+    if(player != null){
+        player.seekTo(second);
+    }
+    console.log('seek to', second);
 }

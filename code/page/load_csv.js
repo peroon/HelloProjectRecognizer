@@ -17,7 +17,6 @@ function convertCSVtoArray(str){
         if(tmp[i] == ''){
             continue;
         }
-        console.log(tmp[i]);
         idol_data[i] = tmp[i].split(',');
     }
 }
