@@ -30,11 +30,10 @@ function min_sec_str(second){
 // JSON
 //var json_path = "../../resources/json/N0c-jH-r_lo.json";
 var json_path = "../../resources/json/testbed.json";
-console.log("json");
 $.getJSON(json_path, function(obj) {
     var total_frames = obj['total_frames'];
     var fps = obj['fps'];
-    console.log(total_frames);
+    console.log('total_frames', total_frames);
 
     // each idol
     idol_num = 4;
@@ -51,7 +50,6 @@ $.getJSON(json_path, function(obj) {
 
         var tc = template.clone();
         var ui_container = tc.find('div .ui-container').prevObject;
-        console.log(ui_container);
         var face = tc.find('.face-image');
         var icon_path = face.attr('src');
         var new_icon_path = icon_path.substring(0, icon_path.length - 8) + zeroPadding(i, 4) + '.jpg';
@@ -60,22 +58,18 @@ $.getJSON(json_path, function(obj) {
         // add face icons
         var span_face = tc.find('.span-face');
         for(var frame of frame_list){
-            console.log(i, frame);
             var percentage = 100 * frame / total_frames;
             var sfc = span_face.clone();
             sfc.css('left', 'calc(' + percentage + '% - 16px)');
 
             var sec = Math.floor(frame / fps);
-            console.log('sec', sec);
 
             // update pop up info
             var new_title = get_idol_name(i) + ' ' + min_sec_str(sec);
             sfc.find('img').prop('title', new_title);
 
-            console.log('set sec', sec);
             sfc.find('a').on('click', (function(){
                 var current = sec;
-                console.log(current);
                 return function(){
                     console.log('a');
                     onClickFaceImage(current);
