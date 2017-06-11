@@ -36,16 +36,30 @@ $.getJSON(json_path, function(obj) {
     console.log('total_frames', total_frames);
 
     // each idol
-    idol_num = 4;
+    idol_num = 8;
+    var groups = $("#groups");
     var template = $("#template div");
-    var container = $("#container");
+    var container = $("#container-template");
+    var containers = [];
+    var group_num = 7;
+
+    for(var i=0; i<group_num; i++){
+        var cc = container.clone();
+        cc.attr('id', 'container-group-' + i.toString());
+        cc.appendTo(groups);
+        containers.push(cc);
+        console.log('append');
+    }
+
     for(var i=0; i<idol_num; i++){
         var key = i.toString();
         frame_list = obj[key];
         if(frame_list.length == 0){
             continue;
         }
-        var idol_name = idol_data[i+1][2];
+        var idol_name = idol_data[i][2];
+        var group_id = idol_data[i][1];
+        console.log('group', group_id, 'i', idol_data[i+1]);
         console.log('Add UI bar for ' + idol_name);
 
         var tc = template.clone();
@@ -79,8 +93,9 @@ $.getJSON(json_path, function(obj) {
             sfc.appendTo(ui_container);
         }
         span_face.remove();
-        tc.appendTo(container);
+        tc.appendTo(containers[group_id]);
     }
+    container.remove();
 
     // delete template
     template.remove();

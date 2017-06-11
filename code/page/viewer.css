@@ -28,3 +28,8 @@ hr {
     background-color: #ff0000;
     color: #ff0000;
 }
+
+span.group-name{
+    border-radius: 5px;
+    background-color: yellow;
+}
