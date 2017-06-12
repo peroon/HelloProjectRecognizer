@@ -49,6 +49,9 @@ $.getJSON(json_path, function(obj) {
         cc.appendTo(groups);
         containers.push(cc);
         console.log('append');
+
+        var group_name = get_group_name(i);
+        var title = cc.find('.group-name').text(group_name);
     }
 
     for(var i=0; i<idol_num; i++){
