@@ -51,7 +51,13 @@ $.getJSON(json_path, function(obj) {
         console.log('append');
 
         var group_name = get_group_name(i);
-        var title = cc.find('.group-name').text(group_name);
+        var gn = cc.find('.group-name');
+        gn.text(group_name);
+        gn.on('click', (function(){
+            console.log('clicked');
+            //gn.next().slideToggle();
+            $('.ui-bars').slideToggle();
+        }));
     }
 
     for(var i=0; i<idol_num; i++){
@@ -96,7 +102,7 @@ $.getJSON(json_path, function(obj) {
             sfc.appendTo(ui_container);
         }
         span_face.remove();
-        tc.appendTo(containers[group_id]);
+        tc.appendTo(containers[group_id].find('.ui-bars'));
     }
     container.remove();
 
