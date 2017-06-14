@@ -36,12 +36,12 @@ $.getJSON(json_path, function(obj) {
     console.log('total_frames', total_frames);
 
     // each idol
-    idol_num = 8;
+    idol_num = 8; // 55
     var groups = $("#groups");
     var template = $("#template div");
     var container = $("#container-template");
     var containers = [];
-    var group_num = 7;
+    var group_num = 2; // 7
 
     for(var i=0; i<group_num; i++){
         var cc = container.clone();
@@ -54,10 +54,12 @@ $.getJSON(json_path, function(obj) {
         var gn = cc.find('.group-name');
         gn.text(group_name);
         gn.on('click', (function(){
-            console.log('clicked');
-            //gn.next().slideToggle();
-            $('.ui-bars').slideToggle();
-        }));
+            var nxt = gn.next();
+            return function(){
+                console.log('clicked');
+                nxt.slideToggle();
+            };
+        })());
     }
 
     for(var i=0; i<idol_num; i++){
