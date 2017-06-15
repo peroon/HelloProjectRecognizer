@@ -57,7 +57,7 @@ $.getJSON(json_path, function(obj) {
             var nxt = gn.next();
             return function(){
                 console.log('clicked');
-                nxt.slideToggle();
+                nxt.toggle();
             };
         })());
     }
