@@ -29,7 +29,7 @@ function min_sec_str(second){
 
 // JSON
 //var json_path = "../../resources/json/N0c-jH-r_lo.json";
-var json_path = "../../resources/json/testbed.json";
+var json_path = "../../resources/json/for_test/testbed.json";
 $.getJSON(json_path, function(obj) {
     var total_frames = obj['total_frames'];
     var fps = obj['fps'];
