@@ -28,20 +28,20 @@ function min_sec_str(second){
 }
 
 // JSON
-//var json_path = "../../resources/json/N0c-jH-r_lo.json";
-var json_path = "../../resources/json/for_test/testbed.json";
+var json_path = "../../resources/json/N0c-jH-r_lo.json";
+//var json_path = "../../resources/json/for_test/testbed.json";
 $.getJSON(json_path, function(obj) {
     var total_frames = obj['total_frames'];
     var fps = obj['fps'];
     console.log('total_frames', total_frames);
 
     // each idol
-    idol_num = 8; // 55
+    idol_num = 55;
     var groups = $("#groups");
     var template = $("#template div");
     var container = $("#container-template");
     var containers = [];
-    var group_num = 2; // 7
+    var group_num = 7;
 
     for(var i=0; i<group_num; i++){
         var cc = container.clone();
@@ -64,7 +64,7 @@ $.getJSON(json_path, function(obj) {
 
     for(var i=0; i<idol_num; i++){
         var key = i.toString();
-        frame_list = obj[key];
+        frame_list = obj['idols'][key];
         if(frame_list.length == 0){
             continue;
         }

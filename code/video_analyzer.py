@@ -7,6 +7,7 @@ import imageio
 import time
 import json
 
+IDOL_NUM = 55
 
 class VideoAnalyzer():
     def __init__(self):
@@ -16,18 +17,35 @@ class VideoAnalyzer():
         # load video
         reader = imageio.get_reader(video_path, 'ffmpeg')
         frame_num = reader.get_meta_data()['nframes']
+        print('frame length', frame_num)
+
+        fps = reader.get_meta_data()['fps']
+        print('fps', fps)
 
         result = {}
+        result['total_frames'] = frame_num
+        result['fps'] = fps
+
+        detected_frames_for_each_idol = {}
+        for i in range(IDOL_NUM):
+            detected_frames_for_each_idol[str(i)] = []
 
         # analyze each frame
-        for i in range(0, frame_num, interval):
-            print('current frame', i)
-            image = reader.get_data(i)
+        for f in range(0, frame_num, interval):
+            print('current frame', f)
+            image = reader.get_data(f)
             temp_path = '../temp/temp.jpg'
             imageio.imwrite(uri=temp_path, im=image)
             detects, idol_ids = self.image_analyzer.analyze(temp_path)
-            print(i, idol_ids)
-            result[i] = idol_ids
+            #print(f, idol_ids)
+            #result[f] = idol_ids
+            if idol_ids:
+                for idol_id in idol_ids:
+                    detected_frames_for_each_idol[str(idol_id)].append(f)
+
+        #for idol_id in range(IDOL_NUM):
+            #result[idol_id] = detected_frames_for_each_idol[idol_id]
+        result['idols'] = detected_frames_for_each_idol
 
         return result
 
@@ -37,7 +55,7 @@ if __name__ == '__main__':
 
     result = video_analyzer.analyze(video_path=video_path)
     json_save_path = video_path.replace('youtube', 'json').replace('mp4', 'json')
-    print('json', json_save_path)
+    print('json save to', json_save_path)
     print(result)
     with open(json_save_path, 'w') as f:
-        json.dump(result, f)
+        json.dump(result, f, indent=4, sort_keys=True, separators=(',', ': '))
