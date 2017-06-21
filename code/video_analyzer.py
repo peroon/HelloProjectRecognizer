@@ -47,7 +47,8 @@ class VideoAnalyzer():
 
 if __name__ == '__main__':
     video_analyzer = VideoAnalyzer()
-    video_path = '../resources/youtube/N0c-jH-r_lo.mp4'
+    #video_path = '../resources/youtube/N0c-jH-r_lo.mp4'
+    video_path = '../resources/youtube/__JmYt48OpY.mp4'
 
     result = video_analyzer.analyze(video_path=video_path, interval=30)
     json_save_path = video_path.replace('youtube', 'json').replace('mp4', 'json')
