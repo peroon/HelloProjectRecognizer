@@ -22,6 +22,22 @@ function loadCSV(str){
 }
 
 function onCompleteLoad(){
-    console.log(videos[0]);
-    console.log(videos[1]);
+    var ul = $('#movie_list');
+    var li = $('.li_template');
+
+    console.log(ul);
+    console.log(li);
+
+    for(var video of videos){
+        console.log('generate', video);
+        var youtube_id = video[0];
+
+        var json_path = '../../resources/json/' + youtube_id + '.json';
+        console.log(json_path);
+
+        var clone = li.clone();
+        clone.appendTo(ul);
+    }
+
+    li.remove();
 }

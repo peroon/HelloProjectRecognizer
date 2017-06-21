@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>list</title>
     <link rel="stylesheet" type="text/css" href="./list.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="load_csv.js"></script>
@@ -11,16 +12,22 @@
 </head>
 
 <body>
-<ul id="movie_list" style="list-style:none;">
-    <li class = "li_template">
-        <a href="./viewer.html?q=N0c-jH-r_lo">
-            <img class="movie_thumbnail" src="https://i.ytimg.com/vi/N0c-jH-r_lo/hqdefault.jpg">
-        </a>
+<div class="container" id="movie_list">
+    <div class="row li_template">
+        <div class="col-md-4">
+            <a href="./viewer.html?q=N0c-jH-r_lo">
+                <img class="movie_thumbnail" src="https://i.ytimg.com/vi/N0c-jH-r_lo/hqdefault.jpg">
+            </a>
+        </div>
 
-        <span class="movie_info">
-            aaaaaa
-        </span>
-    </li>
+        <div class="col-md-8 movie_info">
+            <span class="movie_title">movie title</span><br>
+            info<br>
+            info<br>
+            info<br>
+        </div>
+    </div>
 </ul>
+</div>
 </body>
 </html>

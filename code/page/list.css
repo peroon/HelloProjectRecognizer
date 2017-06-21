@@ -1,9 +1,17 @@
 img.movie_thumbnail{
-    width:400px;
+    width:300px;
 }
 
 span.movie_info{
     width:400px;
     height:400px;
     background-color: red;
+}
+
+.row{
+    margin: 1px;
+}
+
+.movie_title{
+    font-size: large;
 }
