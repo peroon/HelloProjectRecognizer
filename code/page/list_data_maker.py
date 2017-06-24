@@ -18,13 +18,24 @@ def generate():
 
             fps = data['fps']
             total_frames = data['total_frames']
-            ranking = 'TODO'
+
+            idols = data['idols']
+            # TODO
+            ranking = []
+            ranking.append('idol_name0,20%')
+            ranking.append('idol_name1,19%')
+            ranking.append('idol_name2,18%')
 
             df_row = pd.DataFrame([[youtube_id, fps, total_frames, ranking]], columns=columns)
+            print(df_row)
             df.append(df_row)
 
     print('df')
     print(df)
+
+    csv = df.to_csv()
+    print('csv')
+    print(csv)
 
 
 if __name__ == '__main__':
