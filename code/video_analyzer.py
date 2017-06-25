@@ -42,6 +42,7 @@ class VideoAnalyzer():
                         detected_frames_for_each_idol[str(idol_id)].append(f)
 
         result['idols'] = detected_frames_for_each_idol
+        result['interval'] = interval
 
         return result
 
