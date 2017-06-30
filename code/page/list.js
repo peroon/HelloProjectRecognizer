@@ -36,7 +36,7 @@ function onCompleteLoad(){
         console.log(json_path);
 
         var clone = li.clone();
-        var thumbnail_url = "https://i.ytimg.com/vi/" + youtube_id + "/hqdefault.jpg"
+        var thumbnail_url = "https://i.ytimg.com/vi/" + youtube_id + "/mqdefault.jpg"
         clone.find('.movie_thumbnail').attr('src', thumbnail_url);
         var movie_url = "./viewer.html?q=" + youtube_id;
         clone.find('.movie_url').attr('href', movie_url);
