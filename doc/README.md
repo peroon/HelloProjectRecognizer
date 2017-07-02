@@ -1,4 +1,7 @@
-# README of HTML page
+# YouTube Idol Viewer
+
+* [list view](./list.html) 
+* [single view](./viewer.html)
 
 ## Seek bar
 
@@ -17,3 +20,11 @@ python -m http.server 8000
 ```
 
 * then open in Chrome [http://localhost:8000](http://localhost:8000)
+
+## gh-pages
+
+* This viewer is served as gh-pages
+
+## Data
+
+* JSON should be put under dir directory to test locally.

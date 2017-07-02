@@ -1,4 +1,4 @@
-start "" http://localhost:8000/list.html
+start "" http://localhost:8000
 
 python -m http.server 8000
 

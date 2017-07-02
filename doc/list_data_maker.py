@@ -6,8 +6,8 @@ import numpy as np
 import idol
 
 
-def generate():
-    path_list = glob.glob('../../resources/json/*.json')
+def get_each_videos_data():
+    path_list = glob.glob('../resources/json/*.json')
     data_list = []
 
     for json_path in path_list:
@@ -57,10 +57,20 @@ def generate():
 
     print('data_list')
     print(data_list)
+    return data_list
 
-    #with open('./data/temp.json', 'w') as f:
-    with codecs.open('./data/temp.json', 'w', 'utf-8') as f:
-        json.dump(data_list, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
+def merge():
+    d = {}
+    each_videos_data = get_each_videos_data()
+    d['video_list'] = each_videos_data
+
+    # TODO
+    d['groups'] = [1,2,3,4]
+    d['idols'] = [2,3,4,5]
+
+    with codecs.open('./data/list.json', 'w', 'utf-8') as f:
+        json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
+
 
 if __name__ == '__main__':
-    generate()
+    merge()
