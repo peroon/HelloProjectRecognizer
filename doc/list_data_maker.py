@@ -6,12 +6,43 @@ import numpy as np
 import idol
 
 
+def __get_videos():
+    videos = []
+    with open('./data/videos.csv', 'r', encoding='utf8') as f:
+        lines = f.readlines()[1:]
+        for line in lines:
+            data = line.strip().split(',')
+            videos.append(data)
+    return videos
+
+
+def __get_groups():
+    groups = []
+    with open('../data/csv/groups.csv', 'r', encoding='utf8') as f:
+        f.readline()
+        for s in f:
+            group_name = s.strip().split(',')[-1]
+            groups.append(group_name)
+    return groups
+
+
+def __get_idols():
+    idols = []
+    with open('../data/csv/idols.csv', 'r', encoding='utf8') as f:
+        f.readline()
+        for s in f:
+            idol = s.strip().split(',')
+            idols.append(idol)
+    return idols
+
+
 def get_each_videos_data():
-    path_list = glob.glob('../resources/json/*.json')
+    videos = __get_videos()
     data_list = []
 
-    for json_path in path_list:
-        youtube_id = json_path.split('\\')[-1].split('.')[0]
+    for video in videos:
+        youtube_id = video[0]
+        json_path = '../resources/json/' + youtube_id + '.json'
 
         with open(json_path) as data_file:
             json_data = json.load(data_file)
@@ -59,14 +90,13 @@ def get_each_videos_data():
     print(data_list)
     return data_list
 
+
 def merge():
     d = {}
     each_videos_data = get_each_videos_data()
     d['video_list'] = each_videos_data
-
-    # TODO
-    d['groups'] = [1,2,3,4]
-    d['idols'] = [2,3,4,5]
+    d['groups'] = __get_groups()
+    d['idols'] = __get_idols()
 
     with codecs.open('./data/list.json', 'w', 'utf-8') as f:
         json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
