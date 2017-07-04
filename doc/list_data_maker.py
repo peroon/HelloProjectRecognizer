@@ -83,6 +83,8 @@ def get_each_videos_data():
             data = {}
             data['youtube_id'] = youtube_id
             data['ranking'] = ranking
+            data['title'] = video[1]
+            data['release_date'] = video[2]
 
             data_list.append(data)
 

@@ -1,27 +1,10 @@
-var csv_path = "./data/videos.csv";
-var req = new XMLHttpRequest();
-req.open("get", csv_path, true);
-req.send(null);
-req.onload = function(){
-    loadCSV(req.responseText);
-}
+var json_path = "./data/list.json";
+$.getJSON(json_path, function(d) {
+    var videos = d['video_list'];
+    drawVideos(videos);
+});
 
-var videos = [];
-function loadCSV(str){
-    var tmp = str.split("\n");
-    tmp = tmp.slice(1);
-
-    for(var i=0;i<tmp.length;++i){
-        if(tmp[i] == ''){
-            continue;
-        }
-        videos[i] = tmp[i].split(',');
-    }
-
-    onCompleteLoad();
-}
-
-function onCompleteLoad(){
+function drawVideos(videos){
     var ul = $('#movie_list');
     var li = $('.li_template');
 
@@ -30,17 +13,20 @@ function onCompleteLoad(){
 
     for(var video of videos){
         console.log('generate', video);
-        var youtube_id = video[0];
-
-        var json_path = '../../resources/json/' + youtube_id + '.json';
-        console.log(json_path);
-
+        var youtube_id = video['youtube_id'];
         var clone = li.clone();
+
+        // thumbnail
         var thumbnail_url = "https://i.ytimg.com/vi/" + youtube_id + "/mqdefault.jpg"
         clone.find('.movie_thumbnail').attr('src', thumbnail_url);
         var movie_url = "./viewer.html?q=" + youtube_id;
         clone.find('.movie_url').attr('href', movie_url);
 
+        // title
+        clone.find('.movie_title').text(video['title']);
+
+        // ranking
+        clone.find('.idol_ranking').text('aa<br>bb');
 
         clone.appendTo(ul);
     }
