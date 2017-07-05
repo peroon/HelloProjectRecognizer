@@ -26,7 +26,15 @@ function drawVideos(videos){
         clone.find('.movie_title').text(video['title']);
 
         // ranking
-        clone.find('.idol_ranking').text('aa<br>bb');
+        var ranking_ul = clone.find('.idol_ranking');
+        var ranking_data = video['ranking'];
+        ranking_ul.empty();
+        for(var i=0; i<3; i++){
+            var name = ranking_data[i]['name'];
+            var ratio = ranking_data[i]['ratio'];
+            var text = name + ' ' + ratio;
+            ranking_ul.append('<li>' + text + '</li>');
+        }
 
         clone.appendTo(ul);
     }
