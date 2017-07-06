@@ -32,7 +32,8 @@ function drawVideos(videos){
         for(var i=0; i<3; i++){
             var name = ranking_data[i]['name'];
             var ratio = ranking_data[i]['ratio'];
-            var text = name + ' ' + ratio;
+            var percentage = (ratio * 100.0).toFixed(1);
+            var text = name + ' ' + percentage + "%";
             ranking_ul.append('<li>' + text + '</li>');
         }
 
