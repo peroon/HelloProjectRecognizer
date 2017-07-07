@@ -12,9 +12,19 @@ function getUrlVars(){
     return vars;
 }
 var d = getUrlVars();
-console.log("q=" + d['q']);
+var q = d['q'];
+console.log("q", q);
 
 $( document ).ready(function() {
+});
+
+var json_path = "./data/viewer.json";
+var idols;
+var groups;
+$.getJSON(json_path, function(d) {
+    idols = d['idols'];
+    groups = d['groups'];
+    console.log(json_path, 'loaded.')
 });
 
 // util
@@ -28,9 +38,9 @@ function min_sec_str(second){
 }
 
 // JSON
-var json_path = "../../resources/json/N0c-jH-r_lo.json";
-//var json_path = "../../resources/json/for_test/testbed.json";
-$.getJSON(json_path, function(obj) {
+var video_json_path = "./json/" + q + ".json";
+$.getJSON(video_json_path, function(obj) {
+    console.log(video_json_path, 'loaded.')
     var total_frames = obj['total_frames'];
     var fps = obj['fps'];
     console.log('total_frames', total_frames);
@@ -50,7 +60,7 @@ $.getJSON(json_path, function(obj) {
         containers.push(cc);
         console.log('append');
 
-        var group_name = get_group_name(i);
+        var group_name = groups[i];
         var gn = cc.find('.group-name');
         gn.text(group_name);
         gn.on('click', (function(){
@@ -68,9 +78,9 @@ $.getJSON(json_path, function(obj) {
         if(frame_list.length == 0){
             continue;
         }
-        var idol_name = idol_data[i][2];
-        var group_id = idol_data[i][1];
-        console.log('group', group_id, 'i', idol_data[i+1]);
+        var idol_name = idols[i][2];
+        var group_id = idols[i][1];
+        console.log('group', group_id, 'i', idols[i+1]);
         console.log('Add UI bar for ' + idol_name);
 
         var tc = template.clone();
@@ -90,7 +100,7 @@ $.getJSON(json_path, function(obj) {
             var sec = Math.floor(frame / fps);
 
             // update pop up info
-            var new_title = get_idol_name(i) + ' ' + min_sec_str(sec);
+            var new_title = idols[i][2] + ' ' + min_sec_str(sec);
             sfc.find('img').prop('title', new_title);
 
             sfc.find('a').on('click', (function(){

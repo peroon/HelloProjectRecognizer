@@ -48,11 +48,11 @@ class VideoAnalyzer():
 
 if __name__ == '__main__':
     video_analyzer = VideoAnalyzer()
-    #video_path = '../resources/youtube/N0c-jH-r_lo.mp4'
-    video_path = '../resources/youtube/__JmYt48OpY.mp4'
+    youtube_id = '__JmYt48OpY'
+    video_path = '../resources/youtube/' + youtube_id + '.mp4'
 
     result = video_analyzer.analyze(video_path=video_path, interval=30)
-    json_save_path = video_path.replace('youtube', 'json').replace('mp4', 'json')
+    json_save_path = '../doc/json/' + youtube_id + '.json'
     print('json save to', json_save_path)
     print(result)
     with open(json_save_path, 'w') as f:

@@ -2,6 +2,7 @@ import glob
 import json
 import codecs
 import numpy as np
+import common
 
 import idol
 
@@ -14,26 +15,6 @@ def __get_videos():
             data = line.strip().split(',')
             videos.append(data)
     return videos
-
-
-def __get_groups():
-    groups = []
-    with open('../data/csv/groups.csv', 'r', encoding='utf8') as f:
-        f.readline()
-        for s in f:
-            group_name = s.strip().split(',')[-1]
-            groups.append(group_name)
-    return groups
-
-
-def __get_idols():
-    idols = []
-    with open('../data/csv/idols.csv', 'r', encoding='utf8') as f:
-        f.readline()
-        for s in f:
-            idol = s.strip().split(',')
-            idols.append(idol)
-    return idols
 
 
 def get_each_videos_data():
@@ -97,8 +78,8 @@ def merge():
     d = {}
     each_videos_data = get_each_videos_data()
     d['video_list'] = each_videos_data
-    d['groups'] = __get_groups()
-    d['idols'] = __get_idols()
+    d['groups'] = common.get_groups()
+    d['idols'] = common.get_idols()
 
     with codecs.open('./data/list.json', 'w', 'utf-8') as f:
         json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
