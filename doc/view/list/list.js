@@ -1,4 +1,4 @@
-var json_path = "./data/list.json";
+var json_path = "../../data/list.json";
 $.getJSON(json_path, function(d) {
     var videos = d['video_list'];
     drawVideos(videos);
@@ -19,7 +19,7 @@ function drawVideos(videos){
         // thumbnail
         var thumbnail_url = "https://i.ytimg.com/vi/" + youtube_id + "/mqdefault.jpg"
         clone.find('.movie_thumbnail').attr('src', thumbnail_url);
-        var movie_url = "./viewer.html?q=" + youtube_id;
+        var movie_url = "../viewer/viewer.html?q=" + youtube_id;
         clone.find('.movie_url').attr('href', movie_url);
 
         // title

@@ -1,6 +1,6 @@
 def get_groups():
     groups = []
-    with open('../data/csv/groups.csv', 'r', encoding='utf8') as f:
+    with open('../../../data/csv/groups.csv', 'r', encoding='utf8') as f:
         f.readline()
         for s in f:
             group_name = s.strip().split(',')[-1]
@@ -10,7 +10,7 @@ def get_groups():
 
 def get_idols():
     idols = []
-    with open('../data/csv/idols.csv', 'r', encoding='utf8') as f:
+    with open('../../../data/csv/idols.csv', 'r', encoding='utf8') as f:
         f.readline()
         for s in f:
             idol = s.strip().split(',')

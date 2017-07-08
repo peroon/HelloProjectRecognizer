@@ -9,7 +9,7 @@ import idol
 
 def __get_videos():
     videos = []
-    with open('./data/videos.csv', 'r', encoding='utf8') as f:
+    with open('../../data/videos.csv', 'r', encoding='utf8') as f:
         lines = f.readlines()[1:]
         for line in lines:
             data = line.strip().split(',')
@@ -23,7 +23,7 @@ def get_each_videos_data():
 
     for video in videos:
         youtube_id = video[0]
-        json_path = '../resources/json/' + youtube_id + '.json'
+        json_path = '../../json/' + youtube_id + '.json'
 
         with open(json_path) as data_file:
             json_data = json.load(data_file)
@@ -81,7 +81,7 @@ def merge():
     d['groups'] = common.get_groups()
     d['idols'] = common.get_idols()
 
-    with codecs.open('./data/list.json', 'w', 'utf-8') as f:
+    with codecs.open('../../data/list.json', 'w', 'utf-8') as f:
         json.dump(d, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
 
