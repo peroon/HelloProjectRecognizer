@@ -18,7 +18,7 @@ console.log("q", q);
 $( document ).ready(function() {
 });
 
-var json_path = "./data/viewer.json";
+var json_path = "../../data/viewer.json";
 var idols;
 var groups;
 $.getJSON(json_path, function(d) {
@@ -38,7 +38,7 @@ function min_sec_str(second){
 }
 
 // JSON
-var video_json_path = "./json/" + q + ".json";
+var video_json_path = "../../json/" + q + ".json";
 $.getJSON(video_json_path, function(obj) {
     console.log(video_json_path, 'loaded.')
     var total_frames = obj['total_frames'];
@@ -47,16 +47,16 @@ $.getJSON(video_json_path, function(obj) {
 
     // each idol
     idol_num = 55;
-    var groups = $("#groups");
-    var template = $("#template div");
-    var container = $("#container-template");
+    var $groups = $("#groups");
+    var $template = $("#template div");
+    var $container = $("#container-template");
     var containers = [];
     var group_num = 7;
 
     for(var i=0; i<group_num; i++){
-        var cc = container.clone();
+        var cc = $container.clone();
         cc.attr('id', 'container-group-' + i.toString());
-        cc.appendTo(groups);
+        cc.appendTo($groups);
         containers.push(cc);
         console.log('append');
 
@@ -83,7 +83,7 @@ $.getJSON(video_json_path, function(obj) {
         console.log('group', group_id, 'i', idols[i+1]);
         console.log('Add UI bar for ' + idol_name);
 
-        var tc = template.clone();
+        var tc = $template.clone();
         var ui_container = tc.find('div .ui-container').prevObject;
         var face = tc.find('.face-image');
         var icon_path = face.attr('src');
@@ -116,10 +116,10 @@ $.getJSON(video_json_path, function(obj) {
         span_face.remove();
         tc.appendTo(containers[group_id].find('.ui-bars'));
     }
-    container.remove();
+    $container.remove();
 
     // delete template
-    template.remove();
+    $template.remove();
 
     $(".face-image").balloon();
 });
