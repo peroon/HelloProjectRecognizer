@@ -1,10 +1,9 @@
 img.movie_thumbnail{
-    width:300px;
+    width:100%;
 }
 
 span.movie_info{
-    width:400px;
-    height:400px;
+    width:50%;
     background-color: red;
 }
 
