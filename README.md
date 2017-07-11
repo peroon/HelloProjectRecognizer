@@ -1,5 +1,14 @@
 # Hello! Project Recognizer
 
+# Goals
+
+* Recognize idol in video using Deep Learning
+* YouTube viewer using the result information
+
+# Viewer Demo
+
+* [list view](https://peroon.github.io/HelloProjectRecognizer/view/list/list.html) 
+
 # Official Page
 
 [Hello! Project](http://www.helloproject.com)
@@ -58,7 +67,7 @@
 
 # Environment Settings
 
-* TODO
+* same as [food classification settings](https://github.com/peroon/deepanalytics_food_classification)
 
 # How to collect training images
 ## Google Search API
@@ -79,4 +88,4 @@
 # TODO
 
 * Since it is meaningless to learn almost the same face image, 
-we want to eliminate overlapping images by sorting by image similarity
+we want to eliminate overlapped images by sorting by image similarity

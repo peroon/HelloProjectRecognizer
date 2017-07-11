@@ -1,7 +1,8 @@
 # YouTube Idol Viewer
 
-* [list view](./view/list/list.html) 
-* [single view](./view/viewer/viewer.html)
+# Viewer Demo
+
+* [list view](https://peroon.github.io/HelloProjectRecognizer/view/list/list.html) 
 
 ## Local operation check
 
@@ -11,12 +12,16 @@
 python -m http.server 8000
 ```
 
-* then open in Chrome [http://localhost:8000](http://localhost:8000)
+* then open in Chrome 
+    * [http://localhost:8000](http://localhost:8000)
+    * [http://localhost:8000/view/list/list.html](http://localhost:8000/view/list/list.html)
 
-## gh-pages
+## Host
 
-* This viewer is served as gh-pages
+* This viewer is served as Github Pages
 
 ## Data
 
-* JSON should be put under dir directory to test locally.
+* JSON should be put under docs directory
+    * to test locally, and
+    * to be readable in Github Pages
