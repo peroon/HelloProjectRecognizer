@@ -11,10 +11,15 @@ function drawVideos(videos){
     console.log(ul);
     console.log(li);
 
-    for(var video of videos){
+    for(let[index, video] of videos.entries()){
         console.log('generate', video);
         var youtube_id = video['youtube_id'];
         var clone = li.clone();
+
+        if(index % 2 == 1){
+            clone.addClass('gray-bg');
+        }
+
 
         // thumbnail
         var thumbnail_url = "https://i.ytimg.com/vi/" + youtube_id + "/mqdefault.jpg"
