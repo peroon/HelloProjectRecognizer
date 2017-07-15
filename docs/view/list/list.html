@@ -5,7 +5,6 @@
     <title>list</title>
     <link rel="stylesheet" type="text/css" href="./list.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./list.js"></script>
 </head>
@@ -13,16 +12,16 @@
 <body>
 
 <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Hello! Project Viewer</a>
+        <a class="navbar-brand" href="#">
+            Hello! Project Viewer
+        </a>
 
         <a class="nav navbar-nav navbar-right" href="../help/">
             Help
         </a>
-    </div>
 </nav>
 
-<div class="container" id="movie_list">
+<div class="container-fluid" id="movie_list">
     <div class="row li_template">
         <div class="col-xs-6">
             <a class="movie_url" href="../viewer/viewer.html?q=N0c-jH-r_lo">
@@ -37,7 +36,24 @@
             </ul>
         </div>
     </div>
-</ul>
 </div>
+
+<div style="background-color:red;">
+    <br><br><br>
+</div>
+
+<center>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+
+</center>
+
 </body>
 </html>
