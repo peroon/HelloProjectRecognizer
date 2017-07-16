@@ -1,3 +1,6 @@
+/* bootstrap */
+.navbar { margin : 0 !important; }
+
 img.movie_thumbnail{
     width:100%;
 }

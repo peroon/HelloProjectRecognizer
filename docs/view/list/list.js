@@ -20,7 +20,6 @@ function drawVideos(videos){
             clone.addClass('gray-bg');
         }
 
-
         // thumbnail
         var thumbnail_url = "https://i.ytimg.com/vi/" + youtube_id + "/mqdefault.jpg"
         clone.find('.movie_thumbnail').attr('src', thumbnail_url);
