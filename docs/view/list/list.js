@@ -16,8 +16,12 @@ function drawVideos(videos){
         var youtube_id = video['youtube_id'];
         var clone = li.clone();
 
-        if(index % 2 == 1){
-            clone.addClass('gray-bg');
+        if(index % 3 == 0){
+            clone.addClass('bg-color-0');
+        }else if(index % 3 == 1){
+            clone.addClass('bg-color-1');
+        }else{
+            clone.addClass('bg-color-2');
         }
 
         // thumbnail

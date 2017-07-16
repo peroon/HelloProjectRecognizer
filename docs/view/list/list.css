@@ -2,22 +2,29 @@
 .navbar { margin : 0 !important; }
 
 img.movie_thumbnail{
-    width:100%;
-}
-
-span.movie_info{
-    width:50%;
-    background-color: red;
-}
-
-.row{
-    margin: 1px;
+    width:105%;
 }
 
 .movie_title{
     font-size: large;
 }
 
-.gray-bg{
-    background-color: lightgray;
+.bg-black{
+    background-color:black;
+}
+
+.bg-color-0{
+    background-color: #FCFBE3;
+}
+
+.bg-color-1{
+    background-color: #FBCFCF;
+}
+
+.bg-color-2{
+    background-color: #CDBB99;
+}
+
+.left-column{
+    float: left;
 }
