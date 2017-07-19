@@ -1,17 +1,24 @@
+var page = 1
+var video_num_per_page = 2;
+var totalPage = 10;
+var videos;
 var json_path = "../../data/list.json";
 $.getJSON(json_path, function(d) {
-    var videos = d['video_list'];
-    drawVideos(videos);
+    videos = d['video_list'];
+    drawVideos();
 });
 
-function drawVideos(videos){
+function drawVideos(){
     var ul = $('#movie_list');
     var li = $('.li_template');
 
     console.log(ul);
     console.log(li);
 
-    for(let[index, video] of videos.entries()){
+    var p = page - 1;
+    var videos_subset = videos.slice(p * video_num_per_page, (p+1) * video_num_per_page);
+
+    for(let[index, video] of videos_subset.entries()){
         console.log('generate', video);
         var youtube_id = video['youtube_id'];
         var clone = li.clone();
@@ -49,4 +56,32 @@ function drawVideos(videos){
     }
 
     li.remove();
+}
+
+function onClickNext(){
+    console.log('onClickNext');
+    page += 1;
+    if(page > totalPage){
+        console.log('over');
+        page = totalPage;
+    }else{
+        drawVideos();
+        updatePage();
+    }
+}
+
+function onClickPrev(){
+    page -= 1;
+    if(page < 1){
+        console.log('over');
+        page = 1;
+    }else{
+        drawVideos();
+        updatePage();
+    }
+}
+
+function updatePage(){
+    var pageText = page.toString() + '/' + totalPage.toString();
+    $('.page-ui').text(pageText);
 }
