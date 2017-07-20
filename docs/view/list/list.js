@@ -3,17 +3,24 @@ var video_num_per_page = 2;
 var totalPage = 10;
 var videos;
 var json_path = "../../data/list.json";
+
+var ul;
+var li;
+
 $.getJSON(json_path, function(d) {
     videos = d['video_list'];
+
+    ul = $('#movie_list');
+    li = $('.li_template');
+
     drawVideos();
 });
 
 function drawVideos(){
-    var ul = $('#movie_list');
-    var li = $('.li_template');
-
     console.log(ul);
     console.log(li);
+
+    ul.empty();
 
     var p = page - 1;
     var videos_subset = videos.slice(p * video_num_per_page, (p+1) * video_num_per_page);
