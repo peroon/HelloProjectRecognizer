@@ -1,6 +1,6 @@
 var page = 1
 var video_num_per_page = 2;
-var totalPage = 10;
+var totalPage;
 var videos;
 var json_path = "../../data/list.json";
 
@@ -9,6 +9,8 @@ var li;
 
 $.getJSON(json_path, function(d) {
     videos = d['video_list'];
+    totalPage = Math.ceil(videos.length / video_num_per_page);
+    updatePage();
 
     ul = $('#movie_list');
     li = $('.li_template');
