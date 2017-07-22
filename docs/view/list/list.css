@@ -28,3 +28,12 @@ img.movie_thumbnail{
 .left-column{
     float: left;
 }
+
+.ranking-item{
+    font-size: 300%;
+}
+
+.idol_ranking{
+    background-color:red;
+    height:50%;
+}
