@@ -80,9 +80,6 @@ $.getJSON(video_json_path, function(obj) {
         }
         var idol_name = idols[i][2];
         var group_id = idols[i][1];
-        console.log('group', group_id, 'i', idols[i+1]);
-        console.log('Add UI bar for ' + idol_name);
-
         var tc = $template.clone();
         var ui_container = tc.find('div .ui-container').prevObject;
         var face = tc.find('.face-image');
@@ -123,6 +120,10 @@ $.getJSON(video_json_path, function(obj) {
 
     $(".face-image").balloon();
 });
+
+function onClickMenu(){
+    console.log('onClickMenu()');
+}
 
 // Youtube
 var tag = document.createElement('script');
