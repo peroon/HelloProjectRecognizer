@@ -121,10 +121,6 @@ $.getJSON(video_json_path, function(obj) {
     $(".face-image").balloon();
 });
 
-function onClickMenu(){
-    console.log('onClickMenu()');
-}
-
 // Youtube
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
