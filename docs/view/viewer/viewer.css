@@ -1,5 +1,11 @@
+/* bootstrap */
 .navbar { margin : 0 !important; }
 
+.modal{
+    width: 90%;
+}
+
+/* others */
 .face-image{
     width:32px;
     height:32px;
