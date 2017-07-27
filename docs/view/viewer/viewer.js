@@ -89,7 +89,7 @@ $.getJSON(video_json_path, function(obj) {
 
         // add face icons
         var span_face = tc.find('.span-face');
-        for(var frame of frame_list){
+        for(var frame of frame_list.reverse()){
             var percentage = 100 * frame / total_frames;
             var sfc = span_face.clone();
             sfc.css('left', 'calc(' + percentage + '% - 16px)');
