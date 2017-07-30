@@ -24,15 +24,16 @@ span.span-face{
     top: 0px;
 }
 
-hr.ui-line{
-    position:relative;
-    top: 16px;
+hr.seek-bar-line{
+    position:absolute;
     border: none;
-    background-color: #ff0000;
+    top: -5px;
+    width:100%;
+    height:2px;
+    background-color: black;
 }
 
-hr {
-    height: 1px;
-    background-color: #ff0000;
-    color: #ff0000;
+h1.h1-group-name{
+    margin: 0px;
+    padding: 0px 0px 0px 0px;
 }
