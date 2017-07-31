@@ -87,6 +87,10 @@ $.getJSON(video_json_path, function(obj) {
         var new_icon_path = icon_path.substring(0, icon_path.length - 8) + zeroPadding(i, 4) + '.jpg';
         face.attr('src', new_icon_path);
 
+        // color
+        var color = 'background-color:' + idols[i][4] + ';';
+        ui_container.attr('style', color);
+
         // add face icons
         var span_face = tc.find('.span-face');
         for(var frame of frame_list.reverse()){
