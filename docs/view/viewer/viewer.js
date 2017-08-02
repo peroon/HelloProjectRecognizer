@@ -89,7 +89,7 @@ $.getJSON(video_json_path, function(obj) {
         face.attr('src', new_icon_path);
 
         // color
-        var color = 'background-color:' + idols[i][4] + ';';
+        var color = 'background-color:' + idols[i][4] + '; overflow:hidden;';
         ui_container.attr('style', color);
 
         // add face icons
