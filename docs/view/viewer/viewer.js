@@ -16,6 +16,7 @@ var q = d['q'];
 console.log("q", q);
 
 $( document ).ready(function() {
+    console.log('document is ready.');
 });
 
 var json_path = "../../data/viewer.json";
@@ -133,6 +134,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 var width = $(window).width();
 var height = width * (390 / 640);
+
 function onYouTubeIframeAPIReady() {
 player = new YT.Player('player', {
   height: height.toString(),
@@ -145,7 +147,13 @@ player = new YT.Player('player', {
 });
 }
 function onPlayerReady(event) {
-    console.log('YT player is ready.')
+    console.log('YT player is ready.');
+
+    // set dummy space
+    var header_height = $("#header").height();
+    console.log('header H', header_height);
+    var $space = $("#dummyspace"); ///////////////
+    $space.height(header_height + height);
 }
 var done = false;
 function onPlayerStateChange(event) {
