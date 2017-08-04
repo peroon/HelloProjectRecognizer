@@ -108,7 +108,6 @@ $.getJSON(video_json_path, function(obj) {
             sfc.find('a').on('click', (function(){
                 var current = sec;
                 return function(){
-                    console.log('a');
                     onClickFaceImage(current);
                 }
             })());

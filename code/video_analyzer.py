@@ -6,7 +6,8 @@ from image_analyzer import ImageAnalyzer
 import imageio
 import json
 
-IDOL_NUM = 55
+import constant
+
 
 class VideoAnalyzer():
     def __init__(self):
@@ -26,7 +27,7 @@ class VideoAnalyzer():
         result['fps'] = fps
 
         detected_frames_for_each_idol = {}
-        for i in range(IDOL_NUM):
+        for i in range(constant.LABEL_NUM):
             detected_frames_for_each_idol[str(i)] = []
 
         # analyze each frame
@@ -48,11 +49,11 @@ class VideoAnalyzer():
 
 if __name__ == '__main__':
     video_analyzer = VideoAnalyzer()
-    youtube_id = '__JmYt48OpY'
+    youtube_id = '0EwG_EJ7Aaw'
     video_path = '../resources/youtube/' + youtube_id + '.mp4'
 
     result = video_analyzer.analyze(video_path=video_path, interval=30)
-    json_save_path = '../doc/json/' + youtube_id + '.json'
+    json_save_path = '../docs/json/' + youtube_id + '.json'
     print('json save to', json_save_path)
     print(result)
     with open(json_save_path, 'w') as f:
