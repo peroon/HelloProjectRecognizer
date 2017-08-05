@@ -6,9 +6,6 @@ import urllib.parse
 import urllib.request
 import requests
 import json
-import pprint
-import os.path
-from PIL import Image
 
 import data
 from constant import PROJECT_ROOT
