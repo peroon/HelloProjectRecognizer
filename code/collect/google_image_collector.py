@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Collect images using Search API"""
+""" Collect images using Search API """
 
 import urllib.parse
 import urllib.request
@@ -8,12 +8,12 @@ import requests
 import json
 
 import data
-from constant import PROJECT_ROOT
+import google_api
 
 
 def get_image(search_word, save_directory, start_index=1):
     api_key = get_api_key()
-    cx = get_cx()
+    cx = google_api.get_cx()
     q = urllib.parse.quote(search_word)
     print('q', q)
     url = "https://www.googleapis.com/customsearch/v1?key={0}" \
@@ -46,21 +46,6 @@ def download_image(url, save_dir, image_id):
             print('DL error. so skip')
     else:
         print('skip')
-
-
-def get_key(filename):
-    path = PROJECT_ROOT + "/secret/" + filename
-    with open(path, 'r') as f:
-        s = f.readline()
-    return s
-
-
-def get_api_key():
-    return get_key('google_search_api_key')
-
-
-def get_cx():
-    return get_key('google_cx')
 
 
 if __name__ == '__main__':
