@@ -8,8 +8,10 @@ import dateutil.parser
 import codecs
 
 import google_api
+import constant
 
-cache_path = '../data/json/youtube_info_cache.json'
+
+cache_path = constant.PROJECT_ROOT + '/data/json/youtube_info_cache.json'
 
 class VideoInfo:
     def __init__(self, id, title, published_at):
