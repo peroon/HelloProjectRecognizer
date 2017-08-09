@@ -2,19 +2,41 @@ import glob
 import json
 import codecs
 import numpy as np
+import os.path
+
 import common
-
 import idol
-
+import constant
+import youtube_api
 
 def __get_videos():
-    videos = []
-    with open('../../data/videos.csv', 'r', encoding='utf8') as f:
-        lines = f.readlines()[1:]
-        for line in lines:
-            data = line.strip().split(',')
-            videos.append(data)
-    return videos
+    # id list
+    glob_path = constant.PROJECT_ROOT + '/docs/json/*.json'
+    id_list = []
+    for json_path in glob.glob(glob_path):
+        youtube_id = os.path.basename(json_path).split('.')[0]
+        id_list.append(youtube_id)
+
+    # video info list
+    video_info_list = []
+    for youtube_id in id_list:
+        video_info = youtube_api.get_video_info(youtube_id)
+        print(video_info)
+        video_info_list.append(video_info)
+        # sort by latest
+        # TODO
+
+
+    print(video_info_list)
+
+
+    # videos = []
+    # with open('../../data/videos.csv', 'r', encoding='utf8') as f:
+    #     lines = f.readlines()[1:]
+    #     for line in lines:
+    #         data = line.strip().split(',')
+    #         videos.append(data)
+    # return videos
 
 
 def get_each_videos_data():
@@ -86,4 +108,5 @@ def merge():
 
 
 if __name__ == '__main__':
-    merge()
+    #merge()
+    __get_videos()

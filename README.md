@@ -84,8 +84,14 @@
     * https://developers.google.com/custom-search/json-api/v1/using_rest
 * Package for connection
     * requests http://docs.python-requests.org/en/master/
+    
+# How to add a video to list
+
+* Run code/video_analyzer.py after assign youtube id
+* Run docs/
 
 # TODO
 
 * Since it is meaningless to learn almost the same face image, 
 we want to eliminate overlapped images by sorting by image similarity
+* Make READMEs ogranized
