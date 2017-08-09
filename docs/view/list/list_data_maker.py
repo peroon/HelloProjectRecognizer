@@ -10,6 +10,9 @@ import constant
 import youtube_api
 
 def __get_videos():
+    """
+    :rtype: list of youtube_api.VideoInfo
+    """
     # id list
     glob_path = constant.PROJECT_ROOT + '/docs/json/*.json'
     id_list = []
@@ -23,29 +26,18 @@ def __get_videos():
         video_info = youtube_api.get_video_info(youtube_id)
         print(video_info)
         video_info_list.append(video_info)
-        # sort by latest
-        # TODO
 
-
-    print(video_info_list)
-
-
-    # videos = []
-    # with open('../../data/videos.csv', 'r', encoding='utf8') as f:
-    #     lines = f.readlines()[1:]
-    #     for line in lines:
-    #         data = line.strip().split(',')
-    #         videos.append(data)
-    # return videos
+    # sort by latest
+    video_info_list.sort(key=lambda x: x.published_at)
+    return video_info_list
 
 
 def get_each_videos_data():
     videos = __get_videos()
     data_list = []
 
-    for video in videos:
-        youtube_id = video[0]
-        json_path = '../../json/' + youtube_id + '.json'
+    for videoInfo in videos:
+        json_path = '../../json/' + videoInfo.id + '.json'
 
         with open(json_path) as data_file:
             json_data = json.load(data_file)
@@ -84,10 +76,10 @@ def get_each_videos_data():
                 ranking.append(d)
 
             data = {}
-            data['youtube_id'] = youtube_id
+            data['youtube_id'] = videoInfo.id
             data['ranking'] = ranking
-            data['title'] = video[1]
-            data['release_date'] = video[2]
+            data['title'] = videoInfo.title
+            data['release_date'] = videoInfo.published_at
 
             data_list.append(data)
 
@@ -99,6 +91,7 @@ def get_each_videos_data():
 def merge():
     d = {}
     each_videos_data = get_each_videos_data()
+    print(each_videos_data)
     d['video_list'] = each_videos_data
     d['groups'] = common.get_groups()
     d['idols'] = common.get_idols()
@@ -108,5 +101,5 @@ def merge():
 
 
 if __name__ == '__main__':
-    #merge()
-    __get_videos()
+    merge()
+    #__get_videos()
