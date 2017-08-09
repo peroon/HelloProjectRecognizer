@@ -49,7 +49,7 @@ class VideoAnalyzer():
 
 if __name__ == '__main__':
     video_analyzer = VideoAnalyzer()
-    youtube_id = '0EwG_EJ7Aaw'
+    youtube_id = '3PzC8uYb3Kk'
     video_path = '../resources/youtube/' + youtube_id + '.mp4'
 
     result = video_analyzer.analyze(video_path=video_path, interval=30)
