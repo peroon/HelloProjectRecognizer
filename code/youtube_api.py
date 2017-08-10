@@ -73,6 +73,7 @@ def get_video_info(video_id):
               '&fields=items(id,snippet(title,publishedAt))&part=snippet,contentDetails,statistics'
         r = requests.get(url)
         json_obj = json.loads(r.text)
+        print(video_id, json_obj)
         item = json_obj['items'][0]
         id = item['id']
         title = item['snippet']['title']
@@ -83,7 +84,7 @@ def get_video_info(video_id):
 
 
 if __name__ == '__main__':
-    video_id = 'N0c-jH-r_lo'
+    video_id = '4eDwWQindJo'
     #info = get_video_info(video_id)
     #print(info)
 

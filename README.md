@@ -87,8 +87,9 @@
     
 # How to add a video to list
 
+* Download mp4 by running code/collect/youtube_downloader.py
 * Run code/video_analyzer.py after assign youtube id
-* Run docs/
+* Run docs\view\list\list_data_maker.py
 
 # TODO
 
