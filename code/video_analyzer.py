@@ -7,7 +7,7 @@ import imageio
 import json
 
 import constant
-
+import youtube_api
 
 class VideoAnalyzer():
     def __init__(self):
@@ -33,14 +33,17 @@ class VideoAnalyzer():
         # analyze each frame
         for f in range(0, frame_num, interval):
             print('current frame', f, '/', frame_num)
-            image = reader.get_data(f)
-            temp_path = '../temp/temp.jpg'
-            imageio.imwrite(uri=temp_path, im=image)
-            detects, idol_ids = self.image_analyzer.analyze(temp_path)
-            if idol_ids:
-                for idol_id in idol_ids:
-                    if idol_id:
-                        detected_frames_for_each_idol[str(idol_id)].append(f)
+            try:
+                image = reader.get_data(f)
+                temp_path = '../temp/temp.jpg'
+                imageio.imwrite(uri=temp_path, im=image)
+                detects, idol_ids = self.image_analyzer.analyze(temp_path)
+                if idol_ids:
+                    for idol_id in idol_ids:
+                        if idol_id:
+                            detected_frames_for_each_idol[str(idol_id)].append(f)
+            except imageio.core.format.CannotReadFrameError:
+                print('[ERROR]unreadable frame', f)
 
         result['idols'] = detected_frames_for_each_idol
         result['interval'] = interval
@@ -48,8 +51,20 @@ class VideoAnalyzer():
         return result
 
 if __name__ == '__main__':
+    # Suppressing GPU errors
+    import tensorflow as tf
+    from keras.backend.tensorflow_backend import set_session
+    config = tf.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.5
+    set_session(tf.Session(config=config))
+
     video_analyzer = VideoAnalyzer()
-    youtube_id = '3PzC8uYb3Kk'
+    youtube_id = '4eDwWQindJo'
+
+    # check if it is published now
+    #info = youtube_api.get_video_info(youtube_id)
+    # TODO
+
     video_path = '../resources/youtube/' + youtube_id + '.mp4'
 
     result = video_analyzer.analyze(video_path=video_path, interval=30)
