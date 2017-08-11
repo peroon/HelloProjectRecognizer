@@ -59,7 +59,7 @@ if __name__ == '__main__':
     set_session(tf.Session(config=config))
 
     video_analyzer = VideoAnalyzer()
-    youtube_id = '4eDwWQindJo'
+    youtube_id = '4lfwRLsk_Vs'
 
     # check if it is published now
     #info = youtube_api.get_video_info(youtube_id)
