@@ -82,8 +82,6 @@
     * https://cse.google.com/cse/all
 * Request URL example
     * https://developers.google.com/custom-search/json-api/v1/using_rest
-* Package for connection
-    * requests http://docs.python-requests.org/en/master/
     
 # How to add a video to list
 
