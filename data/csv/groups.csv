@@ -1,8 +1,8 @@
-group_id,group_name
-0,℃-ute
-1,Morning Musume '17
-2,Angerme
-3,Juice=Juice
-4,Country Girls
-5,Kobushi Factory
-6,Tsubaki factory
+group_id,group_name,group_name_ja
+0,℃-ute,℃-ute
+1,Morning Musume '17,モーニング娘。'17
+2,Angerme,アンジュルム
+3,Juice=Juice,Juice=Juice
+4,Country Girls,カントリー・ガールズ
+5,Kobushi Factory,こぶしファクトリー
+6,Tsubaki factory,つばきファクトリー

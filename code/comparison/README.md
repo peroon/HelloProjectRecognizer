@@ -6,9 +6,9 @@ we need to compare which is superior.
 
 # Comparison method
 
-* The number of each idle image is assumed to be the same
-* 80% of images for Training
-* 20% of images for Test (validation omitted)
+* The number of each idol image is assumed to be the same
+* 80% images for Training
+* 20% images for Test (validation omitted)
 
 # Keras result
 
