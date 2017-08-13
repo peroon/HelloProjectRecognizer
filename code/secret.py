@@ -9,4 +9,5 @@ def get_key(file_name):
 
 
 if __name__ == '__main__':
+    # test
     print(get_key('bing_api_key'))

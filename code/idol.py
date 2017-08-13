@@ -6,7 +6,7 @@ import os
 import constant
 
 
-class Idol():
+class Idol:
     def __init__(self, idol_id, group_id, name, directory_name, member_color):
         self.idol_id = idol_id
         self.group_id = group_id
@@ -42,10 +42,11 @@ def get_idol(idol_id):
 
 
 def directory_name_to_idol_id(directory_name):
+    # e.g. yajima-maimi => 1
     idol_list = get_idol_list()
-    for idol in idol_list:
-        if idol.directory_name == directory_name:
-            return idol.idol_id
+    for an_idol in idol_list:
+        if an_idol.directory_name == directory_name:
+            return an_idol.idol_id
 
 
 def get_idol_directory(idol_id):
@@ -58,8 +59,8 @@ def get_idol_list():
     """
     idol_list = []
     for i in range(constant.LABEL_NUM):
-        idol = get_idol(i)
-        idol_list.append(idol)
+        an_idol = get_idol(i)
+        idol_list.append(an_idol)
     return idol_list
 
 

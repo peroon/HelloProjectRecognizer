@@ -1,5 +1,8 @@
 # RGB
 def color_code_to_rbg_tuple(color_code):
+    """
+    e.g. "#FF0000" => (255, 0, 0)
+    """
     code_r = color_code[1:3]
     code_g = color_code[3:5]
     code_b = color_code[5:7]

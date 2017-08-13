@@ -59,9 +59,9 @@ def get_each_videos_data():
             temp = arr.argsort()
 
             ranking_index = []
-            ranking_index.append(temp[-1]) #1st
-            ranking_index.append(temp[-2]) #2nd
-            ranking_index.append(temp[-3]) #3rd
+            ranking_index.append(temp[-1])  # 1st
+            ranking_index.append(temp[-2])  # 2nd
+            ranking_index.append(temp[-3])  # 3rd
             ranking = []
 
             for idol_id in ranking_index:

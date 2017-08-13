@@ -10,13 +10,11 @@ def get_generator():
         featurewise_std_normalization=False,  # divide inputs by std of the dataset
         samplewise_std_normalization=False,  # divide each input by its std
         zca_whitening=False,  # apply ZCA whitening
-        rotation_range=0,  # 回転角度範囲 (degrees, 0 to 180)
-
+        rotation_range=0,  # degrees, 0 to 180
         zoom_range=0.2,
         shear_range=0.2,
-
         width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
         height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
-        horizontal_flip=True,  # 横反転
-        vertical_flip=False)  # 縦反転
+        horizontal_flip=True,
+        vertical_flip=False)
     return datagen
