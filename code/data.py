@@ -4,12 +4,10 @@ import os
 import glob
 import numpy as np
 import cv2
-
 from keras.utils import np_utils
 
-import idol
-from idol import Idol
 import constant
+import idol
 
 
 def load_image(image_path):
@@ -18,6 +16,7 @@ def load_image(image_path):
     X = cv2.imread(image_path)
     X = cv2.cvtColor(X, cv2.COLOR_BGR2RGB)
     X = X.astype('float32')
+
     # 'RGB'->'BGR'
     X = X[:, :, ::-1]
 
@@ -29,7 +28,7 @@ def load_image(image_path):
 
 
 def get_all_image_num():
-    idol_list = get_idol_list()
+    idol_list = idol.get_idols()
     image_num = 0
     for an_idol in idol_list:
         glob_path = '../resources/face_224x224/{0}/ok/*.jpg'.format(an_idol.directory_name)
@@ -66,15 +65,8 @@ def get_train_and_validation_data():
     return X_training, Y_training, X_validation, Y_validation
 
 
-def get_idol_list():
-    idol_list = []
-    for i in range(constant.LABEL_NUM):
-        idol_list.append(idol.get_idol(i))
-    return idol_list
-
-
 def __make_directory():
-    idol_list = get_idol_list()
+    idol_list = idol.get_idols()
     for idol in idol_list:
         dir_path = '../resources/youtube/' + idol.directory_name
         os.mkdir(dir_path)

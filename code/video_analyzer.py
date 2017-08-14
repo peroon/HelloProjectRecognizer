@@ -9,6 +9,7 @@ import json
 import constant
 import youtube_api
 
+
 class VideoAnalyzer():
     def __init__(self):
         self.image_analyzer = ImageAnalyzer()

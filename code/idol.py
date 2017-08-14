@@ -43,7 +43,7 @@ def get_idol(idol_id):
 
 def directory_name_to_idol_id(directory_name):
     # e.g. yajima-maimi => 1
-    idol_list = get_idol_list()
+    idol_list = get_idols()
     for an_idol in idol_list:
         if an_idol.directory_name == directory_name:
             return an_idol.idol_id
@@ -53,7 +53,7 @@ def get_idol_directory(idol_id):
     return get_idol(idol_id).directory_name
 
 
-def get_idol_list():
+def get_idols():
     """
     :rtype: list[Idol]
     """
@@ -62,6 +62,16 @@ def get_idol_list():
         an_idol = get_idol(i)
         idol_list.append(an_idol)
     return idol_list
+
+
+def get_groups():
+    groups = []
+    with open(constant.PROJECT_ROOT + '/data/csv/groups.csv', 'r', encoding='utf8') as f:
+        f.readline()
+        for s in f:
+            group_name = s.strip().split(',')[-1]
+            groups.append(group_name)
+    return groups
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 import os
 
+"Read secret text file e.g. API key"
+
 
 def get_key(file_name):
     path = os.path.dirname(__file__) + r'/../secret/' + file_name

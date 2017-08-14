@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Get YouTube info e.g. Title, etc"""
+
 # https://github.com/youtube/api-samples/tree/master/python
 
 import requests

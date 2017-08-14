@@ -18,6 +18,9 @@ def color_code_to_bgr_tuple(color_code):
     return rgb[2], rgb[1], rgb[0]
 
 
-if __name__ == '__main__':
+def test():
     col = color_code_to_rbg_tuple("#FF0000")
     print(col)
+
+if __name__ == '__main__':
+    test()

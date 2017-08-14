@@ -2,13 +2,12 @@
 
 import glob
 
-import data
-
+from idol import get_idols
 
 def list_up():
     """list up the number of images for each idle"""
 
-    idol_list = data.get_idol_list()
+    idol_list = get_idols()
     print('idol num', len(idol_list))
 
     num_list = []
@@ -31,4 +30,5 @@ def list_up():
 
 
 if __name__ == '__main__':
+    # test
     list_up()
