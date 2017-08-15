@@ -19,6 +19,13 @@ import augmentation
 
 class FaceClassifier():
     def __init__(self):
+        # Suppressing GPU errors
+        import tensorflow as tf
+        from keras.backend.tensorflow_backend import set_session
+        config = tf.ConfigProto()
+        config.gpu_options.per_process_gpu_memory_fraction = 0.5
+        set_session(tf.Session(config=config))
+
         self.model, self.base_model = self.__get_model()
 
     def __get_model(self):
@@ -89,7 +96,6 @@ class FaceClassifier():
         self.model.load_weights(weight_path)
 
     def predict(self, x):
-
         x = np.expand_dims(x, axis=0)
         return self.model.predict(x)
 
@@ -98,29 +104,26 @@ class FaceClassifier():
         return np.argmax(probability)
 
 if __name__ == '__main__':
-    classifier = FaceClassifier()
+    face_classifier = FaceClassifier()
 
-    # 学習時
+    # learning
     enable_learning = False
     if enable_learning:
         X_training, Y_training, X_validation, Y_validation = data.get_train_and_validation_data()
-        classifier.learn(X_training, Y_training, X_validation, Y_validation)
+        face_classifier.learn(X_training, Y_training, X_validation, Y_validation)
 
-    # 予測時
+    # prediction
     enable_predict = True
     if enable_predict:
         weight_path = '../temp/model_weight/keras/resnet/epoch_95'
-        classifier.load_weight(weight_path)
+        face_classifier.load_weight(weight_path)
 
         glob_path = PROJECT_ROOT + '/resources/face_224x224/airi-suzuki/ok/0004*.jpg'
         image_path_list = glob.glob(glob_path)
 
         for image_path in image_path_list:
             image = data.load_image(image_path)
-
-            probability = classifier.predict(image)
-            print(probability)
-
+            probability = face_classifier.predict(image)
             label = np.argmax(probability)
             predicted_idol = idol.get_idol(label)
             print(predicted_idol)

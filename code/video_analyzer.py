@@ -52,13 +52,6 @@ class VideoAnalyzer():
         return result
 
 if __name__ == '__main__':
-    # Suppressing GPU errors
-    import tensorflow as tf
-    from keras.backend.tensorflow_backend import set_session
-    config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.5
-    set_session(tf.Session(config=config))
-
     video_analyzer = VideoAnalyzer()
     youtube_id = '4lfwRLsk_Vs'
 
