@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
+"""Get face images for training"""
+
 import dlib
 from skimage import io
 import imageio
 import time
 import pandas as pd
+import glob
 
-from constant import PROJECT_ROOT, MOVIES_CSV_PATH
+from constant import PROJECT_ROOT, RESOURCES_ROOT, MOVIES_CSV_PATH
 import colname
 import idol
 
@@ -73,5 +76,19 @@ def face_crop_batch():
     # update csv
     #df.to_csv(MOVIES_CSV_PATH, index=False)
 
+def extract_faces_from_youtube_video(youtube_id):
+    print('TODO')
+
+def __get_youtube_id_list():
+    path_list = glob.glob(RESOURCES_ROOT + '/youtube/*.mp4')
+    id_list = ['aaa']
+    return id_list
+    # TODO
+
 if __name__ == '__main__':
-    face_crop_batch()
+    id_list = __get_youtube_id_list()
+    print(id_list)
+
+    #face_crop_batch()
+    youtube_id = id_list[0]
+    extract_faces_from_youtube_video(youtube_id)

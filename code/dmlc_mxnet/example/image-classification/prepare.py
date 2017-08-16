@@ -86,8 +86,6 @@ def make_bat():
     print(lst_output_dir)
 
 
-
-
 if __name__ == '__main__':
     make_train_and_validation_lst()
     make_bat()
