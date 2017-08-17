@@ -8,6 +8,7 @@ import imageio
 import time
 import pandas as pd
 import glob
+import os.path
 
 from constant import PROJECT_ROOT, RESOURCES_ROOT, MOVIES_CSV_PATH
 import colname
@@ -76,19 +77,35 @@ def face_crop_batch():
     # update csv
     #df.to_csv(MOVIES_CSV_PATH, index=False)
 
+
 def extract_faces_from_youtube_video(youtube_id):
-    print('TODO')
+    print('youtube id : ', youtube_id)
+    # makedir
+    dir_path = RESOURCES_ROOT + '/youtube_faces/'+ youtube_id
+    if not os.path.exists(dir_path):
+        os.mkdir(dir_path)
+    # extract
+    detect_from_video(
+        video_path=RESOURCES_ROOT + '/youtube/' + youtube_id + '.mp4',
+        save_dir=dir_path + '/',
+        interval=1000
+    )
+
 
 def __get_youtube_id_list():
     path_list = glob.glob(RESOURCES_ROOT + '/youtube/*.mp4')
-    id_list = ['aaa']
+    id_list = []
+    for path in path_list:
+        base = os.path.basename(path)
+        youtube_id = os.path.splitext(base)[0]
+        id_list.append(youtube_id)
+    id_list.sort()
     return id_list
-    # TODO
 
 if __name__ == '__main__':
     id_list = __get_youtube_id_list()
     print(id_list)
 
-    #face_crop_batch()
+    # test
     youtube_id = id_list[0]
     extract_faces_from_youtube_video(youtube_id)
