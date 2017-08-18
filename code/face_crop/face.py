@@ -27,11 +27,12 @@ def detect_from_video(video_path, save_dir, interval=100):
     frame_num = reader._meta['nframes']
     print('frame num', frame_num)
 
-    timestr = time.strftime("%Y%m%d-%H%M%S")
+    youtube_id = path_to_youtube_id(video_path)
+    print('youtube id', youtube_id)
 
-    for i in range(0, frame_num, interval):
-        print(i, '/', frame_num)
-        img = reader.get_data(i)
+    for frame in range(0, frame_num, interval):
+        print(frame, '/', frame_num)
+        img = reader.get_data(frame)
 
         # detect
         try:
@@ -41,7 +42,7 @@ def detect_from_video(video_path, save_dir, interval=100):
 
                 # confirm it is croppable and big enough
                 if d.right() > 0 and d.left() > 0 and d.top() > 0 and d.bottom() > 0 and d.right() - d.left() > 99:
-                    filename = '{}-{}-{}.jpg'.format(timestr, i, detect_id)
+                    filename = 'youtube_id_{}_frame_{}_detect_index_{}.jpg'.format(youtube_id, frame, detect_id)
                     save_path = save_dir + filename
                     io.imsave(save_path, cropped)
         except RuntimeError:
@@ -67,7 +68,7 @@ def face_crop_batch():
                 save_dir = PROJECT_ROOT + '/resources/face/{}/candidates/'.format(dir_name)
 
             # execute crop
-            video_path = PROJECT_ROOT + '/resources/youtube/{}.mp4'.format(movie_id)
+            video_path = youtube_id_to_path(movie_id)
             interval = 10000  # temp
             detect_from_video(video_path=video_path, save_dir=save_dir, interval=interval)
 
@@ -78,6 +79,15 @@ def face_crop_batch():
     #df.to_csv(MOVIES_CSV_PATH, index=False)
 
 
+def youtube_id_to_path(youtube_id):
+    return RESOURCES_ROOT + '/youtube/' + youtube_id + '.mp4'
+
+
+def path_to_youtube_id(path):
+    base = os.path.basename(path)
+    return os.path.splitext(base)[0]
+
+
 def extract_faces_from_youtube_video(youtube_id):
     print('youtube id : ', youtube_id)
     # makedir
@@ -86,7 +96,7 @@ def extract_faces_from_youtube_video(youtube_id):
         os.mkdir(dir_path)
     # extract
     detect_from_video(
-        video_path=RESOURCES_ROOT + '/youtube/' + youtube_id + '.mp4',
+        video_path=youtube_id_to_path(youtube_id),
         save_dir=dir_path + '/',
         interval=1000
     )
@@ -96,9 +106,7 @@ def __get_youtube_id_list():
     path_list = glob.glob(RESOURCES_ROOT + '/youtube/*.mp4')
     id_list = []
     for path in path_list:
-        base = os.path.basename(path)
-        youtube_id = os.path.splitext(base)[0]
-        id_list.append(youtube_id)
+        id_list.append(path_to_youtube_id(path))
     id_list.sort()
     return id_list
 
