@@ -5,14 +5,13 @@
 import dlib
 from skimage import io
 import imageio
-import time
 import pandas as pd
-import glob
 import os.path
 
 from constant import PROJECT_ROOT, RESOURCES_ROOT, MOVIES_CSV_PATH
 import colname
 import idol
+import youtube
 
 
 def detect_from_video(video_path, save_dir, interval=100):
@@ -27,7 +26,7 @@ def detect_from_video(video_path, save_dir, interval=100):
     frame_num = reader._meta['nframes']
     print('frame num', frame_num)
 
-    youtube_id = path_to_youtube_id(video_path)
+    youtube_id = youtube.path_to_youtube_id(video_path)
     print('youtube id', youtube_id)
 
     for frame in range(0, frame_num, interval):
@@ -68,7 +67,7 @@ def face_crop_batch():
                 save_dir = PROJECT_ROOT + '/resources/face/{}/candidates/'.format(dir_name)
 
             # execute crop
-            video_path = youtube_id_to_path(movie_id)
+            video_path = youtube.youtube_id_to_path(movie_id)
             interval = 10000  # temp
             detect_from_video(video_path=video_path, save_dir=save_dir, interval=interval)
 
@@ -79,15 +78,6 @@ def face_crop_batch():
     #df.to_csv(MOVIES_CSV_PATH, index=False)
 
 
-def youtube_id_to_path(youtube_id):
-    return RESOURCES_ROOT + '/youtube/' + youtube_id + '.mp4'
-
-
-def path_to_youtube_id(path):
-    base = os.path.basename(path)
-    return os.path.splitext(base)[0]
-
-
 def extract_faces_from_youtube_video(youtube_id):
     print('youtube id : ', youtube_id)
     # makedir
@@ -96,22 +86,14 @@ def extract_faces_from_youtube_video(youtube_id):
         os.mkdir(dir_path)
     # extract
     detect_from_video(
-        video_path=youtube_id_to_path(youtube_id),
+        video_path=youtube.youtube_id_to_path(youtube_id),
         save_dir=dir_path + '/',
         interval=1000
     )
 
 
-def __get_youtube_id_list():
-    path_list = glob.glob(RESOURCES_ROOT + '/youtube/*.mp4')
-    id_list = []
-    for path in path_list:
-        id_list.append(path_to_youtube_id(path))
-    id_list.sort()
-    return id_list
-
 if __name__ == '__main__':
-    id_list = __get_youtube_id_list()
+    id_list = youtube.get_youtube_id_list()
     print(id_list)
 
     # test
