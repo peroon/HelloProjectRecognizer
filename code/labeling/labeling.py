@@ -22,6 +22,8 @@ def open_editor(youtube_id):
         if key == 27:  # ESC
             break
 
+        print(key)
+
 if __name__ == '__main__':
     id_list = youtube.get_youtube_id_list()
     youtube_id = id_list[0]
