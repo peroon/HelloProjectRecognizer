@@ -1,5 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit
+
+W = 1000
+H = 800
+
 
 class Example(QWidget):
     def __init__(self):
@@ -8,9 +12,9 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.resize(250, 150)
+        self.resize(W, H)
         self.center()
-
+        self.youtube_id_form()
         self.setWindowTitle('Center')
         self.show()
 
@@ -19,6 +23,14 @@ class Example(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def youtube_id_form(self):
+        self.qle = QLineEdit(self)
+        self.qle.returnPressed.connect(self.on_enter_youtube_id)
+
+    def on_enter_youtube_id(self):
+        youtube_id = self.qle.text()
+        print('entered', youtube_id)
 
 
 if __name__ == '__main__':
