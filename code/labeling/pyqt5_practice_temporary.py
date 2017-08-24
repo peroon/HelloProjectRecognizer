@@ -1,5 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel
+from PyQt5.QtGui import QPixmap
+
+from constant import RESOURCES_ROOT
 
 W = 1000
 H = 800
@@ -8,13 +11,18 @@ H = 800
 class Example(QWidget):
     def __init__(self):
         super().__init__()
-
         self.initUI()
 
     def initUI(self):
         self.resize(W, H)
         self.center()
         self.youtube_id_form()
+
+        self.pixmap = QPixmap(RESOURCES_ROOT + "/face_224x224/airi-suzuki/ok/0002.jpg")
+        self.lbl = QLabel(self)
+        self.lbl.setPixmap(self.pixmap)
+        self.lbl.setGeometry(100, 100, 224, 224)
+
         self.setWindowTitle('Center')
         self.show()
 
