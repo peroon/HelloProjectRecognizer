@@ -13,19 +13,13 @@ H = 800
 class LabelingTool(QWidget):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.initialize_ui()
 
-    def initUI(self):
+    def initialize_ui(self):
         self.resize(W, H)
         self.center()
         self.youtube_id_form()
-
-        self.pixmap = QPixmap(RESOURCES_ROOT + "/face_224x224/airi-suzuki/ok/0002.jpg")
-        self.lbl = QLabel(self)
-        self.lbl.setPixmap(self.pixmap)
-        self.lbl.setGeometry(100, 100, 224, 224)
-
-        self.setWindowTitle('Center')
+        self.setWindowTitle('Labeling Tool')
         self.show()
 
     def center(self):
@@ -48,8 +42,7 @@ if __name__ == '__main__':
     labeling_tool = LabelingTool()
 
     carousel = Carousel.Carousel()
-    image_path_list = glob.glob(RESOURCES_ROOT + '/face_224x224/airi-suzuki/ok/*.jpg')
-    carousel.set_image_path_list(image_path_list)
     carousel.setParent(labeling_tool)
+    carousel.test()
 
     sys.exit(app.exec_())
