@@ -5,6 +5,7 @@ import glob
 
 from constant import RESOURCES_ROOT
 SHOW_IMAGE_NUM = 5
+FACE_IMAGE_SIZE = 224
 
 
 class Carousel(QWidget):
@@ -14,7 +15,7 @@ class Carousel(QWidget):
         self.label_list = []
         for i in range(SHOW_IMAGE_NUM):
             self.label_list.append(QLabel(self))
-            self.label_list[i].setGeometry(i * 224, 0, 224, 224)
+            self.label_list[i].setGeometry(i * FACE_IMAGE_SIZE, 0, FACE_IMAGE_SIZE, FACE_IMAGE_SIZE)
 
     def set_image_path_list(self, lst):
         self.image_path_list = lst
