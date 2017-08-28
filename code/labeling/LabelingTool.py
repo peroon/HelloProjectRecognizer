@@ -15,6 +15,7 @@ class LabelingTool(QWidget):
         super().__init__()
         self.image_index = 0
         self.initialize_ui()
+
         # add carousel
         self.carousel = Carousel.Carousel()
         self.carousel.setParent(self)
@@ -23,16 +24,15 @@ class LabelingTool(QWidget):
 
         # info
         self.w = QWidget()
-        label = QLabel('QTextEdit:')
-        self.text = QTextEdit(self)
+        index_title = QLabel('image index:')
+        self.index_label = QLabel('0')
         hbox = QHBoxLayout()
-        hbox.addWidget(label)
-        hbox.addWidget(self.text)
+        hbox.addWidget(index_title)
+        hbox.addWidget(self.index_label)
         self.w.setLayout(hbox)
-        self.w.move(0, 500)
+        self.w.move(0, 275)
         self.w.setParent(self)
 
-        # at last
         self.show()
 
     def initialize_ui(self):
@@ -57,9 +57,16 @@ class LabelingTool(QWidget):
         print('entered', youtube_id)
 
     def tag_input_form(self):
-        self.tag_form = QLineEdit(self)
-        self.tag_form.move(0, 24 + 224)
+        w = QWidget()
+        horizontal = QHBoxLayout()
+        self.tag_form = QLineEdit()
         self.tag_form.returnPressed.connect(self.__on_enter_tag)
+        title = QLabel('tag input')
+        horizontal.addWidget(self.tag_form)
+        horizontal.addWidget(title)
+        w.setLayout(horizontal)
+        w.move(0, 24 + 224)
+        w.setParent(self)
 
     def __get_idol_tag_list(self):
         return ['ym', 'ns']  # temporary
@@ -75,6 +82,7 @@ class LabelingTool(QWidget):
             self.image_index += 1
             # update carousel
             self.carousel.set_index(self.image_index)
+            self.index_label.setText(str(self.image_index))
         else:
             print('no tag')
         print('tag is', tag)
