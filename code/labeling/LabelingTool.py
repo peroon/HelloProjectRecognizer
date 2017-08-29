@@ -1,13 +1,14 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout, QShortcut
+from PyQt5.QtGui import QPixmap, QKeyEvent, QKeySequence
+from PyQt5.QtCore import Qt, QCoreApplication
 import glob
 
 from constant import RESOURCES_ROOT
 import Carousel
 
-W = 224 * 5
-H = 800
+W = 2000
+H = 1200
 WINDOW_NAME = 'Labeling Tool'
 
 class LabelingTool(QWidget):
@@ -35,6 +36,13 @@ class LabelingTool(QWidget):
 
         self.show()
 
+    def keyPressEvent(self, event):
+        key = event.key()
+        if key == Qt.Key_Escape:
+            print('esc')
+            QCoreApplication.quit()
+
+
     def initialize_ui(self):
         self.resize(W, H)
         self.center()
@@ -61,7 +69,7 @@ class LabelingTool(QWidget):
         horizontal = QHBoxLayout()
         self.tag_form = QLineEdit()
         self.tag_form.returnPressed.connect(self.__on_enter_tag)
-        title = QLabel('tag input')
+        title = QLabel('tag input form')
         horizontal.addWidget(self.tag_form)
         horizontal.addWidget(title)
         w.setLayout(horizontal)
