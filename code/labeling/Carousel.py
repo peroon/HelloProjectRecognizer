@@ -1,21 +1,27 @@
+"""Show images in a row"""
+
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QHBoxLayout
 from PyQt5.QtGui import QPixmap
 import glob
 
 from constant import RESOURCES_ROOT
-SHOW_IMAGE_NUM = 5
+SHOW_IMAGE_NUM = 7
 FACE_IMAGE_SIZE = 224
-
 
 class Carousel(QWidget):
     def __init__(self):
         super().__init__()
         self.image_path_list = None
         self.label_list = []
+        horizontal = QHBoxLayout()
         for i in range(SHOW_IMAGE_NUM):
-            self.label_list.append(QLabel(self))
-            self.label_list[i].setGeometry(i * FACE_IMAGE_SIZE, 0, FACE_IMAGE_SIZE, FACE_IMAGE_SIZE)
+            label = QLabel(self)
+            size = FACE_IMAGE_SIZE + 100
+            label.resize(size, size)
+            self.label_list.append(label)
+            horizontal.addWidget(label)
+        self.setLayout(horizontal)
 
     def set_image_path_list(self, lst):
         self.image_path_list = lst
@@ -26,6 +32,8 @@ class Carousel(QWidget):
             if idx >= len(self.image_path_list):
                 idx -= len(self.image_path_list)
             pixmap = QPixmap(self.image_path_list[idx])
+            if i == SHOW_IMAGE_NUM // 2:
+                pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE * 2)
             self.label_list[i].setPixmap(pixmap)
 
     def test(self):
