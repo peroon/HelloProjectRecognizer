@@ -1,13 +1,15 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout, QShortcut
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QShortcut
 from PyQt5.QtGui import QPixmap, QKeyEvent, QKeySequence
 from PyQt5.QtCore import Qt, QCoreApplication
 import glob
 
 from constant import RESOURCES_ROOT
 import Carousel
+import TitleAndForm
+import Info
 
-W = 2000
+W = 1900
 H = 1200
 WINDOW_NAME = 'Labeling Tool'
 
@@ -16,24 +18,29 @@ class LabelingTool(QWidget):
     def __init__(self):
         super().__init__()
         self.image_index = 0
-        self.initialize_ui()
+        self.resize(W, H)
+        self.__center()
+        self.setWindowTitle(WINDOW_NAME)
 
         # add carousel
         self.carousel = Carousel.Carousel()
         self.carousel.setParent(self)
-        self.carousel.move(0, 25)
         self.carousel.test()
 
+        # youtube id form
+        self.youtube_id_form = TitleAndForm.TitleAndForm('youtube id', self.__on_enter_youtube_id)
+        self.youtube_id_form.setParent(self)
+        self.youtube_id_form.move(0, 400)
+
+        # tag form
+        self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
+        self.tag_form.setParent(self)
+        self.tag_form.move(0, 450)
+
         # info
-        self.w = QWidget()
-        index_title = QLabel('image index:')
-        self.index_label = QLabel('0')
-        hbox = QHBoxLayout()
-        hbox.addWidget(index_title)
-        hbox.addWidget(self.index_label)
-        self.w.setLayout(hbox)
-        self.w.move(0, 275)
-        self.w.setParent(self)
+        self.info = Info.Info()
+        self.info.setParent(self)
+        self.info.move(0, 500)
 
         self.show()
 
@@ -42,56 +49,34 @@ class LabelingTool(QWidget):
         if key == Qt.Key_Escape:
             print('esc')
             QCoreApplication.quit()
+        elif key == Qt.RightArroww:
+            print('->')
+        elif key == Qt.LeftArrow:
+            print('<-')
 
-
-    def initialize_ui(self):
-        self.resize(W, H)
-        self.center()
-        self.youtube_id_form()
-        self.tag_input_form()
-        self.setWindowTitle(WINDOW_NAME)
-
-    def center(self):
+    def __center(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def youtube_id_form(self):
-        self.qle = QLineEdit(self)
-        self.qle.returnPressed.connect(self.__on_enter_youtube_id)
-
     def __on_enter_youtube_id(self):
-        youtube_id = self.qle.text()
+        youtube_id = self.youtube_id_form.get_text()
         print('entered', youtube_id)
-
-    def tag_input_form(self):
-        w = QWidget()
-        horizontal = QHBoxLayout()
-        self.tag_form = QLineEdit()
-        self.tag_form.returnPressed.connect(self.__on_enter_tag)
-        title = QLabel('tag input form')
-        horizontal.addWidget(self.tag_form)
-        horizontal.addWidget(title)
-        w.setLayout(horizontal)
-        w.move(0, 24 + 224)
-        w.setParent(self)
 
     def __get_idol_tag_list(self):
         return ['ym', 'ns']  # temporary
 
     def __on_enter_tag(self):
-        tag = self.tag_form.text()
-        self.tag_form.setText('')
+        tag = self.tag_form.get_text()
         tag_list = self.__get_idol_tag_list()
         if tag in tag_list:
             tag_index = tag_list.index(tag)
             print(tag_index)
             # TODO labeling
             self.image_index += 1
-            # update carousel
             self.carousel.set_index(self.image_index)
-            self.index_label.setText(str(self.image_index))
+            self.info.set_image_index(self.image_index)
         else:
             print('no tag')
         print('tag is', tag)

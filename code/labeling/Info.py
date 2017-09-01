@@ -1,39 +1,42 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QHBoxLayout, QVBoxLayout
 
 
 class Info(QWidget):
     def __init__(self):
         super().__init__()
-        self.init_ui()
+        self.vertical_layout = QVBoxLayout()
 
-    def init_ui(self):
-        self.__get_youtube_id_form()
-        self.show()
+        self.image_index_label = self.__create_title_and_label('image index')
+        self.current_tag_label = self.__create_title_and_label('current tag')
 
-    def __get_youtube_id_form(self):
+        self.setLayout(self.vertical_layout)
+
+    def set_image_index(self, index):
+        self.image_index_label.setText(str(index))
+
+    def set_current_tag(self, tag_name):
+        self.current_tag_label.setText(tag_name)
+
+    def __create_title_and_label(self, title):
         w = QWidget()
         h = QHBoxLayout()
-        self.youtube_id_form = QLineEdit(self)
-        self.youtube_id_form.returnPressed.connect(self.__on_enter_youtube_id)
-        label = QLabel('youtube id')
-        h.addWidget(self.youtube_id_form)
+        label = QLabel(self)
+        title = QLabel(title)
+        h.addWidget(title)
         h.addWidget(label)
         w.setLayout(h)
         w.setParent(self)
-
-    def __on_enter_youtube_id(self):
-        youtube_id = self.youtube_id_form.text()
-        print('entered', youtube_id)
-
-    def test(self):
-        self.show()
+        self.vertical_layout.addWidget(w)
+        return label
 
 
 def test():
     app = QApplication(sys.argv)
     info = Info()
-    info.test()
+    info.set_image_index(123)
+    info.set_current_tag('tag')
+    info.show()
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

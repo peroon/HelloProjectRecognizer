@@ -9,6 +9,7 @@ from constant import RESOURCES_ROOT
 SHOW_IMAGE_NUM = 7
 FACE_IMAGE_SIZE = 224
 
+
 class Carousel(QWidget):
     def __init__(self):
         super().__init__()
