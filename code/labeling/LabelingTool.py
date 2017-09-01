@@ -11,6 +11,7 @@ W = 2000
 H = 1200
 WINDOW_NAME = 'Labeling Tool'
 
+
 class LabelingTool(QWidget):
     def __init__(self):
         super().__init__()
