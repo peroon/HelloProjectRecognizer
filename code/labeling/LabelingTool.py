@@ -33,14 +33,14 @@ class LabelingTool(QWidget):
         self.youtube_id_form.move(0, 400)
 
         # tag form
-        self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
-        self.tag_form.setParent(self)
-        self.tag_form.move(0, 450)
+        #self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
+        #self.tag_form.setParent(self)
+        #self.tag_form.move(0, 450)
 
         # info
-        self.info = Info.Info()
-        self.info.setParent(self)
-        self.info.move(0, 500)
+        #self.info = Info.Info()
+        #self.info.setParent(self)
+        #self.info.move(0, 500)
 
         self.show()
 
@@ -60,12 +60,12 @@ class LabelingTool(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
+    def __get_idol_tag_list(self):
+        return ['ym', 'ns']  # temporary
+
     def __on_enter_youtube_id(self):
         youtube_id = self.youtube_id_form.get_text()
         print('entered', youtube_id)
-
-    def __get_idol_tag_list(self):
-        return ['ym', 'ns']  # temporary
 
     def __on_enter_tag(self):
         tag = self.tag_form.get_text()

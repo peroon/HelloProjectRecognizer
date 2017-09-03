@@ -17,13 +17,13 @@ class TitleAndForm(QWidget):
 
     def get_text(self):
         t = self.qle.text()
-        self.clear()
+        #self.clear_text()
         return t
 
     def set_text(self, s):
         self.qle.setText(s)
 
-    def clear(self):
+    def clear_text(self):
         self.set_text('')
 
 
