@@ -17,7 +17,7 @@ class TitleAndForm(QWidget):
 
     def get_text(self):
         t = self.qle.text()
-        #self.clear_text()
+        self.clear_text()
         return t
 
     def set_text(self, s):

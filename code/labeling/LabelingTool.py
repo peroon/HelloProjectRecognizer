@@ -33,9 +33,9 @@ class LabelingTool(QWidget):
         self.youtube_id_form.move(0, 400)
 
         # tag form
-        #self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
-        #self.tag_form.setParent(self)
-        #self.tag_form.move(0, 450)
+        self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
+        self.tag_form.setParent(self)
+        self.tag_form.move(0, 450)
 
         # info
         #self.info = Info.Info()
@@ -43,16 +43,6 @@ class LabelingTool(QWidget):
         #self.info.move(0, 500)
 
         self.show()
-
-    def keyPressEvent(self, event):
-        key = event.key()
-        if key == Qt.Key_Escape:
-            print('esc')
-            QCoreApplication.quit()
-        elif key == Qt.RightArroww:
-            print('->')
-        elif key == Qt.LeftArrow:
-            print('<-')
 
     def __center(self):
         qr = self.frameGeometry()
