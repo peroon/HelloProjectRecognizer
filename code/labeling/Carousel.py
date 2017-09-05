@@ -33,6 +33,7 @@ class Carousel(QWidget):
             if idx >= len(self.image_path_list):
                 idx -= len(self.image_path_list)
             pixmap = QPixmap(self.image_path_list[idx])
+            pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE)
             if i == SHOW_IMAGE_NUM // 2:
                 pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE * 2)
             self.label_list[i].setPixmap(pixmap)

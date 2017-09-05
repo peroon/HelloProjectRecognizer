@@ -1,8 +1,10 @@
 import sys
+import glob
+import os
+
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QShortcut
 from PyQt5.QtGui import QPixmap, QKeyEvent, QKeySequence
 from PyQt5.QtCore import Qt, QCoreApplication
-import glob
 
 from constant import RESOURCES_ROOT
 import Carousel
@@ -31,6 +33,7 @@ class LabelingTool(QWidget):
         self.youtube_id_form = TitleAndForm.TitleAndForm('youtube id', self.__on_enter_youtube_id)
         self.youtube_id_form.setParent(self)
         self.youtube_id_form.move(0, 400)
+        self.youtube_id_form.set_text('0EwG_EJ7Aaw')
 
         # tag form
         self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
@@ -55,7 +58,15 @@ class LabelingTool(QWidget):
 
     def __on_enter_youtube_id(self):
         youtube_id = self.youtube_id_form.get_text()
-        print('entered', youtube_id)
+        print('youtube id entered.', youtube_id)
+        faces_dir = RESOURCES_ROOT + '/youtube_faces/' + youtube_id
+        if os.path.isdir(faces_dir):
+            print('dir exist')
+            face_image_path_list = glob.glob(faces_dir + '/*.jpg')
+            self.carousel.set_image_path_list(face_image_path_list)
+            self.carousel.set_index(0)
+        else:
+            print('no directory')
 
     def __on_enter_tag(self):
         tag = self.tag_form.get_text()
