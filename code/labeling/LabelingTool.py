@@ -41,9 +41,9 @@ class LabelingTool(QWidget):
         self.tag_form.move(0, 450)
 
         # info
-        #self.info = Info.Info()
-        #self.info.setParent(self)
-        #self.info.move(0, 500)
+        self.info = Info.Info()
+        self.info.setParent(self)
+        self.info.move(W / 2 - 100, 500)
 
         self.show()
 
@@ -78,6 +78,7 @@ class LabelingTool(QWidget):
             self.image_index += 1
             self.carousel.set_index(self.image_index)
             self.info.set_image_index(self.image_index)
+            # self.info.set_current_tag(tag)
         else:
             print('no tag')
         print('tag is', tag)
