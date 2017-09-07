@@ -8,12 +8,16 @@ class Info(QWidget):
         self.vertical_layout = QVBoxLayout()
 
         self.image_index_label = self.__create_title_and_label('image index')
+        self.image_num_label = self.__create_title_and_label('image num')
         self.current_tag_label = self.__create_title_and_label('current tag')
 
         self.setLayout(self.vertical_layout)
 
     def set_image_index(self, index):
         self.image_index_label.setText(str(index))
+
+    def set_image_num(self, index):
+        self.image_num_label.setText(str(index))
 
     def set_current_tag(self, tag_name):
         self.current_tag_label.setText(tag_name)
@@ -34,7 +38,8 @@ class Info(QWidget):
 def test():
     app = QApplication(sys.argv)
     info = Info()
-    info.set_image_index(123)
+    info.set_image_index(5)
+    info.set_image_num(100)
     info.set_current_tag('tag')
     info.show()
     sys.exit(app.exec_())

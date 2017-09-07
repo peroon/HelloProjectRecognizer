@@ -12,7 +12,7 @@ import TitleAndForm
 import Info
 
 W = 1900
-H = 1200
+H = 1600
 WINDOW_NAME = 'Labeling Tool'
 
 
@@ -65,6 +65,10 @@ class LabelingTool(QWidget):
             face_image_path_list = glob.glob(faces_dir + '/*.jpg')
             self.carousel.set_image_path_list(face_image_path_list)
             self.carousel.set_index(0)
+
+            self.info.set_image_index(0)
+            self.info.set_image_num(len(face_image_path_list))
+            self.info.set_current_tag(str(None))
         else:
             print('no directory')
 
