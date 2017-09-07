@@ -10,6 +10,7 @@ from constant import RESOURCES_ROOT
 import Carousel
 import TitleAndForm
 import Info
+import LabelButtons
 
 W = 1900
 H = 1600
@@ -44,6 +45,10 @@ class LabelingTool(QWidget):
         self.info = Info.Info()
         self.info.setParent(self)
         self.info.move(W / 2 - 100, 500)
+
+        self.label_buttons = LabelButtons.LabelButtons()
+        self.label_buttons.setParent(self)
+        self.label_buttons.move(1000, 1000)
 
         self.show()
 
