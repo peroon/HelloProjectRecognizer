@@ -1,10 +1,11 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QPushButton, QSizePolicy, QToolButton
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QPushButton, QSizePolicy, QToolButton, QHBoxLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 
 
 import constant
+import idol
 
 IMAGE_BUTTON_SIZE = 200
 
@@ -13,17 +14,26 @@ class LabelButtons(QWidget):
     def __init__(self):
         super().__init__()
 
-        vertical = QVBoxLayout()
-        btn0 = self.__get_image_button(0)
-        btn1 = self.__get_image_button(1)
+        horizontal = QHBoxLayout()
 
-        btn0.clicked.connect(lambda: self.on_press_button(0))
-        btn1.clicked.connect(lambda: self.on_press_button(1))
+        groups = idol.get_idols_by_group()
+        print(groups)
+        for group in groups:
+            vertical = QVBoxLayout()
+            for an_idol in group:
+                btn = self.__get_image_button(an_idol.idol_id)
+                btn.clicked.connect(lambda: self.on_press_button(an_idol.idol_id))
+                vertical.addWidget(btn)
+            horizontal.addLayout(vertical)
 
-        vertical.addWidget(btn0)
-        vertical.addWidget(btn1)
+        # btn0 = self.__get_image_button(0)
+        # btn1 = self.__get_image_button(1)
+        # btn0.clicked.connect(lambda: self.on_press_button(0))
+        # btn1.clicked.connect(lambda: self.on_press_button(1))
+        # vertical.addWidget(btn0)
+        # vertical.addWidget(btn1)
 
-        self.setLayout(vertical)
+        self.setLayout(horizontal)
 
     def __get_image_button(self, idol_id):
         btn1 = QPushButton('', self)

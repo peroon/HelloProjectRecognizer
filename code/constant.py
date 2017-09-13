@@ -1,4 +1,5 @@
 LABEL_NUM = 55
+GROUP_NUM = 7
 IMAGE_SIZE = 224
 
 # Paths

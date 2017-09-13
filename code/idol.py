@@ -63,6 +63,18 @@ def get_idols():
         idol_list.append(an_idol)
     return idol_list
 
+def get_idols_by_group():
+    """
+    :rtype: list[list[Idol]]
+    """
+    groups = []
+    for i in range(constant.GROUP_NUM):
+        groups.append([])
+    idols = get_idols()
+    for an_idol in idols:
+        groups[an_idol.group_id].append(an_idol)
+    return groups
+
 
 def get_groups():
     groups = []
