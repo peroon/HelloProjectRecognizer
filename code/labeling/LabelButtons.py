@@ -22,7 +22,7 @@ class LabelButtons(QWidget):
             vertical = QVBoxLayout()
             for an_idol in group:
                 btn = self.__get_image_button(an_idol.idol_id)
-                btn.clicked.connect(lambda: self.on_press_button(an_idol.idol_id))
+                btn.clicked.connect(lambda state, ii=an_idol.idol_id: self.on_press_button(ii))
                 vertical.addWidget(btn)
             horizontal.addLayout(vertical)
 
@@ -37,10 +37,10 @@ class LabelButtons(QWidget):
 
     def __get_image_button(self, idol_id):
         btn1 = QPushButton('', self)
-        btn1.setFixedSize(200, 200)
+        btn1.setFixedSize(80, 80)
         icon_path = constant.PROJECT_ROOT + '/docs/images/face_icon/' + '{0:04d}'.format(idol_id) + '.jpg'
         btn1.setIcon(QIcon(icon_path))
-        btn1.setIconSize(QSize(180, 180))
+        btn1.setIconSize(QSize(75, 75))
         return btn1
 
     def on_press_button(self, idol_id):
