@@ -3,17 +3,17 @@ import glob
 import os
 
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QShortcut
-from PyQt5.QtGui import QPixmap, QKeyEvent, QKeySequence
+from PyQt5.QtGui import QPixmap, QKeyEvent, QKeySequence, QCursor
 from PyQt5.QtCore import Qt, QCoreApplication
 
-from constant import RESOURCES_ROOT
+from constant import RESOURCES_ROOT, PROJECT_ROOT
 import Carousel
 import TitleAndForm
 import Info
 import LabelButtons
 
 W = 1900
-H = 1600
+H = 1900
 WINDOW_NAME = 'Labeling Tool'
 
 
@@ -36,19 +36,14 @@ class LabelingTool(QWidget):
         self.youtube_id_form.move(0, 400)
         self.youtube_id_form.set_text('0EwG_EJ7Aaw')
 
-        # tag form
-        self.tag_form = TitleAndForm.TitleAndForm('tag', self.__on_enter_tag)
-        self.tag_form.setParent(self)
-        self.tag_form.move(0, 450)
-
         # info
         self.info = Info.Info()
         self.info.setParent(self)
-        self.info.move(W / 2 - 100, 500)
+        self.info.move(W / 2 - 75, 450)
 
-        self.label_buttons = LabelButtons.LabelButtons()
+        self.label_buttons = LabelButtons.LabelButtons(self.__on_click_idol_button)
         self.label_buttons.setParent(self)
-        self.label_buttons.move(1000, 1000)
+        self.label_buttons.move(600, 600)
 
         self.show()
 
@@ -60,6 +55,9 @@ class LabelingTool(QWidget):
 
     def __get_idol_tag_list(self):
         return ['ym', 'ns']  # temporary
+
+    def __on_click_idol_button(self, idol_id):
+        print('idol id', idol_id)
 
     def __on_enter_youtube_id(self):
         youtube_id = self.youtube_id_form.get_text()

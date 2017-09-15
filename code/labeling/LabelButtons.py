@@ -11,7 +11,7 @@ IMAGE_BUTTON_SIZE = 200
 
 
 class LabelButtons(QWidget):
-    def __init__(self):
+    def __init__(self, on_click_button):
         super().__init__()
 
         horizontal = QHBoxLayout()
@@ -22,16 +22,9 @@ class LabelButtons(QWidget):
             vertical = QVBoxLayout()
             for an_idol in group:
                 btn = self.__get_image_button(an_idol.idol_id)
-                btn.clicked.connect(lambda state, ii=an_idol.idol_id: self.on_press_button(ii))
+                btn.clicked.connect(lambda state, ii=an_idol.idol_id: on_click_button(ii))
                 vertical.addWidget(btn)
             horizontal.addLayout(vertical)
-
-        # btn0 = self.__get_image_button(0)
-        # btn1 = self.__get_image_button(1)
-        # btn0.clicked.connect(lambda: self.on_press_button(0))
-        # btn1.clicked.connect(lambda: self.on_press_button(1))
-        # vertical.addWidget(btn0)
-        # vertical.addWidget(btn1)
 
         self.setLayout(horizontal)
 
@@ -43,13 +36,14 @@ class LabelButtons(QWidget):
         btn1.setIconSize(QSize(75, 75))
         return btn1
 
-    def on_press_button(self, idol_id):
-        print(idol_id)
+
+def on_click_button_sample(idol_id):
+    print('sample', idol_id)
 
 
 def test():
     app = QApplication(sys.argv)
-    t = LabelButtons()
+    t = LabelButtons(on_click_button_sample)
     t.show()
     sys.exit(app.exec_())
 
