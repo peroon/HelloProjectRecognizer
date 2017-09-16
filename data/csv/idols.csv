@@ -37,15 +37,15 @@ idol_id,group_id,name,directory_name,member_color
 35,4,小関 舞,mai-ozeki,#0000FF
 36,4,梁川 奈々美,nanami-yanagawa,#8C1888
 37,4,船木 結,musubu-funaki,#FFFF00
-38,5,藤井 梨央,rio-fujii,#FFFF00
+38,-1,藤井 梨央,rio-fujii,#FFFF00
 39,5,広瀬 彩海,ayaka-hirose,#009B9F
 40,5,野村 みな美,minami-nomura,#0000FF
-41,5,小川 麗奈,rena-ogawa,#FF0000
+41,-1,小川 麗奈,rena-ogawa,#FF0000
 42,5,浜浦 彩乃,ayano-hamaura,#FFC0CB
 43,5,田口 夏実,natsumi-taguchi,#FFA500
 44,5,和田 桜子,sakurako-wada,#008000
 45,5,井上 玲音,rei-inoue,#800080
-46,6,山岸 理子 ,riko-yamagishi,#00D603
+46,6,山岸理子 ,riko-yamagishi,#00D603
 47,6,小片 リサ,risa-ogata,#FF9966
 48,6,新沼 希空,kisora-niinuma,#ABFFFF
 49,6,谷本安美 ,ami-tanimoto,#CAB8D9

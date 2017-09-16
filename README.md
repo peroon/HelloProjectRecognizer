@@ -94,3 +94,4 @@
 * Since it is meaningless to learn almost the same face image, 
 we want to eliminate overlapped images by sorting by image similarity
 * Make READMEs ogranized
+* How to respond to idol member changes
