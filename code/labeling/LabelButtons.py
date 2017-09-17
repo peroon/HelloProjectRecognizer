@@ -17,8 +17,8 @@ class LabelButtons(QWidget):
         horizontal = QHBoxLayout()
 
         groups = idol.get_idols_by_group()
-        print(groups)
         for group in groups:
+            print('group', group)
             vertical = QVBoxLayout()
             for an_idol in group:
                 btn = self.__get_image_button(an_idol.idol_id)

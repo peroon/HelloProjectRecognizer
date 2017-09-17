@@ -23,6 +23,9 @@ class Idol:
             self.member_color
         )
 
+    def __repr__(self):
+        return self.__str__()
+
     def alphabet_name(self):
         sep = self.directory_name.split('-')
         return sep[0].capitalize() + ' ' + sep[1].capitalize()
@@ -60,8 +63,10 @@ def get_idols():
     idol_list = []
     for i in range(constant.LABEL_NUM):
         an_idol = get_idol(i)
-        if an_idol.idol_id != -1:
+        if an_idol.group_id != -1:
             idol_list.append(an_idol)
+        else:
+            print('exclude', an_idol)
     return idol_list
 
 def get_idols_by_group():
@@ -88,6 +93,6 @@ def get_groups():
 
 
 if __name__ == '__main__':
-    idol = get_idol(2)
-    print(idol)
-    print(idol.alphabet_name())
+    groups = get_idols_by_group()
+    for group in groups:
+        print(group)
