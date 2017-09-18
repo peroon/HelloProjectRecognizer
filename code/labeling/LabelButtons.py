@@ -27,6 +27,13 @@ class LabelButtons(QWidget):
                 vertical.addWidget(btn)
             horizontal.addLayout(vertical)
 
+        # other label button
+        vertical = QVBoxLayout()
+        btn = self.__get_image_button(-1)
+        btn.clicked.connect(lambda state, ii=-1: on_click_button(ii))
+        vertical.addWidget(btn)
+        horizontal.addLayout(vertical)
+
         self.setLayout(horizontal)
 
     def __get_image_button(self, idol_id):
