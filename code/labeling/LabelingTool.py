@@ -45,6 +45,8 @@ class LabelingTool(QWidget):
         self.label_buttons.setParent(self)
         self.label_buttons.move(600, 600)
 
+        self.label_list = []
+
         self.show()
 
     def __center(self):
@@ -53,11 +55,14 @@ class LabelingTool(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def __get_idol_tag_list(self):
-        return ['ym', 'ns']  # temporary
-
     def __on_click_idol_button(self, idol_id):
         print('idol id', idol_id)
+        self.label_list[self.image_index] = idol_id
+
+        self.image_index += 1
+        self.carousel.set_index(self.image_index)
+        self.info.set_image_index(self.image_index)
+        self.info.set_current_label(idol_id)
 
     def __on_enter_youtube_id(self):
         youtube_id = self.youtube_id_form.get_text()
@@ -67,28 +72,17 @@ class LabelingTool(QWidget):
             print('dir exist')
             face_image_path_list = glob.glob(faces_dir + '/*.jpg')
             self.carousel.set_image_path_list(face_image_path_list)
-            self.carousel.set_index(0)
+            self.image_index = 0
+            self.carousel.set_index(self.image_index)
 
-            self.info.set_image_index(0)
+            self.info.set_image_index(self.image_index)
             self.info.set_image_num(len(face_image_path_list))
-            self.info.set_current_tag(str(None))
+            self.info.set_current_label(str(None))
+
+            self.label_list = [None] * len(face_image_path_list)
         else:
             print('no directory')
 
-    def __on_enter_tag(self):
-        tag = self.tag_form.get_text()
-        tag_list = self.__get_idol_tag_list()
-        if tag in tag_list:
-            tag_index = tag_list.index(tag)
-            print(tag_index)
-            # TODO labeling
-            self.image_index += 1
-            self.carousel.set_index(self.image_index)
-            self.info.set_image_index(self.image_index)
-            # self.info.set_current_tag(tag)
-        else:
-            print('no tag')
-        print('tag is', tag)
 
 
 if __name__ == '__main__':

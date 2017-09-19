@@ -9,7 +9,7 @@ class Info(QWidget):
 
         self.image_index_label = self.__create_title_and_label('image index')
         self.image_num_label = self.__create_title_and_label('image num')
-        self.current_tag_label = self.__create_title_and_label('current tag')
+        self.current_label_label = self.__create_title_and_label('current label')
 
         self.setLayout(self.vertical_layout)
 
@@ -19,8 +19,8 @@ class Info(QWidget):
     def set_image_num(self, index):
         self.image_num_label.setText(str(index))
 
-    def set_current_tag(self, tag_name):
-        self.current_tag_label.setText(tag_name)
+    def set_current_label(self, label):
+        self.current_tag_label.setText(str(label))
 
     def __create_title_and_label(self, title):
         w = QWidget()
