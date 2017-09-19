@@ -20,7 +20,7 @@ class Info(QWidget):
         self.image_num_label.setText(str(index))
 
     def set_current_label(self, label):
-        self.current_tag_label.setText(str(label))
+        self.current_label_label.setText(str(label))
 
     def __create_title_and_label(self, title):
         w = QWidget()
@@ -40,7 +40,7 @@ def test():
     info = Info()
     info.set_image_index(5)
     info.set_image_num(100)
-    info.set_current_tag('tag')
+    info.set_current_label(12)
     info.show()
     sys.exit(app.exec_())
 

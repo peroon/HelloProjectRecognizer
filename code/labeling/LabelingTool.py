@@ -58,11 +58,20 @@ class LabelingTool(QWidget):
     def __on_click_idol_button(self, idol_id):
         print('idol id', idol_id)
         self.label_list[self.image_index] = idol_id
+        self.__next()
 
+    def __next(self):
         self.image_index += 1
+        self.__update_by_index()
+
+    def __prev(self):
+        self.image_index -= 1
+        self.__update_by_index()
+
+    def __update_by_index(self):
         self.carousel.set_index(self.image_index)
         self.info.set_image_index(self.image_index)
-        self.info.set_current_label(idol_id)
+        self.info.set_current_label(self.label_list[self.image_index])
 
     def __on_enter_youtube_id(self):
         youtube_id = self.youtube_id_form.get_text()
@@ -81,8 +90,7 @@ class LabelingTool(QWidget):
 
             self.label_list = [None] * len(face_image_path_list)
         else:
-            print('no directory')
-
+            print('There is no directory.', faces_dir)
 
 
 if __name__ == '__main__':
