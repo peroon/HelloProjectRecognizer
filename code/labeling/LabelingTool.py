@@ -40,11 +40,17 @@ class LabelingTool(QWidget):
         self.info.setParent(self)
         self.info.move(W / 2 - 75, 450)
 
-        # next and prev button
+        # next button
         next_button = QPushButton('next', self)
         next_button.setFixedSize(80, 80)
         next_button.clicked.connect(self.__next)
-        next_button.move(500, 500)
+        next_button.move(1200, 500)
+
+        # prev button
+        next_button = QPushButton('prev', self)
+        next_button.setFixedSize(80, 80)
+        next_button.clicked.connect(self.__prev)
+        next_button.move(600, 500)
 
         self.label_buttons = LabelButtons.LabelButtons(self.__on_click_idol_button)
         self.label_buttons.setParent(self)
