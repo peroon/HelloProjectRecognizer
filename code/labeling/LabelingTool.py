@@ -2,11 +2,9 @@ import sys
 import glob
 import os
 
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QShortcut
-from PyQt5.QtGui import QPixmap, QKeyEvent, QKeySequence, QCursor
-from PyQt5.QtCore import Qt, QCoreApplication
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton
 
-from constant import RESOURCES_ROOT, PROJECT_ROOT
+from constant import RESOURCES_ROOT
 import Carousel
 import TitleAndForm
 import Info
@@ -34,12 +32,19 @@ class LabelingTool(QWidget):
         self.youtube_id_form = TitleAndForm.TitleAndForm('youtube id', self.__on_enter_youtube_id)
         self.youtube_id_form.setParent(self)
         self.youtube_id_form.move(0, 400)
-        self.youtube_id_form.set_text('0EwG_EJ7Aaw')
+        youtube_id_sample = '0EwG_EJ7Aaw'
+        self.youtube_id_form.set_text(youtube_id_sample)
 
         # info
         self.info = Info.Info()
         self.info.setParent(self)
         self.info.move(W / 2 - 75, 450)
+
+        # next and prev button
+        next_button = QPushButton('next', self)
+        next_button.setFixedSize(80, 80)
+        next_button.clicked.connect(self.__next)
+        next_button.move(500, 500)
 
         self.label_buttons = LabelButtons.LabelButtons(self.__on_click_idol_button)
         self.label_buttons.setParent(self)
@@ -47,6 +52,7 @@ class LabelingTool(QWidget):
 
         self.label_list = []
 
+        self.__update_by_youtube_id(youtube_id_sample)
         self.show()
 
     def __center(self):
@@ -75,6 +81,9 @@ class LabelingTool(QWidget):
 
     def __on_enter_youtube_id(self):
         youtube_id = self.youtube_id_form.get_text()
+        self.__update_by_youtube_id(youtube_id)
+
+    def __update_by_youtube_id(self, youtube_id):
         print('youtube id entered.', youtube_id)
         faces_dir = RESOURCES_ROOT + '/youtube_faces/' + youtube_id
         if os.path.isdir(faces_dir):
@@ -91,7 +100,6 @@ class LabelingTool(QWidget):
             self.label_list = [None] * len(face_image_path_list)
         else:
             print('There is no directory.', faces_dir)
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

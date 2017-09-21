@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QPushButton, QSizePolicy, QToolButton, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QPushButton, QHBoxLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 
