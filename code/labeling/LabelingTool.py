@@ -57,6 +57,7 @@ class LabelingTool(QWidget):
         self.label_buttons.move(600, 600)
 
         self.label_list = []
+        self.image_num = 0
 
         self.__update_by_youtube_id(youtube_id_sample)
         self.show()
@@ -74,10 +75,14 @@ class LabelingTool(QWidget):
 
     def __next(self):
         self.image_index += 1
+        if self.image_index >= self.image_num:
+            self.image_index -= self.image_num
         self.__update_by_index()
 
     def __prev(self):
         self.image_index -= 1
+        if self.image_index < 0:
+            self.image_index += self.image_num
         self.__update_by_index()
 
     def __update_by_index(self):
@@ -99,11 +104,13 @@ class LabelingTool(QWidget):
             self.image_index = 0
             self.carousel.set_index(self.image_index)
 
+            self.image_num = len(face_image_path_list)
+
             self.info.set_image_index(self.image_index)
-            self.info.set_image_num(len(face_image_path_list))
+            self.info.set_image_num(self.image_num)
             self.info.set_current_label(str(None))
 
-            self.label_list = [None] * len(face_image_path_list)
+            self.label_list = [None] * self.image_num
         else:
             print('There is no directory.', faces_dir)
 

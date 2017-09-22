@@ -29,11 +29,15 @@ class Carousel(QWidget):
 
     def set_index(self, index):
         for i in range(SHOW_IMAGE_NUM):
-            idx = index + i
-            if idx >= len(self.image_path_list):
-                idx -= len(self.image_path_list)
-            pixmap = QPixmap(self.image_path_list[idx])
+            image_index = index + i
+            while image_index >= len(self.image_path_list):
+                image_index -= len(self.image_path_list)
+            print(len(self.image_path_list), image_index)
+            path = self.image_path_list[image_index]
+            pixmap = QPixmap(path)
             pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE)
+
+            # center image size
             if i == SHOW_IMAGE_NUM // 2:
                 pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE * 2)
             self.label_list[i].setPixmap(pixmap)
