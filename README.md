@@ -94,4 +94,9 @@
 * Since it is meaningless to learn almost the same face image, 
 we want to eliminate overlapped images by sorting by image similarity
 * Make READMEs ogranized
-* How to respond to idol member changes
+* How to manage the change of group of idol or resignation
+    * Withdrawal while maintaining a good relationship
+        * Visible?
+    * Withdrawal due to causing problems
+        * Invisible?
+        
