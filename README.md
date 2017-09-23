@@ -64,6 +64,7 @@
 # Accuracy 
 
 * 0.627 on validation set (3000 images)
+    * 0.9 is desirable and I think it is possible.
 
 # Environment Settings
 

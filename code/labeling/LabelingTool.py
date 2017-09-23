@@ -71,6 +71,9 @@ class LabelingTool(QWidget):
     def __on_click_idol_button(self, idol_id):
         print('idol id', idol_id)
         self.label_list[self.image_index] = idol_id
+
+        labeled_num = sum(1 for i in self.label_list if i is not None)
+        self.info.set_labeled_num(labeled_num)
         self.__next()
 
     def __next(self):
