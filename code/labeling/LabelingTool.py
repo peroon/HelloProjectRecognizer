@@ -111,7 +111,7 @@ class LabelingTool(QWidget):
 
             self.info.set_image_index(self.image_index)
             self.info.set_image_num(self.image_num)
-            self.info.set_current_label(str(None))
+            self.info.set_current_label(None)
 
             self.label_list = [None] * self.image_num
         else:

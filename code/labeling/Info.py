@@ -1,6 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QLineEdit, QLabel, QHBoxLayout, QVBoxLayout
 
+import idol
+
 
 class Info(QWidget):
     def __init__(self):
@@ -14,6 +16,7 @@ class Info(QWidget):
         self.set_labeled_num(0)
 
         self.setLayout(self.vertical_layout)
+        self.resize(500, self.sizeHint().height())
 
     def set_image_index(self, index):
         self.image_index_label.setText(str(index))
@@ -22,7 +25,12 @@ class Info(QWidget):
         self.image_num_label.setText(str(index))
 
     def set_current_label(self, label):
-        self.current_label_label.setText(str(label))
+        print('label', label)
+        if label is not None:
+            idol_name = idol.get_idol(label).name
+        else:
+            idol_name = ''
+        self.current_label_label.setText(str(label) + ' ' + idol_name)
 
     def set_labeled_num(self, num):
         self.labeled_num.setText(str(num))
