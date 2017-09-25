@@ -1,6 +1,7 @@
 import sys
 import glob
 import os
+import shutil
 
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton
 
@@ -52,6 +53,12 @@ class LabelingTool(QWidget):
         next_button.clicked.connect(self.__prev)
         next_button.move(600, 500)
 
+        # move button
+        move_button = QPushButton('move', self)
+        move_button.setFixedSize(80, 80)
+        move_button.clicked.connect(self.__move)
+        move_button.move(1600, 500)
+
         self.label_buttons = LabelButtons.LabelButtons(self.__on_click_idol_button)
         self.label_buttons.setParent(self)
         self.label_buttons.move(600, 600)
@@ -71,10 +78,11 @@ class LabelingTool(QWidget):
     def __on_click_idol_button(self, idol_id):
         print('idol id', idol_id)
         self.label_list[self.image_index] = idol_id
-
-        labeled_num = sum(1 for i in self.label_list if i is not None)
-        self.info.set_labeled_num(labeled_num)
+        self.info.set_labeled_num(self.__get_labeled_num())
         self.__next()
+
+    def __get_labeled_num(self):
+        return sum(1 for i in self.label_list if i is not None)
 
     def __next(self):
         self.image_index += 1
@@ -87,6 +95,18 @@ class LabelingTool(QWidget):
         if self.image_index < 0:
             self.image_index += self.image_num
         self.__update_by_index()
+
+    def __move(self):
+        if self.image_num == self.__get_labeled_num():
+            print('Done! I move images.')
+            for i, path in enumerate(self.carousel.image_path_list):
+                label = self.label_list[i]
+                mv_dir = os.path.dirname(path) + '/' + '%04d' % label
+                if not os.path.exists(mv_dir):
+                    os.mkdir(mv_dir)
+                shutil.copyfile(path, mv_dir + '/' + os.path.basename(path))
+        else:
+            print('unlabeled images exist...')
 
     def __update_by_index(self):
         self.carousel.set_index(self.image_index)
