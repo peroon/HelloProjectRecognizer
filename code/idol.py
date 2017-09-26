@@ -63,10 +63,7 @@ def get_idols():
     idol_list = []
     for i in range(constant.LABEL_NUM):
         an_idol = get_idol(i)
-        if an_idol.group_id != -1:
-            idol_list.append(an_idol)
-        else:
-            print('exclude', an_idol)
+        idol_list.append(an_idol)
     return idol_list
 
 def get_idols_by_group():
