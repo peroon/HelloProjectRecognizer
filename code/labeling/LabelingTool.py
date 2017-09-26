@@ -13,6 +13,7 @@ import LabelButtons
 
 W = 1900
 H = 1900
+DEBUG = False
 WINDOW_NAME = 'Labeling Tool'
 
 
@@ -104,7 +105,11 @@ class LabelingTool(QWidget):
                 mv_dir = os.path.dirname(path) + '/' + '%04d' % label
                 if not os.path.exists(mv_dir):
                     os.mkdir(mv_dir)
-                shutil.copyfile(path, mv_dir + '/' + os.path.basename(path))
+                dst = mv_dir + '/' + os.path.basename(path)
+                if DEBUG:
+                    shutil.copyfile(path, dst)
+                else:
+                    shutil.move(path, dst)
         else:
             print('unlabeled images exist...')
 
