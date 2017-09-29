@@ -7,20 +7,22 @@ import constant
 
 
 class Idol:
-    def __init__(self, idol_id, group_id, name, directory_name, member_color):
+    def __init__(self, idol_id, group_id, name, directory_name, member_color, quit):
         self.idol_id = idol_id
         self.group_id = group_id
         self.name = name
         self.directory_name = directory_name
         self.member_color = member_color
+        self.quit = quit
 
     def __str__(self):
-        return '{0} {1} {2} {3} {4}'.format(
+        return '{0} {1} {2} {3} {4} {5}'.format(
             self.idol_id,
             self.group_id,
             self.name,
             self.directory_name,
-            self.member_color
+            self.member_color,
+            self.quit
         )
 
     def __repr__(self):
@@ -40,7 +42,8 @@ def get_idol(idol_id):
         group_id=row['group_id'],
         name=row['name'],
         directory_name=row['directory_name'],
-        member_color=row['member_color']
+        member_color=row['member_color'],
+        quit=row['quit']
     )
 
 
@@ -76,6 +79,8 @@ def get_idols_by_group():
     idols = get_idols()
     for an_idol in idols:
         groups[an_idol.group_id].append(an_idol)
+    for g in groups:
+        g.sort(key=lambda i: i.quit)
     return groups
 
 
