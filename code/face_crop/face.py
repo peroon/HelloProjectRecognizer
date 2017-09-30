@@ -88,7 +88,7 @@ def extract_faces_from_youtube_video(youtube_id):
     detect_from_video(
         video_path=youtube.youtube_id_to_path(youtube_id),
         save_dir=dir_path + '/',
-        interval=1000
+        interval=100
     )
 
 
@@ -98,4 +98,5 @@ if __name__ == '__main__':
 
     # test
     youtube_id = id_list[0]
+    print('face crop from', youtube_id)
     extract_faces_from_youtube_video(youtube_id)

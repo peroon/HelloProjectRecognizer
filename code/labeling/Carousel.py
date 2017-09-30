@@ -38,9 +38,13 @@ class Carousel(QWidget):
             pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE)
 
             # center image size
-            if i == SHOW_IMAGE_NUM // 2:
+            if i == 0:
                 pixmap = pixmap.scaledToWidth(FACE_IMAGE_SIZE * 2)
-            self.label_list[i].setPixmap(pixmap)
+
+            if i in [0, 1, 2, 3]:
+                self.label_list[i+3].setPixmap(pixmap)
+            else:
+                self.label_list[i-4].setPixmap(pixmap)
 
     def test(self):
         image_path_list = glob.glob(RESOURCES_ROOT + '/face_224x224/airi-suzuki/ok/*.jpg')

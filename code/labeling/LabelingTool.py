@@ -13,7 +13,7 @@ import LabelButtons
 
 W = 1900
 H = 1900
-DEBUG = False
+DEBUG = True
 WINDOW_NAME = 'Labeling Tool'
 
 
@@ -34,7 +34,9 @@ class LabelingTool(QWidget):
         self.youtube_id_form = TitleAndForm.TitleAndForm('youtube id', self.__on_enter_youtube_id)
         self.youtube_id_form.setParent(self)
         self.youtube_id_form.move(0, 400)
+        #youtube_id_sample = '_sample'
         youtube_id_sample = '0EwG_EJ7Aaw'
+
         self.youtube_id_form.set_text(youtube_id_sample)
 
         # info
@@ -103,6 +105,7 @@ class LabelingTool(QWidget):
             for i, path in enumerate(self.carousel.image_path_list):
                 label = self.label_list[i]
                 mv_dir = os.path.dirname(path) + '/' + '%04d' % label
+                print('index', i, 'label', label)
                 if not os.path.exists(mv_dir):
                     os.mkdir(mv_dir)
                 dst = mv_dir + '/' + os.path.basename(path)

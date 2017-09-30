@@ -53,7 +53,7 @@ class VideoAnalyzer():
 
 if __name__ == '__main__':
     video_analyzer = VideoAnalyzer()
-    youtube_id = '4lfwRLsk_Vs'
+    youtube_id = '0EwG_EJ7Aaw'
 
     # check if it is published now
     #info = youtube_api.get_video_info(youtube_id)
