@@ -97,6 +97,6 @@ if __name__ == '__main__':
     print(id_list)
 
     # test
-    youtube_id = id_list[0]
+    youtube_id = id_list[2]
     print('face crop from', youtube_id)
     extract_faces_from_youtube_video(youtube_id)

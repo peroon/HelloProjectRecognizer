@@ -13,7 +13,7 @@ import LabelButtons
 
 W = 1900
 H = 1900
-DEBUG = True
+DEBUG = False
 WINDOW_NAME = 'Labeling Tool'
 
 
@@ -34,8 +34,8 @@ class LabelingTool(QWidget):
         self.youtube_id_form = TitleAndForm.TitleAndForm('youtube id', self.__on_enter_youtube_id)
         self.youtube_id_form.setParent(self)
         self.youtube_id_form.move(0, 400)
-        #youtube_id_sample = '_sample'
-        youtube_id_sample = '0EwG_EJ7Aaw'
+        youtube_id_sample = '_sample'
+        #youtube_id_sample = '0EwG_EJ7Aaw'
 
         self.youtube_id_form.set_text(youtube_id_sample)
 
