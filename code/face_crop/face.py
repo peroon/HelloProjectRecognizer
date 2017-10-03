@@ -96,7 +96,10 @@ if __name__ == '__main__':
     id_list = youtube.get_youtube_id_list()
     print(id_list)
 
-    # test
-    youtube_id = id_list[2]
-    print('face crop from', youtube_id)
-    extract_faces_from_youtube_video(youtube_id)
+    for youtube_id in id_list:
+        youtube_faces_dir = RESOURCES_ROOT + '/youtube_faces/' + youtube_id
+        if os.path.exists(youtube_faces_dir):
+            print('exist', youtube_id)
+        else:
+            print('not yet exist', youtube_id)
+            extract_faces_from_youtube_video(youtube_id)
