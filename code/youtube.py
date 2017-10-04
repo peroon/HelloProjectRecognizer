@@ -20,3 +20,16 @@ def get_youtube_id_list():
         id_list.append(path_to_youtube_id(path))
     id_list.sort()
     return id_list
+
+
+def get_a_unlabeled_youtube_id():
+    id_list = get_youtube_id_list()
+    for youtube_id in id_list:
+        jpg_list = glob.glob(RESOURCES_ROOT + '/youtube_faces/' + youtube_id + '/*.jpg')
+        if len(jpg_list) != 0:
+            return youtube_id
+    return None
+
+if __name__ == '__main__':
+    # test
+    print(get_a_unlabeled_youtube_id())
