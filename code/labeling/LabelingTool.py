@@ -11,6 +11,7 @@ import TitleAndForm
 import Info
 import LabelButtons
 import youtube
+import statistics
 
 W = 1900
 H = 1900
@@ -62,6 +63,12 @@ class LabelingTool(QWidget):
         move_button.setFixedSize(80, 80)
         move_button.clicked.connect(self.__move)
         move_button.move(1600, 500)
+
+        # stats button
+        stats_button = QPushButton('stats', self)
+        stats_button.setFixedSize(80, 80)
+        stats_button.clicked.connect(self.__stats)
+        stats_button.move(1800, 500)
 
         self.label_buttons = LabelButtons.LabelButtons(self.__on_click_idol_button)
         self.label_buttons.setParent(self)
@@ -116,6 +123,9 @@ class LabelingTool(QWidget):
                     shutil.move(path, dst)
         else:
             print('unlabeled images exist...')
+
+    def __stats(self):
+        statistics.face_image_stats()
 
     def __update_by_index(self):
         self.carousel.set_index(self.image_index)
